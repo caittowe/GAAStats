@@ -16,7 +16,7 @@ public class NewGame extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_game);
+        setContentView(R.layout.activity_squad_setup);
 
         team1 = findViewById(R.id.tvTeam1);
         team2 = findViewById(R.id.tvTeam2);

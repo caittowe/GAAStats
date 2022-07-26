@@ -42,7 +42,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     @Override
     public CustomAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.my_players, parent,false);
+        View view = inflater.inflate(R.layout.my_row, parent,false);
         return new MyViewHolder(view);
     }
 
@@ -93,7 +93,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             super(itemView);
             player_id_txt = itemView.findViewById(R.id.player_id_txt);
             player_name_txt = itemView.findViewById(R.id.player_name_txt);
-            playersLayout = itemView.findViewById(R.id.playersLayout);
+            playersLayout = itemView.findViewById(R.id.rowLayout);
         }
     }
 }
