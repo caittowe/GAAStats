@@ -1,18 +1,16 @@
-package com.example.newgotconfused;
+package com.example.statsgaa;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class StatActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     MaterialButton btnPlayer1,btnPlayer2;
@@ -22,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_stat);
 
         btnPlayer1 = findViewById(R.id.btnPlayer1);
         btnPlayer1.setOnClickListener(this);

@@ -1,4 +1,4 @@
-package com.example.newgotconfused;
+package com.example.statsgaa;
 
 import java.io.Serializable;
 
