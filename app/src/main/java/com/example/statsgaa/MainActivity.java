@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                         .setPositiveButton("Start", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Intent intent = new Intent(MainActivity.this, SquadSetup.class);
+                                Intent intent = new Intent(MainActivity.this, SavedSquads.class);
                                 intent.putExtra("TEAM1", enterTeam1.getText().toString());
                                 intent.putExtra("TEAM2", enterTeam2.getText().toString());
                                 intent.putExtra("DATE", toString().valueOf(enterDate.getText()));

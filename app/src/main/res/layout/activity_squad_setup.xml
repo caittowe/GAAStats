@@ -7,97 +7,6 @@
     tools:context=".SquadSetup">
 
     <TextView
-        android:id="@+id/V"
-        android:layout_width="31dp"
-        android:layout_height="20dp"
-        android:ems="10"
-        android:text="V"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.125" />
-
-    <TextView
-        android:id="@+id/tvDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Date"
-        android:inputType="date"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.518"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.188" />
-
-    <TextView
-        android:id="@+id/tvTeam2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:text="team2"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.935"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.125" />
-
-    <TextView
-        android:id="@+id/tvLocation"
-        android:layout_width="165dp"
-        android:layout_height="20dp"
-        android:ems="10"
-        android:text="location"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.504"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.215" />
-
-    <TextView
-        android:id="@+id/tvTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="datetime"
-        android:text="time"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.469"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.162" />
-
-    <TextView
-        android:id="@+id/tvTeam1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:text="team1"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.024"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.125" />
-
-    <TextView
         android:id="@+id/tvPlayerNo3"
         android:layout_width="17dp"
         android:layout_height="29dp"
@@ -286,15 +195,15 @@
         android:id="@+id/tvNewSquad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose Squad"
+        android:text="New Squad"
         android:textColor="@color/black"
-        android:textStyle="bold"
         android:textSize="30dp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.447"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.047" />
+        app:layout_constraintVertical_bias="0.046" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

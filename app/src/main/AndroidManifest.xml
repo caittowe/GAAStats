@@ -22,10 +22,6 @@
             android:exported="false"
             android:label="Previous Games"/>
         <activity
-            android:name=".NewGame"
-            android:exported="false"
-            android:label="New Game"/>
-        <activity
             android:name=".SquadSetup"
             android:exported="false"
             android:label="Squad Setup"/>

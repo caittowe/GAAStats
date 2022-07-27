@@ -104,8 +104,8 @@ public class SavedSquads extends AppCompatActivity {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                MyDatabaseHelper myDB = new MyDatabaseHelper(SavedSquads.this);
-                myDB.deleteAllData();
+//                MyDatabaseHelper myDB = new MyDatabaseHelper(SavedSquads.this);
+//                myDB.deleteAllData();
                 //refreshes activity
                 Intent intent = new Intent(SavedSquads.this, MainActivity.class);
                 startActivity(intent);

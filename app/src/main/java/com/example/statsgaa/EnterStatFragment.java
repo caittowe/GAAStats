@@ -1,5 +1,6 @@
 package com.example.statsgaa;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,9 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.statsgaa.R;
+import com.google.android.material.button.MaterialButton;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,7 +25,9 @@ public class EnterStatFragment extends Fragment {
 
     // vars
     View view;
-    private Button playerStat1, exitButton;
+    TextView playerName;
+    private Button point, exitButton;
+    int points = 0;
 
     // constructors
     public EnterStatFragment() {
@@ -34,15 +40,27 @@ public class EnterStatFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_enter_stat, container, false);
 
-        playerStat1 = view.findViewById(R.id.playerStat1);
+        View name1 = getActivity().findViewById(R.id.playerName1);
+
         exitButton = view.findViewById(R.id.exitButton);
+        playerName = view.findViewById(R.id.playerName);
+
+        // NEED TO PASS ARRAYLIST TO FRAGMENT HERE
+        Bundle bundle = this.getArguments();
+        ArrayList<Player> players = bundle.getParcelableArrayList("message");
+        playerName.setText(players.get(0).toString());
+
+
+        point = view.findViewById(R.id.point);
+
 
         /**
-         * click listener for enter stat button - displays toast and exits fragment
+         * click listener for point button - displays toast and exits fragment
          */
-        playerStat1.setOnClickListener(new View.OnClickListener() {
+        point.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // here we need to enter SQL statement - increment the point where player name = button clicked
                 Toast.makeText(getActivity(), "Stat Entered", Toast.LENGTH_SHORT).show();
                 getFragmentManager().beginTransaction().remove(EnterStatFragment.this).commit();
             }

@@ -4,17 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 
+import java.util.ArrayList;
+
 public class StatActivity extends AppCompatActivity implements View.OnClickListener {
 
-
-    MaterialButton btnPlayer1,btnPlayer2;
-    TextView player1Info;
+    String playersName1, playersName2, playersName3, playersName4, playersName5, playersName6;
+    MaterialButton btnPlayer1, btnPlayer2;
+    TextView playerName1, playerName2;
 
 
     @Override
@@ -22,21 +26,66 @@ public class StatActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stat);
 
+        Intent intent = getIntent();
+        Bundle args = intent.getBundleExtra("PLAYER_LIST");
+        ArrayList<Player> players = (ArrayList<Player>) args.getSerializable("PLAYER_LIST");
+
+        // sets textview under jersey to name of player entered
+        playerName1 = findViewById(R.id.playerName1);
+        playersName1 = players.get(0).getPlayerName().toString();
+        playerName1.setText(playersName1);
+        // when button is clicked, fragment appears
         btnPlayer1 = findViewById(R.id.btnPlayer1);
-        btnPlayer1.setOnClickListener(this);
+        btnPlayer1.setTag(playersName1);
+        btnPlayer1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick (View view){
+                // need to pass player name to fragment
+                //replaceFragment(new EnterStatFragment());
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("players", players);
+                EnterStatFragment fragInfo = new EnterStatFragment();
+                fragInfo.setArguments(bundle);
+                ft.replace(R.id.enterStatFrame, fragInfo);
+                ft.commit();
+
+                String thePlayerName = playersName1.toString();
+            }
+        });
 
         btnPlayer2 = findViewById(R.id.btnPlayer2);
-        btnPlayer2.setOnClickListener(this);
+        playerName2 = findViewById(R.id.playerName2);
+        playersName2 =players.get(1).getPlayerName().toString();
+        playerName2.setText(playersName2);
+        btnPlayer2.setTag(playersName2);
+        btnPlayer2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                Bundle bundle = new Bundle();
+                String thePlayerName = playersName2.toString();
+                bundle.putSerializable("players", players );
+                EnterStatFragment fragInfo = new EnterStatFragment();
+                fragInfo.setArguments(bundle);
+                ft.replace(R.id.enterStatFrame, fragInfo);
+                ft.commit();
+            }
+        });
 
     }
 
-    @Override
     public void onClick(View view) {
         replaceFragment(new EnterStatFragment());
+
+
     }
 
     /**
      * makes the back button exit out of the fragment
+     *
      * @param enterStatFragment
      */
     private void replaceFragment(EnterStatFragment enterStatFragment) {
@@ -46,4 +95,5 @@ public class StatActivity extends AppCompatActivity implements View.OnClickListe
         ft.commit();
 
     }
+
 }
