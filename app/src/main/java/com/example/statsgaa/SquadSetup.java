@@ -1,8 +1,6 @@
 package com.example.statsgaa;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -57,7 +55,10 @@ public class SquadSetup extends AppCompatActivity {
                 players.add(player5);
                 players.add(player6);
 
-               // pass array list to
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("PLAYER_LIST",(Serializable)players);
+                intent.putExtra("PLAYER_LIST",bundle);
+                startActivity(intent);
             }
         });
 

@@ -46,9 +46,9 @@ public class EnterStatFragment extends Fragment {
         playerName = view.findViewById(R.id.playerName);
 
         // NEED TO PASS ARRAYLIST TO FRAGMENT HERE
-        Bundle bundle = this.getArguments();
-        ArrayList<Player> players = bundle.getParcelableArrayList("message");
-        playerName.setText(players.get(0).toString());
+//        Bundle bundle = this.getArguments();
+//        ArrayList<Player> players = bundle.getParcelableArrayList("message");
+//        playerName.setText(players.get(0).toString());
 
 
         point = view.findViewById(R.id.point);

@@ -72,4 +72,9 @@ public class Player implements Serializable {
                 ", playerScores=" + playerScores +
                 '}';
     }
+
+
+    public void addScore(){
+        playerScores++;
+    }
 }
