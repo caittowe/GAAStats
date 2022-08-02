@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,7 +19,7 @@ import java.util.ArrayList;
  */
 
 
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
+public class CustomAdapterStat extends RecyclerView.Adapter<CustomAdapterStat.MyViewHolder> {
 
     private Context context;
     Activity activity;
@@ -38,7 +36,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
      * @param book_author
      * @param book_pages
      */
-    CustomAdapter(Activity activity, Context context, ArrayList book_id, ArrayList book_title,ArrayList book_author,ArrayList book_pages){
+    CustomAdapterStat(Activity activity, Context context, ArrayList book_id, ArrayList book_title, ArrayList book_author, ArrayList book_pages){
         this.activity = activity;
         this.context = context;
         this.book_id = book_id;
@@ -49,14 +47,14 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
     @NonNull
     @Override
-    public CustomAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CustomAdapterStat.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.my_row, parent,false);
         return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull CustomAdapterStat.MyViewHolder holder, final int position) {
         this.position = position;
 
         holder.book_id_txt.setText(String.valueOf(book_id.get(position)));
@@ -90,14 +88,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            book_id_txt = itemView.findViewById(R.id.book_id_txt);
-            book_title_txt = itemView.findViewById(R.id.book_title_txt);
-            book_author_txt = itemView.findViewById(R.id.book_author_txt);
-            book_pages_txt = itemView.findViewById(R.id.book_pages_txt);
+            book_id_txt = itemView.findViewById(R.id.player_id_txt);
+            book_title_txt = itemView.findViewById(R.id.player_name_txt);
+            book_author_txt = itemView.findViewById(R.id.player_number_txt);
+            book_pages_txt = itemView.findViewById(R.id.player_scores_txt);
             mainLayout = itemView.findViewById(R.id.mainLayout);
-//            // animate Recyclerview
-//            Animation anim = AnimationUtils.loadAnimation(context, R.anim.anim);
-//            mainLayout.setAnimation(anim);
+
         }
     }
 }

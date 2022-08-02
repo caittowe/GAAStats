@@ -6,10 +6,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
@@ -44,7 +42,7 @@ public class StatActivity extends AppCompatActivity {
         btnPlayer1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View view){
-                Intent intent = new Intent(StatActivity.this, EnterStat.class);
+                Intent intent = new Intent(StatActivity.this, EditPlayer.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("PLAYER_LIST",(Serializable)players);
                 intent.putExtra("PLAYER_LIST",bundle);
