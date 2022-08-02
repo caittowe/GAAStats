@@ -18,7 +18,8 @@
             android:exported="false" />
         <activity
             android:name=".EnterStat"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".SavedSquads" />
         <activity
             android:name=".SavedSquads"
             android:exported="false"
@@ -30,11 +31,12 @@
         <activity
             android:name=".SquadSetup"
             android:exported="false"
-            android:label="Squad Setup" />
+            android:label="Squad Setup"
+            android:parentActivityName=".SavedSquads" />
         <activity
             android:name=".StatActivity"
             android:exported="false"
-            android:label="Start Activity" />
+            android:label="Start Activity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

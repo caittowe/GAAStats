@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,10 +28,13 @@ import java.util.ArrayList;
 public class SavedSquads extends AppCompatActivity {
 
     RecyclerView recyclerView;
+//    ImageView empty_imageview;
+//    TextView no_data;
+    FloatingActionButton addButton;
     MyDatabaseHelper myDB;
-    FloatingActionButton fab;
-    ArrayList<String> player_id, player_name;
+    ArrayList<String> player_id, player_name, player_number, player_scores;
     CustomAdapter customAdapter;
+
 
     /**
      * @param savedInstanceState
@@ -41,9 +45,11 @@ public class SavedSquads extends AppCompatActivity {
         setContentView(R.layout.activity_saved_squads);
 
         recyclerView = findViewById(R.id.recyclerView);
-        fab = findViewById(R.id.fab);
+//        no_data = findViewById(R.id.noData);
+//        empty_imageview = findViewById(R.id.emptyData);
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        addButton = findViewById(R.id.fab);
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SavedSquads.this, SquadSetup.class);
@@ -54,9 +60,11 @@ public class SavedSquads extends AppCompatActivity {
         myDB = new MyDatabaseHelper(SavedSquads.this);
         player_id = new ArrayList<>();
         player_name = new ArrayList<>();
+        player_number = new ArrayList<>();
+        player_scores = new ArrayList<>();
 
         storeDataInArrays();
-        customAdapter = new CustomAdapter(SavedSquads.this, this, player_id, player_name);
+        customAdapter = new CustomAdapter(SavedSquads.this, this, player_id, player_name, player_number, player_scores);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(SavedSquads.this));
     }
@@ -74,11 +82,20 @@ public class SavedSquads extends AppCompatActivity {
      */
     public void storeDataInArrays() {
         Cursor cursor = myDB.readAllData();
-
-        while (cursor.moveToNext()) {
-            player_id.add(cursor.getString(0));
-            player_name.add(cursor.getString(1));
+        if (cursor.getCount() == 0) {
+//           empty_imageview.setVisibility(View.VISIBLE);
+//           no_data.setVisibility(View.VISIBLE);
+        } else {
+            while (cursor.moveToNext()) {
+                player_id.add(cursor.getString(0));
+                player_name.add(cursor.getString(1));
+                player_number.add(cursor.getString(2));
+                player_scores.add(cursor.getString(3));
+            }
+//            empty_imageview.setVisibility(View.GONE);
+//            no_data.setVisibility(View.GONE);
         }
+
     }
 
     @Override
@@ -104,10 +121,10 @@ public class SavedSquads extends AppCompatActivity {
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-//                MyDatabaseHelper myDB = new MyDatabaseHelper(SavedSquads.this);
-//                myDB.deleteAllData();
+                MyDatabaseHelper myDB = new MyDatabaseHelper(SavedSquads.this);
+                myDB.deleteAllData();
                 //refreshes activity
-                Intent intent = new Intent(SavedSquads.this, MainActivity.class);
+                Intent intent = new Intent(SavedSquads.this, SavedSquads.class);
                 startActivity(intent);
                 finish();
             }
