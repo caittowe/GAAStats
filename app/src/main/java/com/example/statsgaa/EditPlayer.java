@@ -5,7 +5,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,11 +13,11 @@ import android.widget.Toast;
 
 public class EditPlayer extends AppCompatActivity {
 
-    private EditText title_input, author_input, pages_input;
-    private Button updateButton, deleteButton, addPages;
+    private EditText name_input, number_input, scores_input;
+    private Button updateButton, deleteButton;
 
 
-    String author, id, title, pages;
+    String number, id, name, scores;
 
 
     @Override
@@ -26,9 +25,9 @@ public class EditPlayer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_player);
 
-        title_input = findViewById(R.id.titleInput2);
-        author_input = findViewById(R.id.authorInput2);
-        pages_input = findViewById(R.id.pagesInput2);
+        name_input = findViewById(R.id.nameInput);
+        number_input = findViewById(R.id.numberInput);
+        scores_input = findViewById(R.id.scoresInput);
         updateButton = findViewById(R.id.updateBookButton);
         deleteButton = findViewById(R.id.deleteBookButton);
 
@@ -37,9 +36,9 @@ public class EditPlayer extends AppCompatActivity {
 
         // set actionbar after get and set method
         ActionBar ab = getSupportActionBar();
-        ab.setTitle(title);
+        ab.setTitle(name);
         if (ab != null) {
-            ab.setTitle(title);
+            ab.setTitle(name);
         }
 
         updateButton.setOnClickListener(new View.OnClickListener() {
@@ -47,11 +46,11 @@ public class EditPlayer extends AppCompatActivity {
             public void onClick(View view) {
                 // and only then we call this
                 MyDatabaseHelper myDB = new MyDatabaseHelper(EditPlayer.this);
-                myDB.updateData(id, title, author, pages);
-                title = title_input.getText().toString().trim();
-                author = author_input.getText().toString().trim();
-                pages = pages_input.getText().toString().trim();
-                myDB.updateData(id, title, author, pages);
+                myDB.updateData(id, name, number, scores);
+                name = name_input.getText().toString().trim();
+                number = number_input.getText().toString().trim();
+                scores = scores_input.getText().toString().trim();
+                myDB.updateData(id, name, number, scores);
             }
         });
 
@@ -69,17 +68,17 @@ public class EditPlayer extends AppCompatActivity {
      *
      */
     public void getAndSetIntentData() {
-        if (getIntent().hasExtra("id") && getIntent().hasExtra("title") && getIntent().hasExtra("pages")) {
+        if (getIntent().hasExtra("id") && getIntent().hasExtra("name") && getIntent().hasExtra("scores")) {
             // getting data from intent
             id = getIntent().getStringExtra("id");
-            title = getIntent().getStringExtra("title");
-            author = getIntent().getStringExtra("author");
-            pages = getIntent().getStringExtra("pages");
+            name = getIntent().getStringExtra("name");
+            number = getIntent().getStringExtra("number");
+            scores = getIntent().getStringExtra("scores");
 
             // setting intent data
-            title_input.setText(title);
-            author_input.setText(author);
-            pages_input.setText(pages);
+            name_input.setText(name);
+            number_input.setText(number);
+            scores_input.setText(scores);
         } else {
             Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();
         }
@@ -88,8 +87,8 @@ public class EditPlayer extends AppCompatActivity {
 
     void confirmDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Delete " + title + " ?");
-        builder.setMessage("Are you sure you want to delete " + title + " ?");
+        builder.setTitle("Delete " + name + " ?");
+        builder.setMessage("Are you sure you want to delete " + name + " ?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {

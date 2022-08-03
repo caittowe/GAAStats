@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EditPlayer"
-    android:id="@+id/mainLayout">
+    android:id="@+id/editLayout">
 
 
     <Button
@@ -21,11 +21,11 @@
         app:layout_constraintVertical_bias="0.797" />
 
     <EditText
-        android:id="@+id/authorInput2"
+        android:id="@+id/numberInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Author"
+        android:hint="Number"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,11 +35,11 @@
         app:layout_constraintVertical_bias="0.43" />
 
     <EditText
-        android:id="@+id/titleInput2"
+        android:id="@+id/nameInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Title"
+        android:hint="Name"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,11 +49,11 @@
         app:layout_constraintVertical_bias="0.291" />
 
     <EditText
-        android:id="@+id/pagesInput2"
+        android:id="@+id/scoresInput"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Pages"
+        android:hint="Scores"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

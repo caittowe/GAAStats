@@ -23,7 +23,7 @@ public class CustomAdapterStat extends RecyclerView.Adapter<CustomAdapterStat.My
 
     private Context context;
     Activity activity;
-    private ArrayList book_id, book_title, book_author, book_pages;
+    private ArrayList player_id, player_name, player_number, player_scores;
 
     int position;
 
@@ -31,18 +31,18 @@ public class CustomAdapterStat extends RecyclerView.Adapter<CustomAdapterStat.My
     /**
      * constructor with args
      * @param context
-     * @param book_id
-     * @param book_title
-     * @param book_author
-     * @param book_pages
+     * @param player_id
+     * @param player_name
+     * @param player_number
+     * @param player_scores
      */
-    CustomAdapterStat(Activity activity, Context context, ArrayList book_id, ArrayList book_title, ArrayList book_author, ArrayList book_pages){
+    CustomAdapterStat(Activity activity, Context context, ArrayList player_id, ArrayList player_name, ArrayList player_number, ArrayList player_scores){
         this.activity = activity;
         this.context = context;
-        this.book_id = book_id;
-        this.book_title = book_title;
-        this.book_author = book_author;
-        this.book_pages = book_pages;
+        this.player_id = player_id;
+        this.player_name = player_name;
+        this.player_number = player_number;
+        this.player_scores = player_scores;
     }
 
     @NonNull
@@ -57,19 +57,19 @@ public class CustomAdapterStat extends RecyclerView.Adapter<CustomAdapterStat.My
     public void onBindViewHolder(@NonNull CustomAdapterStat.MyViewHolder holder, final int position) {
         this.position = position;
 
-        holder.book_id_txt.setText(String.valueOf(book_id.get(position)));
-        holder.book_title_txt.setText(String.valueOf(book_title.get(position)));
-        holder.book_author_txt.setText(String.valueOf(book_author.get(position)));
-        holder.book_pages_txt.setText(String.valueOf(book_pages.get(position)));
+        holder.player_id_txt.setText(String.valueOf(player_id.get(position)));
+        holder.player_name_txt.setText(String.valueOf(player_name.get(position)));
+        holder.player_number_txt.setText(String.valueOf(player_number.get(position)));
+        holder.player_scores_txt.setText(String.valueOf(player_scores.get(position)));
 
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, EnterStat.class);
-                intent.putExtra("id", toString().valueOf(book_id.get(position)));
-                intent.putExtra("title", toString().valueOf(book_title.get(position)));
-                intent.putExtra("author", toString().valueOf(book_author.get(position)));
-                intent.putExtra("pages", toString().valueOf(book_pages.get(position)));
+                intent.putExtra("id", toString().valueOf(player_id.get(position)));
+                intent.putExtra("name", toString().valueOf(player_name.get(position)));
+                intent.putExtra("number", toString().valueOf(player_number.get(position)));
+                intent.putExtra("scores", toString().valueOf(player_scores.get(position)));
                 // allows changes to be seen
                 activity.startActivityForResult(intent,1);
             }
@@ -78,20 +78,20 @@ public class CustomAdapterStat extends RecyclerView.Adapter<CustomAdapterStat.My
 
     @Override
     public int getItemCount() {
-        return book_id.size();
+        return player_id.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView book_id_txt, book_title_txt, book_author_txt, book_pages_txt;
+        TextView player_id_txt, player_name_txt, player_number_txt, player_scores_txt;
         LinearLayout mainLayout;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            book_id_txt = itemView.findViewById(R.id.player_id_txt);
-            book_title_txt = itemView.findViewById(R.id.player_name_txt);
-            book_author_txt = itemView.findViewById(R.id.player_number_txt);
-            book_pages_txt = itemView.findViewById(R.id.player_scores_txt);
+            player_id_txt = itemView.findViewById(R.id.player_id_txt);
+            player_name_txt = itemView.findViewById(R.id.player_name_txt);
+            player_number_txt = itemView.findViewById(R.id.player_number_txt);
+            player_scores_txt = itemView.findViewById(R.id.player_scores_txt);
             mainLayout = itemView.findViewById(R.id.mainLayout);
 
         }

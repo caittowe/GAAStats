@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/caitt/AndroidStudioProjects/StatsGAA/app/src/main/res/layout/activity_edit_player.xml" value="0.36302083333333335" />
         <entry key="..\:/Users/caitt/AndroidStudioProjects/StatsGAA/app/src/main/res/layout/activity_enter_players.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/caitt/AndroidStudioProjects/StatsGAA/app/src/main/res/layout/activity_enter_stat.xml" value="0.11333333333333334" />
         <entry key="..\:/Users/caitt/AndroidStudioProjects/StatsGAA/app/src/main/res/layout/activity_game_start.xml" value="0.36302083333333335" />
@@ -14,6 +15,7 @@
         <entry key="..\:/Users/caitt/AndroidStudioProjects/StatsGAA/app/src/main/res/layout/activity_show_game_stats.xml" value="0.17604166666666668" />
         <entry key="..\:/Users/caitt/AndroidStudioProjects/StatsGAA/app/src/main/res/layout/activity_squad_setup.xml" value="0.16041666666666668" />
         <entry key="..\:/Users/caitt/AndroidStudioProjects/StatsGAA/app/src/main/res/layout/activity_stat.xml" value="0.17604166666666668" />
+        <entry key="..\:/Users/caitt/AndroidStudioProjects/StatsGAA/app/src/main/res/layout/content_show_stats.xml" value="0.36302083333333335" />
         <entry key="..\:/Users/caitt/AndroidStudioProjects/StatsGAA/app/src/main/res/layout/fragment_enter_stat.xml" value="0.15572916666666667" />
         <entry key="..\:/Users/caitt/AndroidStudioProjects/StatsGAA/app/src/main/res/layout/fragment_first.xml" value="0.1" />
         <entry key="..\:/Users/caitt/AndroidStudioProjects/StatsGAA/app/src/main/res/layout/my_row.xml" value="0.4466666666666667" />

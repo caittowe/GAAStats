@@ -63,7 +63,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     /**
      * adds a new player to the player table
      */
-    public void addBook(String name, String number, String scores) {
+    public void addPlayer(String name, String number, String scores) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 

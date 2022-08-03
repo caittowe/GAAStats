@@ -7,10 +7,10 @@
     tools:context=".EnterStat">
 
     <Button
-        android:id="@+id/addPages"
+        android:id="@+id/addScore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="add Pages"
+        android:text="add Score"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.506"

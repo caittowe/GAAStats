@@ -43,11 +43,11 @@ public class GameStart extends AppCompatActivity {
         setContentView(R.layout.activity_game_start);
 
         recyclerView = findViewById(R.id.recyclerView);
-//        team1 = findViewById(R.id.tvTeam1);
-//        team2 = findViewById(R.id.tvTeam2);
-//        time = findViewById(R.id.tvTime);
-//        date = findViewById(R.id.tvDate);
-//        location = findViewById(R.id.tvLocation);
+        team1 = findViewById(R.id.tvTeam1);
+        team2 = findViewById(R.id.tvTeam2);
+        time = findViewById(R.id.tvTime);
+        date = findViewById(R.id.tvDate);
+        location = findViewById(R.id.tvLocation);
         endTheGame = findViewById(R.id.endTheGame);
         endTheGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +56,7 @@ public class GameStart extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
+//
 //        team1.setText(getIntent().getStringExtra("TEAM1"));
 //        team2.setText(getIntent().getStringExtra("TEAM2"));
 //        date.setText(getIntent().getStringExtra("DATE"));

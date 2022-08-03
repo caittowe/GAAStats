@@ -34,12 +34,12 @@ public class SquadSetup extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(SquadSetup.this);
-                myDB.addBook(player1.getText().toString().trim(),String.valueOf(1),String.valueOf(0));
-                myDB.addBook(player2.getText().toString().trim(),String.valueOf(2),String.valueOf(0));
-                myDB.addBook(player3.getText().toString().trim(),String.valueOf(3),String.valueOf(0));
-                myDB.addBook(player4.getText().toString().trim(),String.valueOf(4),String.valueOf(0));
-                myDB.addBook(player5.getText().toString().trim(),String.valueOf(5),String.valueOf(0));
-                myDB.addBook(player6.getText().toString().trim(),String.valueOf(6),String.valueOf(0));
+                myDB.addPlayer(player1.getText().toString().trim(),String.valueOf(1),String.valueOf(0));
+                myDB.addPlayer(player2.getText().toString().trim(),String.valueOf(2),String.valueOf(0));
+                myDB.addPlayer(player3.getText().toString().trim(),String.valueOf(3),String.valueOf(0));
+                myDB.addPlayer(player4.getText().toString().trim(),String.valueOf(4),String.valueOf(0));
+                myDB.addPlayer(player5.getText().toString().trim(),String.valueOf(5),String.valueOf(0));
+                myDB.addPlayer(player6.getText().toString().trim(),String.valueOf(6),String.valueOf(0));
                 Intent intent = new Intent(SquadSetup.this, SavedSquads.class);
                 startActivity(intent);
 
