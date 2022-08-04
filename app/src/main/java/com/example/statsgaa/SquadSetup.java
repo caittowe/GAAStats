@@ -14,7 +14,9 @@ import android.widget.EditText;
  */
 public class SquadSetup extends AppCompatActivity {
 
-    private EditText player1, player2, player3, player4, player5, player6;
+    private EditText player1, player2, player3, player4, player5, player6, player7, player8, player9,
+    player10, player11, player12,player13, player14, player15;
+
     private Button addPlayerButton;
 
     @Override
@@ -28,6 +30,15 @@ public class SquadSetup extends AppCompatActivity {
         player4 = findViewById(R.id.player4input);
         player5 = findViewById(R.id.player5input);
         player6 = findViewById(R.id.player6input);
+        player7 = findViewById(R.id.player7input);
+        player8 = findViewById(R.id.player8input);
+        player9 = findViewById(R.id.player9input);
+        player10 = findViewById(R.id.player10input);
+        player11 = findViewById(R.id.player11input);
+        player12 = findViewById(R.id.player12input);
+        player13 = findViewById(R.id.player13input);
+        player14 = findViewById(R.id.player14input);
+        player15 = findViewById(R.id.player15input);
 
         addPlayerButton = findViewById(R.id.addPlayersButton);
         addPlayerButton.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +51,16 @@ public class SquadSetup extends AppCompatActivity {
                 myDB.addPlayer(player4.getText().toString().trim(),String.valueOf(4),String.valueOf(0));
                 myDB.addPlayer(player5.getText().toString().trim(),String.valueOf(5),String.valueOf(0));
                 myDB.addPlayer(player6.getText().toString().trim(),String.valueOf(6),String.valueOf(0));
+                myDB.addPlayer(player7.getText().toString().trim(),String.valueOf(7),String.valueOf(0));
+                myDB.addPlayer(player8.getText().toString().trim(),String.valueOf(8),String.valueOf(0));
+                myDB.addPlayer(player9.getText().toString().trim(),String.valueOf(9),String.valueOf(0));
+                myDB.addPlayer(player10.getText().toString().trim(),String.valueOf(10),String.valueOf(0));
+                myDB.addPlayer(player11.getText().toString().trim(),String.valueOf(11),String.valueOf(0));
+                myDB.addPlayer(player12.getText().toString().trim(),String.valueOf(12),String.valueOf(0));
+                myDB.addPlayer(player13.getText().toString().trim(),String.valueOf(13),String.valueOf(0));
+                myDB.addPlayer(player14.getText().toString().trim(),String.valueOf(14),String.valueOf(0));
+                myDB.addPlayer(player15.getText().toString().trim(),String.valueOf(15),String.valueOf(0));
+
                 Intent intent = new Intent(SquadSetup.this, SavedSquads.class);
                 startActivity(intent);
 
