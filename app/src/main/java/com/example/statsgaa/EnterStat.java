@@ -9,11 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class EnterStat extends AppCompatActivity {
 
     private Button addScore;
 
     String number, id, name, scores;
+
 
 
     @Override
@@ -30,20 +33,17 @@ public class EnterStat extends AppCompatActivity {
         // set actionbar after get and set method
         ActionBar ab = getSupportActionBar();
         ab.setTitle(number + ". " + name);
-        if (ab != null) {
-            ab.setTitle(number + ". " + name);
-        }
 
         // increments number of pages by 1
         addScore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(EnterStat.this);
+                Intent intent = new Intent(EnterStat.this, GameStart.class);
                 int increment = 1;
                 int oldScore = Integer.valueOf(scores);
                 int newScore = oldScore + increment;
                 myDB.updateData(id, name, number, String.valueOf(newScore));
-                Intent intent = new Intent(EnterStat.this, GameStart.class);
                 startActivity(intent);
             }
         });

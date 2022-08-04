@@ -4,19 +4,78 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GameStart">
+    tools:context=".GameStart"
+    tools:layout_editor_absoluteX="135dp"
+    tools:layout_editor_absoluteY="-10dp">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="411dp"
-        android:layout_height="412dp"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnPlayer3"
+        android:layout_width="64dp"
+        android:layout_height="57dp"
+        android:background="@drawable/ic_jersey"
+        android:backgroundTint="#33BF39"
+        android:text="3"
+        android:textColor="@color/white"
+        app:backgroundTint="#02BA09"
+        app:iconGravity="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.532" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnPlayer2"
+        android:layout_width="64dp"
+        android:layout_height="57dp"
+        android:background="@drawable/ic_jersey"
+        android:backgroundTint="#33BF39"
+        android:text="2"
+        android:textColor="@color/white"
+        app:backgroundTint="#02BA09"
+        app:iconGravity="textStart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.155"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.528" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnPlayer4"
+        android:layout_width="64dp"
+        android:layout_height="57dp"
+        android:background="@drawable/ic_jersey"
+        android:backgroundTint="#33BF39"
+        android:text="4"
+        android:textColor="@color/white"
+        app:backgroundTint="#02BA09"
+        app:iconGravity="textStart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.887"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.532" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnPlayer1"
+        android:layout_width="64dp"
+        android:layout_height="57dp"
+        android:background="@drawable/ic_jersey"
+        android:backgroundTint="#33BF39"
+        android:text="1"
+        android:textColor="@color/white"
+        app:backgroundTint="#02BA09"
+        app:iconGravity="textStart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.419" />
 
     <Button
         android:id="@+id/endTheGame"
@@ -24,10 +83,8 @@
         android:layout_height="58dp"
         android:layout_marginTop="168dp"
         android:text="End Game"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.802" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

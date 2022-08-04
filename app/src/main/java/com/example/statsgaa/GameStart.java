@@ -1,39 +1,27 @@
 package com.example.statsgaa;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class GameStart extends AppCompatActivity {
 
-
-    RecyclerView recyclerView;
     MyDatabaseHelper myDB;
+    Context context;
+    String id, name, number, scores;
     ArrayList<String> player_id, player_name, player_number, player_scores;
-    CustomAdapterStat customAdapter;
-    TextView team1, team2, time, date, location;
-    Button endTheGame;
+    Button endTheGame, btnPlayer1, btnPlayer2, btnPlayer3, btnPlayer4;
 
     /**
      * displays the details entered from the dialog
      * calls storedatainarrays method
-     * calls the custom adapter to layout the recycler view of all players
      *
      * @param savedInstanceState
      */
@@ -42,12 +30,6 @@ public class GameStart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_start);
 
-        recyclerView = findViewById(R.id.recyclerView);
-        team1 = findViewById(R.id.tvTeam1);
-        team2 = findViewById(R.id.tvTeam2);
-        time = findViewById(R.id.tvTime);
-        date = findViewById(R.id.tvDate);
-        location = findViewById(R.id.tvLocation);
         endTheGame = findViewById(R.id.endTheGame);
         endTheGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,12 +38,6 @@ public class GameStart extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-//
-//        team1.setText(getIntent().getStringExtra("TEAM1"));
-//        team2.setText(getIntent().getStringExtra("TEAM2"));
-//        date.setText(getIntent().getStringExtra("DATE"));
-//        time.setText(getIntent().getStringExtra("TIME"));
-//        location.setText(getIntent().getStringExtra("LOCATION"));
 
         myDB = new MyDatabaseHelper(GameStart.this);
         player_id = new ArrayList<>();
@@ -70,27 +46,66 @@ public class GameStart extends AppCompatActivity {
         player_scores = new ArrayList<>();
 
         storeDataInArrays();
-        customAdapter = new CustomAdapterStat(GameStart.this, this, player_id, player_name, player_number, player_scores);
-        recyclerView.setAdapter(customAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(GameStart.this));
+
+        btnPlayer1 = findViewById(R.id.btnPlayer1);
+        btnPlayer1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(GameStart.this, EnterStat.class);
+                intent.putExtra("id", toString().valueOf(player_id.get(0)));
+                intent.putExtra("name", toString().valueOf(player_name.get(0)));
+                intent.putExtra("number", toString().valueOf(player_number.get(0)));
+                intent.putExtra("scores", toString().valueOf(player_scores.get(0)));
+                startActivity(intent);
+
+            }
+        });
+
+        btnPlayer2 = findViewById(R.id.btnPlayer2);
+        btnPlayer2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(GameStart.this, EnterStat.class);
+                intent.putExtra("id", toString().valueOf(player_id.get(1)));
+                intent.putExtra("name", toString().valueOf(player_name.get(1)));
+                intent.putExtra("number", toString().valueOf(player_number.get(1)));
+                intent.putExtra("scores", toString().valueOf(player_scores.get(1)));
+                startActivity(intent);
+
+            }
+        });
+
+        btnPlayer3 = findViewById(R.id.btnPlayer3);
+        btnPlayer3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(GameStart.this, EnterStat.class);
+                intent.putExtra("id", toString().valueOf(player_id.get(2)));
+                intent.putExtra("name", toString().valueOf(player_name.get(2)));
+                intent.putExtra("number", toString().valueOf(player_number.get(2)));
+                intent.putExtra("scores", toString().valueOf(player_scores.get(2)));
+                startActivity(intent);
+
+            }
+        });
+
+        btnPlayer4 = findViewById(R.id.btnPlayer4);
+        btnPlayer4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(GameStart.this, EnterStat.class);
+                intent.putExtra("id", toString().valueOf(player_id.get(3)));
+                intent.putExtra("name", toString().valueOf(player_name.get(3)));
+                intent.putExtra("number", toString().valueOf(player_number.get(3)));
+                intent.putExtra("scores", toString().valueOf(player_scores.get(3)));
+                startActivity(intent);
+
+            }
+        });
+
     }
 
-    /**
-     * allows results to be seen when data is changed
-     *
-     * @param requestCode
-     * @param resultCode
-     * @param data
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            recreate();
-        }
-    }
-
-    /**
+    /* *
      * Stores data entered into array lists
      */
     public void storeDataInArrays() {
@@ -106,20 +121,6 @@ public class GameStart extends AppCompatActivity {
                 player_scores.add(cursor.getString(3));
             }
         }
-
-    }
-
-    /**
-     * inflates the menu oin top corner of screen +++not yet implemented++
-     *
-     * @param menu
-     * @return
-     */
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.my_menu, menu);
-        return super.onCreateOptionsMenu(menu);
 
     }
 }

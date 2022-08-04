@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 public class EditPlayer extends AppCompatActivity {
 
-    private EditText name_input, number_input, scores_input;
+    private EditText name_input;
     private Button updateButton, deleteButton;
 
 
@@ -26,10 +26,8 @@ public class EditPlayer extends AppCompatActivity {
         setContentView(R.layout.activity_edit_player);
 
         name_input = findViewById(R.id.nameInput);
-        number_input = findViewById(R.id.numberInput);
-        scores_input = findViewById(R.id.scoresInput);
-        updateButton = findViewById(R.id.updateBookButton);
-        deleteButton = findViewById(R.id.deleteBookButton);
+        updateButton = findViewById(R.id.updatePlayerNameButton);
+        deleteButton = findViewById(R.id.deletePlayerButton);
 
         // first we call this
         getAndSetIntentData();
@@ -48,8 +46,6 @@ public class EditPlayer extends AppCompatActivity {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(EditPlayer.this);
                 myDB.updateData(id, name, number, scores);
                 name = name_input.getText().toString().trim();
-                number = number_input.getText().toString().trim();
-                scores = scores_input.getText().toString().trim();
                 myDB.updateData(id, name, number, scores);
             }
         });
@@ -74,11 +70,8 @@ public class EditPlayer extends AppCompatActivity {
             name = getIntent().getStringExtra("name");
             number = getIntent().getStringExtra("number");
             scores = getIntent().getStringExtra("scores");
-
             // setting intent data
             name_input.setText(name);
-            number_input.setText(number);
-            scores_input.setText(scores);
         } else {
             Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();
         }

@@ -84,6 +84,7 @@ public class SavedSquads extends AppCompatActivity {
         player_scores = new ArrayList<>();
 
         storeDataInArrays();
+
         customAdapter = new CustomAdapterEdit(SavedSquads.this, this, player_id, player_name, player_number, player_scores);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(SavedSquads.this));

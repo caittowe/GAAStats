@@ -37,7 +37,7 @@ public class StatActivity extends AppCompatActivity {
         playersName1 = players.get(0).getPlayerName().toString();
         playerName1.setText(playersName1);
         // when button is clicked, activity appears
-        btnPlayer1 = findViewById(R.id.btnPlayer1);
+        btnPlayer1 = findViewById(R.id.kk2);
         btnPlayer1.setTag("1."+playersName1);
         btnPlayer1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +51,7 @@ public class StatActivity extends AppCompatActivity {
             }
         });
 
-        btnPlayer2 = findViewById(R.id.btnPlayer2);
+        btnPlayer2 = findViewById(R.id.kk);
         playerName2 = findViewById(R.id.playerName2);
         playersName2 =players.get(1).getPlayerName().toString();
         playerName2.setText(playersName2);

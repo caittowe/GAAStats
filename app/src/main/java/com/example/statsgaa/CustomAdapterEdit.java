@@ -67,7 +67,7 @@ public class CustomAdapterEdit extends RecyclerView.Adapter<CustomAdapterEdit.My
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, EnterStat.class);
+                Intent intent = new Intent(context, EditPlayer.class);
                 intent.putExtra("id", toString().valueOf(player_id.get(position)));
                 intent.putExtra("name", toString().valueOf(player_name.get(position)));
                 intent.putExtra("number", toString().valueOf(player_number.get(position)));
