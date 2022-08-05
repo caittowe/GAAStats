@@ -12,7 +12,7 @@ import android.widget.EditText;
  * adds each player to the database and sets their default values
  * should be up to 30 players when fully developed
  */
-public class SquadSetup extends AppCompatActivity {
+public class AddNewSquad extends AppCompatActivity {
 
     private EditText player1, player2, player3, player4, player5, player6, player7, player8, player9,
     player10, player11, player12,player13, player14, player15;
@@ -44,7 +44,7 @@ public class SquadSetup extends AppCompatActivity {
         addPlayerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MyDatabaseHelper myDB = new MyDatabaseHelper(SquadSetup.this);
+                MyDatabaseHelper myDB = new MyDatabaseHelper(AddNewSquad.this);
                 myDB.addPlayer(player1.getText().toString().trim(),String.valueOf(1),String.valueOf(0));
                 myDB.addPlayer(player2.getText().toString().trim(),String.valueOf(2),String.valueOf(0));
                 myDB.addPlayer(player3.getText().toString().trim(),String.valueOf(3),String.valueOf(0));
@@ -61,7 +61,7 @@ public class SquadSetup extends AppCompatActivity {
                 myDB.addPlayer(player14.getText().toString().trim(),String.valueOf(14),String.valueOf(0));
                 myDB.addPlayer(player15.getText().toString().trim(),String.valueOf(15),String.valueOf(0));
 
-                Intent intent = new Intent(SquadSetup.this, SavedSquads.class);
+                Intent intent = new Intent(AddNewSquad.this, SavedSquads.class);
                 startActivity(intent);
 
             }

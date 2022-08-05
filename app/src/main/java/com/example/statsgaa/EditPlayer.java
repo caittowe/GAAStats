@@ -44,9 +44,9 @@ public class EditPlayer extends AppCompatActivity {
             public void onClick(View view) {
                 // and only then we call this
                 MyDatabaseHelper myDB = new MyDatabaseHelper(EditPlayer.this);
-                myDB.updateData(id, name, number, scores);
+                myDB.updatePlayerName(id, name, number, scores);
                 name = name_input.getText().toString().trim();
-                myDB.updateData(id, name, number, scores);
+                myDB.updatePlayerName(id, name, number, scores);
             }
         });
 
@@ -54,7 +54,7 @@ public class EditPlayer extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(EditPlayer.this);
-                myDB.deleteOneRow(id);
+                myDB.deleteOnePlayer(id);
                 confirmDialog();
             }
         });
@@ -86,7 +86,7 @@ public class EditPlayer extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(EditPlayer.this);
-                myDB.deleteOneRow(id);
+                myDB.deleteOnePlayer(id);
                 finish();
             }
         });

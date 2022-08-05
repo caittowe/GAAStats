@@ -31,7 +31,7 @@ public class SavedSquads extends AppCompatActivity {
     FloatingActionButton addButton;
     MyDatabaseHelper myDB;
     ArrayList<String> player_id, player_name, player_number, player_scores;
-    CustomAdapterEdit customAdapter;
+    CustomAdapterPlayerList customAdapter;
     TextView team1, team2, time, date, location;
     Button startGame;
 
@@ -72,7 +72,7 @@ public class SavedSquads extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(SavedSquads.this, SquadSetup.class);
+                Intent intent = new Intent(SavedSquads.this, AddNewSquad.class);
                 startActivity(intent);
             }
         });
@@ -85,7 +85,7 @@ public class SavedSquads extends AppCompatActivity {
 
         storeDataInArrays();
 
-        customAdapter = new CustomAdapterEdit(SavedSquads.this, this, player_id, player_name, player_number, player_scores);
+        customAdapter = new CustomAdapterPlayerList(SavedSquads.this, this, player_id, player_name, player_number, player_scores);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(SavedSquads.this));
     }

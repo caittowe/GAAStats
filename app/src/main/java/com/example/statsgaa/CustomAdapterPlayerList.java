@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 
 
-public class CustomAdapterEdit extends RecyclerView.Adapter<CustomAdapterEdit.MyViewHolder> {
+public class CustomAdapterPlayerList extends RecyclerView.Adapter<CustomAdapterPlayerList.MyViewHolder> {
 
 
     private Context context;
@@ -37,7 +37,7 @@ public class CustomAdapterEdit extends RecyclerView.Adapter<CustomAdapterEdit.My
      * @param player_number
      * @param player_scores
      */
-    CustomAdapterEdit(Activity activity, Context context, ArrayList player_id, ArrayList player_name, ArrayList player_number, ArrayList player_scores) {
+    CustomAdapterPlayerList(Activity activity, Context context, ArrayList player_id, ArrayList player_name, ArrayList player_number, ArrayList player_scores) {
         this.activity = activity;
         this.context = context;
         this.player_id = player_id;
@@ -49,14 +49,14 @@ public class CustomAdapterEdit extends RecyclerView.Adapter<CustomAdapterEdit.My
 
     @NonNull
     @Override
-    public CustomAdapterEdit.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CustomAdapterPlayerList.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.my_row, parent,false);
         return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CustomAdapterEdit.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull CustomAdapterPlayerList.MyViewHolder holder, final int position) {
         this.position = position;
 
         holder.player_id_txt.setText(String.valueOf(player_id.get(position)));

@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
                         .setPositiveButton("Start", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+
+                                // NEED TO IMPLEMENT THE GENERATION OF A NEW MATCH_ID WHEN GAME STARTS
+
                                 Intent intent = new Intent(MainActivity.this, SavedSquads.class);
                                 intent.putExtra("TEAM1", enterTeam1.getText().toString());
                                 intent.putExtra("TEAM2", enterTeam2.getText().toString());

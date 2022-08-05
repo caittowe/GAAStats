@@ -35,14 +35,10 @@
             android:exported="false"
             android:label="Previous Games" />
         <activity
-            android:name=".SquadSetup"
+            android:name=".AddNewSquad"
             android:exported="false"
             android:label="Squad Setup"
             android:parentActivityName=".SavedSquads" />
-        <activity
-            android:name=".StatActivity"
-            android:exported="false"
-            android:label="Start Activity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
