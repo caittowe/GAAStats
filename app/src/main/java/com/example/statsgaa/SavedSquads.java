@@ -30,8 +30,8 @@ public class SavedSquads extends AppCompatActivity {
     RecyclerView recyclerView;
     FloatingActionButton addButton;
     MyDatabaseHelper myDB;
-    ArrayList<String> player_id, player_name, player_number, player_scores;
-    CustomAdapterPlayerList customAdapter;
+    ArrayList<String> squad_table_id, squad_id, squad_name, player_name, player_no;
+    CustomAdapterSquadList customAdapter;
     TextView team1, team2, time, date, location;
     Button startGame;
 
@@ -40,6 +40,7 @@ public class SavedSquads extends AppCompatActivity {
      * displays the details entered from the dialog
      * calls storedatainarrays method
      * calls the custom adapter to layout the recycler view of all players
+     *
      * @param savedInstanceState
      */
     @Override
@@ -70,28 +71,32 @@ public class SavedSquads extends AppCompatActivity {
 
         addButton = findViewById(R.id.fab);
         addButton.setOnClickListener(new View.OnClickListener() {
+            int counter = 0;
+
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SavedSquads.this, AddNewSquad.class);
                 startActivity(intent);
+                counter++;
             }
         });
 
         myDB = new MyDatabaseHelper(SavedSquads.this);
-        player_id = new ArrayList<>();
-        player_name = new ArrayList<>();
-        player_number = new ArrayList<>();
-        player_scores = new ArrayList<>();
+        squad_id = new ArrayList<>();
+        squad_name = new ArrayList<>();
+//        player_name = new ArrayList<>();
+//        player_no = new ArrayList<>();
 
         storeDataInArrays();
 
-        customAdapter = new CustomAdapterPlayerList(SavedSquads.this, this, player_id, player_name, player_number, player_scores);
+        customAdapter = new CustomAdapterSquadList(SavedSquads.this, this, squad_id, squad_name);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(SavedSquads.this));
     }
 
     /**
      * allows results to be seen when data is changed
+     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -108,16 +113,17 @@ public class SavedSquads extends AppCompatActivity {
      * Stores data entered into array lists
      */
     public void storeDataInArrays() {
-        Cursor cursor = myDB.readAllData();
+        Cursor cursor = myDB.readAllSquadID();
         if (cursor.getCount() == 0) {
 //           empty_imageview.setVisibility(View.VISIBLE);
 //           no_data.setVisibility(View.VISIBLE);
         } else {
             while (cursor.moveToNext()) {
-                player_id.add(cursor.getString(0));
-                player_name.add(cursor.getString(1));
-                player_number.add(cursor.getString(2));
-                player_scores.add(cursor.getString(3));
+                squad_id.add(cursor.getString(0));
+//                    squad_name.add(cursor.getString(2));
+//                squad_name.add(cursor.getString(1));
+//                player_name.add(cursor.getString(2));
+//                player_no.add(cursor.getString(3));
             }
         }
 
@@ -125,6 +131,7 @@ public class SavedSquads extends AppCompatActivity {
 
     /**
      * inflates the menu oin top corner of screen +++not yet implemented++
+     *
      * @param menu
      * @return
      */
@@ -138,6 +145,7 @@ public class SavedSquads extends AppCompatActivity {
 
     /**
      * prompts the dialog when asked to delete all players
+     *
      * @param item
      * @return
      */
@@ -160,7 +168,7 @@ public class SavedSquads extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(SavedSquads.this);
-                myDB.deleteAllData();
+                myDB.deleteSquad();
                 //refreshes activity
                 Intent intent = new Intent(SavedSquads.this, SavedSquads.class);
                 startActivity(intent);

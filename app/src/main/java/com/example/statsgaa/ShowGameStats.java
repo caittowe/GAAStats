@@ -1,7 +1,6 @@
 package com.example.statsgaa;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,12 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -71,7 +64,7 @@ public class ShowGameStats extends AppCompatActivity {
      * Stores data entered into array lists
      */
     public void storeDataInArrays() {
-        Cursor cursor = myDB.readAllData();
+        Cursor cursor = myDB.readAllSquadData();
         if (cursor.getCount() == 0) {
 //           empty_imageview.setVisibility(View.VISIBLE);
 //           no_data.setVisibility(View.VISIBLE);

@@ -2,7 +2,6 @@ package com.example.statsgaa;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +48,7 @@ public class CustomAdapterShowStats extends RecyclerView.Adapter<CustomAdapterSh
     @Override
     public CustomAdapterShowStats.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.my_row, parent,false);
+        View view = inflater.inflate(R.layout.my_player_row, parent,false);
         return new MyViewHolder(view);
     }
 
@@ -89,8 +88,8 @@ public class CustomAdapterShowStats extends RecyclerView.Adapter<CustomAdapterSh
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             player_id_txt = itemView.findViewById(R.id.player_id_txt);
-            player_name_txt = itemView.findViewById(R.id.player_name_txt);
-            player_number_txt = itemView.findViewById(R.id.player_number_txt);
+            player_name_txt = itemView.findViewById(R.id.squad_name_txt);
+            player_number_txt = itemView.findViewById(R.id.squad_id_txt);
             player_scores_txt = itemView.findViewById(R.id.player_scores_txt);
             mainLayout = itemView.findViewById(R.id.mainLayout);
 

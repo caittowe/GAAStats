@@ -16,7 +16,7 @@ public class EnterStat extends AppCompatActivity {
 
     private Button addScore, addKickpass, addFistpass;
 
-    String number, id, name, scores;
+    String squad_table_id, squad_id, squad_name, player_name, player_no;
     int scoreID = 1;
     int kickpassID = 2;
     int handpassID = 3;
@@ -36,7 +36,7 @@ public class EnterStat extends AppCompatActivity {
 
         // set actionbar after get and set method
         ActionBar ab = getSupportActionBar();
-        ab.setTitle(number + ". " + name);
+        ab.setTitle(player_no + ". " + player_name);
 
         // increments number of pages by 1
         addScore.setOnClickListener(new View.OnClickListener() {
@@ -44,9 +44,9 @@ public class EnterStat extends AppCompatActivity {
             public void onClick(View view) {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(EnterStat.this);
                 Intent intent = new Intent(EnterStat.this, GameStart.class);
-                myDB.addMatchEvent(1, Integer.parseInt(id), scoreID, 2);
+                myDB.addMatchEvent(1, Integer.parseInt(player_no), scoreID, 2);
                 startActivity(intent);
-                Log.i("SCOREADDED", "Score added player id: "+id);
+                Log.i("SCOREADDED", "Score added player "+player_no);
             }
         });
 
@@ -55,9 +55,9 @@ public class EnterStat extends AppCompatActivity {
             public void onClick(View view) {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(EnterStat.this);
                 Intent intent = new Intent(EnterStat.this, GameStart.class);
-                myDB.addMatchEvent(1, Integer.parseInt(id), handpassID, 2);
+                myDB.addMatchEvent(1, Integer.parseInt(player_no), handpassID, 2);
                 startActivity(intent);
-                Log.i("FISTADDED", "Fistpass added player id: "+id);
+                Log.i("FISTADDED", "Fistpass added player "+player_no);
             }
         });
 
@@ -66,9 +66,9 @@ public class EnterStat extends AppCompatActivity {
         public void onClick(View view) {
             MyDatabaseHelper myDB = new MyDatabaseHelper(EnterStat.this);
             Intent intent = new Intent(EnterStat.this, GameStart.class);
-            myDB.addMatchEvent(1, Integer.parseInt(id), kickpassID, 2);
+            myDB.addMatchEvent(1, Integer.parseInt(player_no), kickpassID, 2);
             startActivity(intent);
-            Log.i("KICKADDED", "kickpass added player id: "+id);
+            Log.i("KICKADDED", "kickpass added player "+player_no);
         }
     });
 }
@@ -77,14 +77,14 @@ public class EnterStat extends AppCompatActivity {
      *
      */
     public void getAndSetIntentData() {
-        if (getIntent().hasExtra("id") && getIntent().hasExtra("name") && getIntent().hasExtra("scores")) {
+        if (getIntent().hasExtra("squad_table_id") && getIntent().hasExtra("squad_id") && getIntent().hasExtra("squad_name") && getIntent().hasExtra("player_name")
+        && getIntent().hasExtra("player_no")){
             // getting data from intent
-            id = getIntent().getStringExtra("id");
-            name = getIntent().getStringExtra("name");
-            number = getIntent().getStringExtra("number");
-            scores = getIntent().getStringExtra("scores");
-
-
+            squad_table_id = getIntent().getStringExtra("squad_table_id");
+            squad_id = getIntent().getStringExtra("squad_id");
+            squad_name = getIntent().getStringExtra("squad_name");
+            player_name = getIntent().getStringExtra("player_name");
+            player_no = getIntent().getStringExtra("player_no");
 
         } else {
             Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();

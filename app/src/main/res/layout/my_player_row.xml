@@ -30,7 +30,7 @@
                 app:layout_constraintVertical_bias="0.508" />
 
             <TextView
-                android:id="@+id/player_name_txt"
+                android:id="@+id/squad_name_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name"
@@ -45,7 +45,7 @@
                 app:layout_constraintVertical_bias="0.372" />
 
             <TextView
-                android:id="@+id/player_number_txt"
+                android:id="@+id/squad_id_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1"

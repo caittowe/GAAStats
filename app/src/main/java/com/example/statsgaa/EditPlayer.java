@@ -13,11 +13,12 @@ import android.widget.Toast;
 
 public class EditPlayer extends AppCompatActivity {
 
-    private EditText name_input;
+    private EditText name_input, no_input;
+    String squad_table_id, squad_id, squad_name, player_name, player_no;
     private Button updateButton, deleteButton;
 
 
-    String number, id, name, scores;
+    String number, id, name;
 
 
     @Override
@@ -34,19 +35,17 @@ public class EditPlayer extends AppCompatActivity {
 
         // set actionbar after get and set method
         ActionBar ab = getSupportActionBar();
-        ab.setTitle(name);
-        if (ab != null) {
-            ab.setTitle(name);
-        }
+        ab.setTitle(player_no+". "+player_name);
 
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // and only then we call this
                 MyDatabaseHelper myDB = new MyDatabaseHelper(EditPlayer.this);
-                myDB.updatePlayerName(id, name, number, scores);
-                name = name_input.getText().toString().trim();
-                myDB.updatePlayerName(id, name, number, scores);
+                myDB.updatePlayerName(player_name, player_no);
+                player_name = name_input.getText().toString().trim();
+//                number = number_input.getText().toString().trim();
+                myDB.updatePlayerName(player_name, player_no);
             }
         });
 
@@ -54,7 +53,7 @@ public class EditPlayer extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(EditPlayer.this);
-                myDB.deleteOnePlayer(id);
+                myDB.deleteOnePlayer(player_no);
                 confirmDialog();
             }
         });
@@ -64,14 +63,16 @@ public class EditPlayer extends AppCompatActivity {
      *
      */
     public void getAndSetIntentData() {
-        if (getIntent().hasExtra("id") && getIntent().hasExtra("name") && getIntent().hasExtra("scores")) {
+        if (getIntent().hasExtra("squad_table_id") && getIntent().hasExtra("squad_id") && getIntent().hasExtra("squad_name") && getIntent().hasExtra("player_name")
+                && getIntent().hasExtra("player_no")){
             // getting data from intent
-            id = getIntent().getStringExtra("id");
-            name = getIntent().getStringExtra("name");
-            number = getIntent().getStringExtra("number");
-            scores = getIntent().getStringExtra("scores");
+            squad_table_id = getIntent().getStringExtra("squad_table_id");
+            squad_id = getIntent().getStringExtra("squad_id");
+            squad_name = getIntent().getStringExtra("squad_name");
+            player_name = getIntent().getStringExtra("player_name");
+            player_no = getIntent().getStringExtra("player_no");
             // setting intent data
-            name_input.setText(name);
+            name_input.setText(player_name);
         } else {
             Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();
         }
@@ -80,13 +81,13 @@ public class EditPlayer extends AppCompatActivity {
 
     void confirmDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Delete " + name + " ?");
-        builder.setMessage("Are you sure you want to delete " + name + " ?");
+        builder.setTitle("Delete " + player_name + " ?");
+        builder.setMessage("Are you sure you want to delete " + player_name + " ?");
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(EditPlayer.this);
-                myDB.deleteOnePlayer(id);
+                myDB.deleteOnePlayer(player_no);
                 finish();
             }
         });
