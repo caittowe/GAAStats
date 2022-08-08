@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -15,8 +17,12 @@ public class GameStart extends AppCompatActivity {
 
     MyDatabaseHelper myDB;
     Context context;
-    String id, name, number, scores;
-    ArrayList<String> squad_table_id, squad_id, squad_name, player_name, player_no;
+    String id, name, number, scores, clickedSquadID;
+    ArrayList<String> squad_table_id;
+    ArrayList<String> squad_id;
+    ArrayList<String> squad_name;
+    ArrayList<String> player_name;
+    ArrayList<String> player_no;
     Button endTheGame, btnPlayer1, btnPlayer2, btnPlayer3, btnPlayer4,btnPlayer5, btnPlayer6, btnPlayer7, btnPlayer8
             ,btnPlayer9, btnPlayer10, btnPlayer11, btnPlayer12,btnPlayer13, btnPlayer14, btnPlayer15;
 
@@ -47,6 +53,7 @@ public class GameStart extends AppCompatActivity {
         player_name = new ArrayList<>();
         player_no = new ArrayList<>();
 
+        getIntentData();
 
         storeDataInArrays();
 
@@ -55,13 +62,13 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("squad_table_id", toString().valueOf(squad_id.get(0)));
+                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(0)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(0)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(0)));
                 intent.putExtra("player_name", toString().valueOf(player_name.get(0)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(0)));
+                intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 startActivity(intent);
-
             }
         });
 
@@ -70,11 +77,12 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("squad_table_id", toString().valueOf(squad_id.get(1)));
+                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(1)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(1)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(1)));
                 intent.putExtra("player_name", toString().valueOf(player_name.get(1)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(1)));
+                intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 startActivity(intent);
 
             }
@@ -85,11 +93,12 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("squad_table_id", toString().valueOf(squad_id.get(2)));
+                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(2)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(2)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(2)));
                 intent.putExtra("player_name", toString().valueOf(player_name.get(2)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(2)));
+                intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 startActivity(intent);
 
             }
@@ -100,11 +109,12 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("squad_table_id", toString().valueOf(squad_id.get(3)));
+                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(3)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(3)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(3)));
                 intent.putExtra("player_name", toString().valueOf(player_name.get(3)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(3)));
+                intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 startActivity(intent);
 
             }
@@ -115,11 +125,12 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("squad_table_id", toString().valueOf(squad_id.get(4)));
+                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(4)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(4)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(4)));
                 intent.putExtra("player_name", toString().valueOf(player_name.get(4)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(4)));
+                intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 startActivity(intent);
 
             }
@@ -130,11 +141,12 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("squad_table_id", toString().valueOf(squad_id.get(5)));
+                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(5)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(5)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(5)));
                 intent.putExtra("player_name", toString().valueOf(player_name.get(5)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(5)));
+                intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 startActivity(intent);
 
             }
@@ -145,11 +157,12 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("squad_table_id", toString().valueOf(squad_id.get(6)));
+                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(6)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(6)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(6)));
                 intent.putExtra("player_name", toString().valueOf(player_name.get(6)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(6)));
+                intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 startActivity(intent);
 
             }
@@ -160,11 +173,12 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("squad_table_id", toString().valueOf(squad_id.get(7)));
+                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(7)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(7)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(7)));
                 intent.putExtra("player_name", toString().valueOf(player_name.get(7)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(7)));
+                intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 startActivity(intent);
 
             }
@@ -175,11 +189,12 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("squad_table_id", toString().valueOf(squad_id.get(8)));
+                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(8)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(8)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(8)));
                 intent.putExtra("player_name", toString().valueOf(player_name.get(8)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(8)));
+                intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 startActivity(intent);
 
             }
@@ -190,11 +205,12 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("squad_table_id", toString().valueOf(squad_id.get(9)));
+                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(9)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(9)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(9)));
                 intent.putExtra("player_name", toString().valueOf(player_name.get(9)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(9)));
+                intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 startActivity(intent);
 
             }
@@ -205,11 +221,12 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("squad_table_id", toString().valueOf(squad_id.get(10)));
+                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(10)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(10)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(10)));
                 intent.putExtra("player_name", toString().valueOf(player_name.get(10)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(10)));
+                intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 startActivity(intent);
 
             }
@@ -220,11 +237,12 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("squad_table_id", toString().valueOf(squad_id.get(11)));
+                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(11)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(11)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(11)));
                 intent.putExtra("player_name", toString().valueOf(player_name.get(11)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(11)));
+                intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 startActivity(intent);
 
             }
@@ -235,11 +253,12 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("squad_table_id", toString().valueOf(squad_id.get(12)));
+                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(12)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(12)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(12)));
                 intent.putExtra("player_name", toString().valueOf(player_name.get(12)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(12)));
+                intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 startActivity(intent);
 
             }
@@ -250,11 +269,12 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("squad_table_id", toString().valueOf(squad_id.get(13)));
+                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(13)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(13)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(13)));
                 intent.putExtra("player_name", toString().valueOf(player_name.get(13)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(13)));
+                intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 startActivity(intent);
 
             }
@@ -265,11 +285,12 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("squad_table_id", toString().valueOf(squad_id.get(14)));
+                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(14)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(14)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(14)));
                 intent.putExtra("player_name", toString().valueOf(player_name.get(14)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(14)));
+                intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 startActivity(intent);
 
             }
@@ -277,12 +298,28 @@ public class GameStart extends AppCompatActivity {
 
     }
 
+    /**
+     *  gets squad id of the squad that was clicked ont
+     */
+    public void getIntentData(){
+        if (getIntent().hasExtra("clicked_squad_id")){
+            // getting data from intent
+            clickedSquadID = getIntent().getStringExtra("clicked_squad_id");
+            storeDataInArrays();
+            Log.i("GOTSQUAD", "getIntentData: squad id =  "+clickedSquadID);
+        } else {
+            Toast.makeText(this, "Hi", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
     /* *
      * Stores data entered into array lists
      */
     public void storeDataInArrays() {
-        Cursor cursor = myDB.readAllSquadData();
+        Cursor cursor = myDB.readAllClickedSquadData(clickedSquadID);
         if (cursor.getCount() == 0) {
+//            Toast.makeText(context, "No results", Toast.LENGTH_SHORT).show();
 //           empty_imageview.setVisibility(View.VISIBLE);
 //           no_data.setVisibility(View.VISIBLE);
         } else {

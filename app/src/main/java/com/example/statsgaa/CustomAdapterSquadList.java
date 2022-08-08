@@ -25,6 +25,7 @@ public class CustomAdapterSquadList extends RecyclerView.Adapter<CustomAdapterSq
     private Context context;
     Activity activity;
     private ArrayList squad_id, squad_name;
+    String squadID;
 
     int position;
 
@@ -57,15 +58,17 @@ public class CustomAdapterSquadList extends RecyclerView.Adapter<CustomAdapterSq
         this.position = position;
 
         holder.squad_id_txt.setText(String.valueOf(squad_id.get(position)));
-//        holder.squad_name_txt.setText(String.valueOf(squad_name.get(position)));
+        holder.squad_name_txt.setText(String.valueOf(squad_name.get(position)));
 
 
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DisplaySquad.class);
+                intent.putExtra("squad_id", toString().valueOf(squad_id.get(position)));
                 // allows changes to be seen
-                activity.startActivityForResult(intent,1);
+                activity.startActivity(intent);
+//                activity.startActivityForResult(intent,2);
             }
         });
     }

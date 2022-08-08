@@ -87,10 +87,10 @@ public class CustomAdapterShowStats extends RecyclerView.Adapter<CustomAdapterSh
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            player_id_txt = itemView.findViewById(R.id.player_id_txt);
+            player_id_txt = itemView.findViewById(R.id.player_no_txt);
             player_name_txt = itemView.findViewById(R.id.squad_name_txt);
             player_number_txt = itemView.findViewById(R.id.squad_id_txt);
-            player_scores_txt = itemView.findViewById(R.id.player_scores_txt);
+            player_scores_txt = itemView.findViewById(R.id.player_name_txt);
             mainLayout = itemView.findViewById(R.id.mainLayout);
 
         }

@@ -54,14 +54,14 @@ public class SavedSquads extends AppCompatActivity {
         time = findViewById(R.id.tvTime);
         date = findViewById(R.id.tvDate);
         location = findViewById(R.id.tvLocation);
-        startGame = findViewById(R.id.startGame);
-        startGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(SavedSquads.this, GameStart.class);
-                startActivity(intent);
-            }
-        });
+//        startGame = findViewById(R.id.startGame);
+//        startGame.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(SavedSquads.this, GameStart.class);
+//                startActivity(intent);
+//            }
+//        });
 
         team1.setText(getIntent().getStringExtra("TEAM1"));
         team2.setText(getIntent().getStringExtra("TEAM2"));
@@ -113,20 +113,16 @@ public class SavedSquads extends AppCompatActivity {
      * Stores data entered into array lists
      */
     public void storeDataInArrays() {
-        Cursor cursor = myDB.readAllSquadID();
+        Cursor cursor = myDB.readSquadIDSquadName();
         if (cursor.getCount() == 0) {
 //           empty_imageview.setVisibility(View.VISIBLE);
 //           no_data.setVisibility(View.VISIBLE);
         } else {
             while (cursor.moveToNext()) {
                 squad_id.add(cursor.getString(0));
-//                    squad_name.add(cursor.getString(2));
-//                squad_name.add(cursor.getString(1));
-//                player_name.add(cursor.getString(2));
-//                player_no.add(cursor.getString(3));
+                squad_name.add(cursor.getString(1));
             }
         }
-
     }
 
     /**

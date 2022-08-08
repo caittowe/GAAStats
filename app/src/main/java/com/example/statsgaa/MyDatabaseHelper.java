@@ -85,7 +85,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     /**
      * adds a new player to the player table
      */
-    public void addSquad(String squad_id, String squad_name, String player_name, String player_no) {
+    public void addPlayersToSquad(String squad_id, String squad_name, String player_name, String player_no) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -159,11 +159,25 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             return cursor;
         }
 
+    /**
+     * returns all data in database
+     * @return
+     */
+    public Cursor readAllClickedSquadData (String squad_id) {
+        String query = "SELECT * FROM " + TABLE_SQUAD + " WHERE squad_id = "+ squad_id +";";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
         /**
-         * returns all data in database
+         * returns distinct squad ids and names
          * @return
          */
-        public Cursor readAllSquadID () {
+        public Cursor readSquadIDSquadName() {
             String query = "SELECT DISTINCT squad_id, squad_name  FROM " + TABLE_SQUAD;
             SQLiteDatabase db = this.getReadableDatabase();
             Cursor cursor = null;
@@ -173,7 +187,23 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
             return cursor;
         }
 
-        /**
+    /**
+     * returns players with a certain squad id
+     * @return
+     */
+    public Cursor readPlayerNamePlayerID(String squad_id) {
+        String query = "SELECT player_no, player_name  FROM squad WHERE squad_id ="+squad_id+";";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+
+
+    /**
          * makes updates in the database accordign to user input
          * @param player_name
          */

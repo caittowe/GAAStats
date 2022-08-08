@@ -40,9 +40,13 @@ public class ShowGameStats extends AppCompatActivity {
         player_scores = new ArrayList<>();
 
         storeDataInArrays();
+
         customAdapter = new CustomAdapterShowStats(ShowGameStats.this, this, player_id, player_name, player_number, player_scores);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(ShowGameStats.this));
+
+        MyDatabaseHelper db = new MyDatabaseHelper(ShowGameStats.this);
+        db.close();
     }
 
     /**
