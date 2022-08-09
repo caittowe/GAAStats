@@ -22,7 +22,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_PLAYER_GAME_STAT = "player_game_stat";
     private static final String PLAYER_GAME_STAT_ID = "player_game_stat_id";
     private static final String STAT_ID = "stat_id";
-    private static final String MATCH_ID = "game_id";
+//    private static final String MATCH_ID = "match_id";
     //    private static final String PLAYER_NO = "player_no";
     private static final String TIMESTAMP = "timestamp";
 
@@ -32,6 +32,18 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String SQUAD_NAME = "squad_name";
     private static final String PLAYER_NAME = "player_name";
     private static final String PLAYER_NO = "player_no";
+
+
+    private static final String TABLE_MATCH = "game";
+    private static final String MATCH_ID = "game_id";
+    private static final String MATCH_NAME = "game_name";
+    private static final String TEAM1 = "team1";
+    private static final String TEAM2= "team2";
+    private static final String DATE= "date";
+    private static final String TIME= "time";
+    private static final String LOCATION= "location";
+
+
 
     /**
      * constructor
@@ -51,9 +63,19 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
+        String createMatch = "CREATE TABLE IF NOT EXISTS " + TABLE_MATCH + " (" + MATCH_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + MATCH_NAME + " TEXT, "
+                + TEAM1 + " TEXT, "
+                + TEAM2 + " TEXT, "
+                + DATE + " TEXT, "
+                + TIME + " TEXT, "
+                + LOCATION + " TEXT);";
+
+
         String createPlayerGameStat = "CREATE TABLE IF NOT EXISTS " + TABLE_PLAYER_GAME_STAT + " (" + PLAYER_GAME_STAT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + STAT_ID + " INTEGER, "
                 + MATCH_ID + " INTEGER, "
+                + SQUAD_ID + " INTEGER, "
                 + PLAYER_NO + " INTEGER, "
                 + TIMESTAMP + " INTEGER);";
 
@@ -65,6 +87,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL(createSquad);
         db.execSQL(createPlayerGameStat);
+        db.execSQL(createMatch);
     }
 
     /**
@@ -78,8 +101,46 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLAYER_GAME_STAT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SQUAD);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_MATCH);
 
         onCreate(db);
+    }
+
+    /**
+     * adds a new stat to the player_match_stat
+     */
+    public void createNewMatch(String match_name, String team1, String team2, String date, String time, String location) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(MATCH_NAME, match_name);
+        cv.put(TEAM1, team1);
+        cv.put(TEAM2, team2);
+        cv.put(DATE, date);
+        cv.put(TIME, time);
+        cv.put(LOCATION, location);
+
+        long result = db.insert(TABLE_MATCH, null, cv);
+        if (result == -1) {
+            Toast.makeText(context, "Failed to add match", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Match Added", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    /**
+     * returns all data in database
+     * @return
+     */
+    public Cursor readAllMatchData () {
+        String query = "SELECT * FROM " + TABLE_MATCH;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
     }
 
     /**
@@ -107,13 +168,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     /**
      * adds a new stat to the player_match_stat
      */
-    public void addMatchEvent(int match_id, int player_no, int stat_id, int timestamp) {
+    public void addMatchEvent(int stat_id, int match_id, int squad_id, int player_no,  int timestamp) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put(MATCH_ID, match_id);
-        cv.put(PLAYER_NO, player_no);
         cv.put(STAT_ID, stat_id);
+        cv.put(MATCH_ID, match_id);
+        cv.put(SQUAD_ID, squad_id);
+        cv.put(PLAYER_NO, player_no);
         cv.put(TIMESTAMP, timestamp);
 
         long result = db.insert(TABLE_PLAYER_GAME_STAT, null, cv);

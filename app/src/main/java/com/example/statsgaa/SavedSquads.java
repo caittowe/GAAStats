@@ -33,7 +33,6 @@ public class SavedSquads extends AppCompatActivity {
     ArrayList<String> squad_table_id, squad_id, squad_name, player_name, player_no;
     CustomAdapterSquadList customAdapter;
     TextView team1, team2, time, date, location;
-    Button startGame;
 
 
     /**
@@ -54,14 +53,6 @@ public class SavedSquads extends AppCompatActivity {
         time = findViewById(R.id.tvTime);
         date = findViewById(R.id.tvDate);
         location = findViewById(R.id.tvLocation);
-//        startGame = findViewById(R.id.startGame);
-//        startGame.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(SavedSquads.this, GameStart.class);
-//                startActivity(intent);
-//            }
-//        });
 
         team1.setText(getIntent().getStringExtra("TEAM1"));
         team2.setText(getIntent().getStringExtra("TEAM2"));
@@ -72,7 +63,6 @@ public class SavedSquads extends AppCompatActivity {
         addButton = findViewById(R.id.fab);
         addButton.setOnClickListener(new View.OnClickListener() {
             int counter = 0;
-
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(SavedSquads.this, AddNewSquad.class);
@@ -84,8 +74,6 @@ public class SavedSquads extends AppCompatActivity {
         myDB = new MyDatabaseHelper(SavedSquads.this);
         squad_id = new ArrayList<>();
         squad_name = new ArrayList<>();
-//        player_name = new ArrayList<>();
-//        player_no = new ArrayList<>();
 
         storeDataInArrays();
 

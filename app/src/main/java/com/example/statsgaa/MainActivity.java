@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
                 final View myView= inflater.inflate(R.layout.new_game_dialog, null);
                 builder.setView(myView);
 
-                EditText enterTeam1, enterTeam2, enterDate, enterTime, enterLocation;
+                EditText enterMatchName, enterTeam1, enterTeam2, enterDate, enterTime, enterLocation;
+                enterMatchName = myView.findViewById(R.id.etMatchName);
                 enterTeam1 = myView.findViewById(R.id.etTeam1);
                 enterTeam2 = myView.findViewById(R.id.etTeam2);
                 enterDate = myView.findViewById(R.id.etDate);
@@ -41,9 +42,9 @@ public class MainActivity extends AppCompatActivity {
                         .setPositiveButton("Start", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-
-                                // NEED TO IMPLEMENT THE GENERATION OF A NEW MATCH_ID WHEN GAME STARTS
-
+                                MyDatabaseHelper db = new MyDatabaseHelper(MainActivity.this);
+                                db.createNewMatch(enterMatchName.getText().toString(), enterTeam1.getText().toString(), enterTeam2.getText().toString(),
+                                        enterDate.getText().toString(), enterTime.getText().toString(), enterLocation.getText().toString());
                                 Intent intent = new Intent(MainActivity.this, SavedSquads.class);
                                 intent.putExtra("TEAM1", enterTeam1.getText().toString());
                                 intent.putExtra("TEAM2", enterTeam2.getText().toString());

@@ -8,7 +8,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeoutException;
 
 public class EnterStat extends AppCompatActivity {
 
@@ -18,6 +23,7 @@ public class EnterStat extends AppCompatActivity {
     int scoreID = 1;
     int kickpassID = 2;
     int handpassID = 3;
+
 
 
     @Override
@@ -32,6 +38,7 @@ public class EnterStat extends AppCompatActivity {
         // first we call this
         getAndSetIntentData();
 
+
         // set actionbar after get and set method
         ActionBar ab = getSupportActionBar();
         ab.setTitle(player_no + ". " + player_name);
@@ -42,7 +49,7 @@ public class EnterStat extends AppCompatActivity {
             public void onClick(View view) {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(EnterStat.this);
                 Intent intent = new Intent(EnterStat.this, GameStart.class);
-                myDB.addMatchEvent(1, Integer.parseInt(player_no), scoreID, 2);
+                myDB.addMatchEvent(scoreID, 1, Integer.parseInt(clickedSquadID), Integer.parseInt(player_no), 2);
                 intent.putExtra("clicked_squad_id", toString().valueOf(clickedSquadID));
                 startActivity(intent);
                 Log.i("SCOREADDED", "Score added player "+player_no);
@@ -54,7 +61,7 @@ public class EnterStat extends AppCompatActivity {
             public void onClick(View view) {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(EnterStat.this);
                 Intent intent = new Intent(EnterStat.this, GameStart.class);
-                myDB.addMatchEvent(1, Integer.parseInt(player_no), handpassID, 2);
+                myDB.addMatchEvent(handpassID, 1, Integer.parseInt(clickedSquadID), Integer.parseInt(player_no), 2);
                 intent.putExtra("squad_table_id", toString().valueOf(squad_table_id));
                 intent.putExtra("squad_id", toString().valueOf(squad_id));
                 intent.putExtra("squad_name", toString().valueOf(squad_name));
@@ -71,7 +78,7 @@ public class EnterStat extends AppCompatActivity {
         public void onClick(View view) {
             MyDatabaseHelper myDB = new MyDatabaseHelper(EnterStat.this);
             Intent intent = new Intent(EnterStat.this, GameStart.class);
-            myDB.addMatchEvent(1, Integer.parseInt(player_no), kickpassID, 2);
+            myDB.addMatchEvent(kickpassID, 1, Integer.parseInt(clickedSquadID), Integer.parseInt(player_no), 2);
             intent.putExtra("squad_table_id", toString().valueOf(squad_table_id));
             intent.putExtra("squad_id", toString().valueOf(squad_id));
             intent.putExtra("squad_name", toString().valueOf(squad_name));
@@ -83,6 +90,7 @@ public class EnterStat extends AppCompatActivity {
         }
     });
 }
+
 
     /**
      *
@@ -102,4 +110,6 @@ public class EnterStat extends AppCompatActivity {
             Toast.makeText(this, "No Data here boss", Toast.LENGTH_SHORT).show();
         }
     }
+
+
 }

@@ -27,7 +27,6 @@ import java.util.ArrayList;
 public class DisplaySquad extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    FloatingActionButton addButton;
     MyDatabaseHelper myDB;
     ArrayList<String> squad_id, player_no, player_name;
     CustomAdapterPlayerList customAdapter;
@@ -68,18 +67,6 @@ public class DisplaySquad extends AppCompatActivity {
         date.setText(getIntent().getStringExtra("DATE"));
         time.setText(getIntent().getStringExtra("TIME"));
         location.setText(getIntent().getStringExtra("LOCATION"));
-
-//        addButton = findViewById(R.id.fab);
-//        addButton.setOnClickListener(new View.OnClickListener() {
-//            int counter = 0;
-//
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(DisplaySquad.this, AddNewSquad.class);
-//                startActivity(intent);
-//                counter++;
-//            }
-//        });
 
         myDB = new MyDatabaseHelper(DisplaySquad.this);
         squad_id = new ArrayList<>();

@@ -11,6 +11,35 @@
         android:layout_height="match_parent"
         tools:context=".EnterStat">
 
+        <ImageView
+            android:id="@+id/timerIcon1"
+            android:layout_width="39dp"
+            android:layout_height="51dp"
+            android:background="#FFFFFF"
+            android:tint="#000000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.034"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.039"
+            app:srcCompat="@drawable/ic_baseline_timer_24"
+            tools:srcCompat="@drawable/ic_baseline_timer_24" />
+
+        <TextView
+            android:id="@+id/gameTimer1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00:00"
+            android:textColor="@color/black"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.099"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.044" />
+
         <Button
             android:id="@+id/addNegativeTurnover"
             android:layout_width="wrap_content"
@@ -18,10 +47,10 @@
             android:text="- Turnover"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.712"
+            app:layout_constraintHorizontal_bias="0.927"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.236" />
+            app:layout_constraintVertical_bias="0.215" />
 
         <Button
             android:id="@+id/addPositiveTurnover"
@@ -30,82 +59,80 @@
             android:text="+ Turnover"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.71"
+            app:layout_constraintHorizontal_bias="0.106"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.066" />
+            app:layout_constraintVertical_bias="0.215" />
 
-            <Button
-                android:id="@+id/addFoulConceded"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Foul Conceded"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.468"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.801" />
+        <Button
+            android:id="@+id/addFoulConceded"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Foul Conceded"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.3" />
 
-            <Button
-                android:id="@+id/addFoulWon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Foul Won"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.468"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.622" />
+        <Button
+            android:id="@+id/addFoulWon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Foul Won"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.503"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.215" />
 
-            <Button
-                android:id="@+id/addPosessionEnd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Posession end"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.064"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.198" />
+        <Button
+            android:id="@+id/addPosessionEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Posession end"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.934"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.3" />
 
-            <Button
-                android:id="@+id/addPosessionStart"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Posession start"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.066"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.044" />
+        <Button
+            android:id="@+id/addPosessionStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Posession start"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.103"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.3" />
 
-            <Button
-                android:id="@+id/addFirstpass"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="FistPass"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.463"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.426" />
+        <Button
+            android:id="@+id/addFirstpass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FistPass"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.902"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.12" />
 
-            <Button
-                android:id="@+id/addKickpass"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Kickpass"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.461"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.236" />
+        <Button
+            android:id="@+id/addKickpass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kickpass"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.12" />
 
         <Button
             android:id="@+id/addScore"
@@ -114,10 +141,10 @@
             android:text="Score"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.447"
+            app:layout_constraintHorizontal_bias="0.116"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.066" />
+            app:layout_constraintVertical_bias="0.12" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
