@@ -51,7 +51,7 @@ public class AddNewSquad extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(AddNewSquad.this);
-                int maxID = myDB.getMaxID();
+                int maxID = myDB.getMaxSquadID();
                 maxID = maxID+1;
                 // needs to be chnaged to either add a player or a squad
                 myDB.addPlayersToSquad(String.valueOf(maxID), squadName.getText().toString(), player1.getText().toString().trim(), String.valueOf(1));
