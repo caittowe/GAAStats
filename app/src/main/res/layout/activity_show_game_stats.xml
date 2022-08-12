@@ -1,36 +1,710 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ShowGameStats">
 
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="407dp"
-        android:layout_height="573dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/gameOver"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Game Over"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.922" />
+        android:orientation="vertical" >
+
+      <TableLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="40dp"
+          android:background="@android:color/white">
+
+        <!-- Table Heading -->
+
+        <TableRow
+            android:background="@color/green">
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="Player"
+              android:textColor="@android:color/black"
+              android:textSize="14sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="Score"
+              android:textColor="@android:color/black"
+              android:textSize="14sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="Kickpass"
+              android:textColor="@android:color/black"
+              android:textSize="14sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="Handpass"
+              android:textColor="@android:color/black"
+              android:textSize="14sp" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </TableRow>
+
+        <!-- Table Data -->
+
+        <TableRow>
+
+          <TextView
+              android:id="@+id/p1Name"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="player1"
+              android:textSize="12sp" />
+
+          <TextView
+              android:id="@+id/p1Score"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row1Age1"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row1Surname1"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row1Surname2"
+              android:textSize="12sp" />
+
+        </TableRow>
+
+        <TableRow>
+
+          <TextView
+              android:id="@+id/p2Name"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="player2"
+              android:textSize="12sp" />
+
+          <TextView
+              android:id="@+id/p2Score"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row2Age3"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row2Surname4"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row2Name6"
+              android:textSize="12sp" />
+
+
+        </TableRow>
+
+        <TableRow>
+
+          <TextView
+              android:id="@+id/p3Name"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="player3"
+              android:textSize="12sp" />
+
+          <TextView
+              android:id="@+id/p3Score"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Age"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Surname"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Name"
+              android:textSize="12sp" />
+
+        </TableRow>
+
+        <TableRow>
+
+          <TextView
+              android:id="@+id/p4Name"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="player4"
+              android:textSize="12sp" />
+
+          <TextView
+              android:id="@+id/p4Score"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Age"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Surname"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Name"
+              android:textSize="12sp" />
+
+        </TableRow>
+
+        <TableRow>
+
+          <TextView
+              android:id="@+id/p5Name"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="player5"
+              android:textSize="12sp" />
+
+          <TextView
+              android:id="@+id/p5Score"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Age"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Surname"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Name"
+              android:textSize="12sp" />
+
+        </TableRow>
+
+        <TableRow>
+
+          <TextView
+              android:id="@+id/p6Name"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="player6"
+              android:textSize="12sp" />
+
+          <TextView
+              android:id="@+id/p6Score"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Age"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Surname"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Name"
+              android:textSize="12sp" />
+
+        </TableRow>
+
+        <TableRow>
+
+          <TextView
+              android:id="@+id/p7Name"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="player7"
+              android:textSize="12sp" />
+
+          <TextView
+              android:id="@+id/p7Score"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Age"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Surname"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Name"
+              android:textSize="12sp" />
+
+        </TableRow>
+
+        <TableRow>
+
+          <TextView
+              android:id="@+id/p8Name"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="player8"
+              android:textSize="12sp" />
+
+          <TextView
+              android:id="@+id/p8Score"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Age"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Surname"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Name"
+              android:textSize="12sp" />
+
+        </TableRow>
+
+        <TableRow>
+
+          <TextView
+              android:id="@+id/p9Name"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="player9"
+              android:textSize="12sp" />
+
+          <TextView
+              android:id="@+id/p9Score"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Age"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Surname"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Name"
+              android:textSize="12sp" />
+
+        </TableRow>
+
+        <TableRow>
+
+          <TextView
+              android:id="@+id/p10Name"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="player10"
+              android:textSize="12sp" />
+
+          <TextView
+              android:id="@+id/p10Score"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Age"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Surname"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Name"
+              android:textSize="12sp" />
+
+        </TableRow>
+
+        <TableRow>
+
+          <TextView
+              android:id="@+id/p11Name"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="player11"
+              android:textSize="12sp" />
+
+          <TextView
+              android:id="@+id/p11Score"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Age"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Surname"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Name"
+              android:textSize="12sp" />
+
+        </TableRow>
+
+        <TableRow>
+
+          <TextView
+              android:id="@+id/p12Name"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="player12"
+              android:textSize="12sp" />
+
+          <TextView
+              android:id="@+id/p12Score"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Age"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Surname"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Name"
+              android:textSize="12sp" />
+
+        </TableRow>
+
+        <TableRow>
+
+          <TextView
+              android:id="@+id/p13Name"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="player13"
+              android:textSize="12sp" />
+
+          <TextView
+              android:id="@+id/p13Score"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Age"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Surname"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Name"
+              android:textSize="12sp" />
+
+        </TableRow>
+
+        <TableRow>
+
+          <TextView
+              android:id="@+id/p14Name"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="player14"
+              android:textSize="12sp" />
+
+          <TextView
+              android:id="@+id/p14Score"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Age"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Surname"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Name"
+              android:textSize="12sp" />
+
+        </TableRow>
+
+        <TableRow>
+
+          <TextView
+              android:id="@+id/p15Name"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="player15"
+              android:textSize="12sp" />
+
+          <TextView
+              android:id="@+id/p15Score"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Age"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Surname"
+              android:textSize="12sp" />
+
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_weight="4"
+              android:gravity="center_horizontal"
+              android:padding="10sp"
+              android:text="row3Name"
+              android:textSize="12sp" />
+
+        </TableRow>
+
+      </TableLayout>
+
+    </LinearLayout>
+  </ScrollView>
+
+</RelativeLayout>
