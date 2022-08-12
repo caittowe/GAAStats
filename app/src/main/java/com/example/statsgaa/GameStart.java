@@ -2,46 +2,47 @@ package com.example.statsgaa;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 public class GameStart extends AppCompatActivity {
 
     MyDatabaseHelper myDB;
-    String gameID, clickedSquadID;
+    Context context;
+    String id, name, number, scores, clickedSquadID;
     ArrayList<String> squad_table_id;
     ArrayList<String> squad_id;
     ArrayList<String> squad_name;
     ArrayList<String> player_name;
     ArrayList<String> player_no;
 
-    private static final long START_TIME_IN_MILLIS = 1800000;
+    int seconds;
+    int minutes;
 
-    private TextView mTextViewCountDown;
-    private Button mButtonStartPause;
-    private Button endAndResetGame;
-
-    private CountDownTimer mCountDownTimer;
-
-    private boolean mTimerRunning;
-
-    private long mTimeLeftInMillis = START_TIME_IN_MILLIS;
-    private long mEndTime;
-
-    Button endTheGame, btnPlayer1, btnPlayer2, btnPlayer3, btnPlayer4, btnPlayer5, btnPlayer6, btnPlayer7, btnPlayer8, btnPlayer9, btnPlayer10, btnPlayer11, btnPlayer12, btnPlayer13, btnPlayer14, btnPlayer15;
+    TextView gameTimer;
+    Timer timer;
+    Double time = 0.00;
+    TimerTask timerTask;
+    Boolean isPlaying = false;
+    Button timerStopStart, endTheGame, btnPlayer1, btnPlayer2, btnPlayer3, btnPlayer4, btnPlayer5, btnPlayer6, btnPlayer7, btnPlayer8, btnPlayer9, btnPlayer10, btnPlayer11, btnPlayer12, btnPlayer13, btnPlayer14, btnPlayer15;
 
     /**
      * displays the details entered from the dialog
@@ -54,48 +55,27 @@ public class GameStart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_start);
 
-        mTextViewCountDown = findViewById(R.id.text_view_countdown);
+        gameTimer = findViewById(R.id.gameTimer);
 
-        mButtonStartPause = findViewById(R.id.button_start_pause);
-        endAndResetGame = findViewById(R.id.endTheGame);
+        timer = new Timer();
 
-        mButtonStartPause.setOnClickListener(new View.OnClickListener() {
+        timerStopStart = findViewById(R.id.timerStopStart);
+        timerStopStart.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                if (mTimerRunning) {
-                    pauseTimer();
-                } else {
+            public void onClick(View view) {
+                if (isPlaying == false) {
+                    setButtonUI("PAUSE", R.color.red);
+                    isPlaying = true;
                     startTimer();
+                } else {
+                    isPlaying = false;
+                    setButtonUI("START", R.color.green);
+                    timerTask.cancel();
                 }
             }
         });
 
-        endAndResetGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(GameStart.this);
-                builder.setTitle("End Game")
-                        .setCancelable(true)
-                        .setMessage("Are you sure you want to end the game?")
-                        .setPositiveButton("End", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                Intent intent = new Intent(GameStart.this, ShowGameStats.class);
-                                intent.putExtra("squadID", clickedSquadID);
-                                intent.putExtra("gameID", gameID);
-                                mCountDownTimer.cancel();
-                                resetTimer();
-                                startActivity(intent);
-
-                            }
-                        })
-                        .setNegativeButton("Cancel", null);
-
-                builder.create();
-                builder.show();
-            }
-        });
 
 
         myDB = new MyDatabaseHelper(GameStart.this);
@@ -114,7 +94,6 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
                 intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(0)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(0)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(0)));
@@ -130,7 +109,6 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
                 intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(1)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(1)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(1)));
@@ -147,7 +125,6 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
                 intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(2)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(2)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(2)));
@@ -164,7 +141,6 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
                 intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(3)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(3)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(3)));
@@ -181,7 +157,6 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
                 intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(4)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(4)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(4)));
@@ -198,7 +173,6 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
                 intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(5)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(5)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(5)));
@@ -215,7 +189,6 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
                 intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(6)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(6)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(6)));
@@ -232,7 +205,6 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
                 intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(7)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(7)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(7)));
@@ -249,7 +221,6 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
                 intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(8)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(8)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(8)));
@@ -266,7 +237,6 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
                 intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(9)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(9)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(9)));
@@ -283,7 +253,6 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
                 intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(10)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(10)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(10)));
@@ -300,7 +269,6 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
                 intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(11)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(11)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(11)));
@@ -317,7 +285,6 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
                 intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(12)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(12)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(12)));
@@ -334,7 +301,6 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
                 intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(13)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(13)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(13)));
@@ -351,7 +317,6 @@ public class GameStart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
                 intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(14)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(14)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(14)));
@@ -362,118 +327,91 @@ public class GameStart extends AppCompatActivity {
 
             }
         });
-        
-    }
 
-
-    private void startTimer() {
-        mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
-
-        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
+        endTheGame = findViewById(R.id.endTheGame);
+        endTheGame.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTick(long millisUntilFinished) {
-                mTimeLeftInMillis = millisUntilFinished;
-                updateCountDownText();
-            }
+            public void onClick(View view) {
+                AlertDialog.Builder endGameAlert = new AlertDialog.Builder(GameStart.this);
+                endGameAlert.setTitle("End Game");
+                endGameAlert.setMessage("Are you sure you want to end the game?");
+                endGameAlert.setPositiveButton("End Game", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (timerTask == null) {
+                            timerTask.cancel();
+                            time = 0.0;
+                            isPlaying = false;
+                            gameTimer.setText(formatTime(0,0));
+                        }
+                        Intent intent = new Intent(GameStart.this, ShowGameStats.class);
+                        startActivity(intent);
+                    }
+                });
+                endGameAlert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // do nothing
+                    }
+                });
+                endGameAlert.show();
 
+            }
+        });
+
+    }
+
+    /**
+     * sets colour and text of button when clicked
+     *
+     * @param start
+     */
+    public void setButtonUI(String start, int colour) {
+        timerStopStart.setText(start);
+        timerStopStart.setBackgroundColor(ContextCompat.getColor(GameStart.this, colour));
+    }
+
+    /**
+     * starts game timer
+     */
+    public void startTimer() {
+        timerTask = new TimerTask() {
             @Override
-            public void onFinish() {
-                mTimerRunning = false;
-                updateButtons();
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        time++;
+                        gameTimer.setText(getTimerText());
+                    }
+                });
             }
-        }.start();
-
-        mTimerRunning = true;
-        updateButtons();
+        };
+        timer.scheduleAtFixedRate(timerTask, 0, 1000);
     }
 
-    private void pauseTimer() {
-        mCountDownTimer.cancel();
-        mTimerRunning = false;
-        updateButtons();
+    /**
+     * gets timer text
+     *
+     * @return
+     */
+    public String getTimerText() {
+        int rounded = (int) Math.round(time);
+        seconds = ((rounded % 86400) % 3600) % 60;
+        minutes = ((rounded % 86400) % 3600) / 60;
+
+        return formatTime(seconds, minutes);
+
+
     }
 
-    private void resetTimer() {
-        mTimeLeftInMillis = START_TIME_IN_MILLIS;
-        updateCountDownText();
-        updateButtons();
+    /*
+     * formats time
+     */
+    private String formatTime(int seconds, int minutes) {
+        return String.format("%02d", minutes) + "." + String.format("%02d", seconds);
+
     }
-
-    private void updateCountDownText() {
-        int minutes = (int) (mTimeLeftInMillis / 1000) / 60;
-        int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
-
-        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-
-        mTextViewCountDown.setText(timeLeftFormatted);
-    }
-
-    private void updateButtons() {
-        if (mTimerRunning) {
-            endAndResetGame.setVisibility(View.INVISIBLE);
-            mButtonStartPause.setText("Pause");
-        } else {
-            mButtonStartPause.setText("Start");
-
-            if (mTimeLeftInMillis < 1000) {
-                mButtonStartPause.setVisibility(View.INVISIBLE);
-            } else {
-                mButtonStartPause.setVisibility(View.VISIBLE);
-            }
-
-            if (mTimeLeftInMillis < START_TIME_IN_MILLIS) {
-                endAndResetGame.setVisibility(View.VISIBLE);
-            } else {
-                endAndResetGame.setVisibility(View.INVISIBLE);
-            }
-        }
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-
-        editor.putLong("millisLeft", mTimeLeftInMillis);
-        editor.putBoolean("timerRunning", mTimerRunning);
-        editor.putLong("endTime", mEndTime);
-
-        editor.apply();
-
-        if (mCountDownTimer != null) {
-            mCountDownTimer.cancel();
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-
-        mTimeLeftInMillis = prefs.getLong("millisLeft", START_TIME_IN_MILLIS);
-        mTimerRunning = prefs.getBoolean("timerRunning", false);
-
-        updateCountDownText();
-        updateButtons();
-
-        if (mTimerRunning) {
-            mEndTime = prefs.getLong("endTime", 0);
-            mTimeLeftInMillis = mEndTime - System.currentTimeMillis();
-
-            if (mTimeLeftInMillis < 0) {
-                mTimeLeftInMillis = 0;
-                mTimerRunning = false;
-                updateCountDownText();
-                updateButtons();
-            } else {
-                startTimer();
-            }
-        }
-    }
-
 
     /**
      * gets squad id of the squad that was clicked ont
@@ -482,7 +420,6 @@ public class GameStart extends AppCompatActivity {
         if (getIntent().hasExtra("clicked_squad_id")) {
             // getting data from intent
             clickedSquadID = getIntent().getStringExtra("clicked_squad_id");
-            gameID = getIntent().getStringExtra("gameID");
             storeDataInArrays();
             Log.i("GOTSQUAD", "getIntentData: squad id =  " + clickedSquadID);
         } else {
