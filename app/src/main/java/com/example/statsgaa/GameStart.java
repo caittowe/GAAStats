@@ -59,8 +59,6 @@ public class GameStart extends AppCompatActivity {
 
         context = this;
 
-        SharedPreferences settings = context.getSharedPreferences("prefs", Context.MODE_PRIVATE);
-        settings.edit().clear().commit();
 
 
         mTextViewCountDown = findViewById(R.id.text_view_countdown);
@@ -95,6 +93,8 @@ public class GameStart extends AppCompatActivity {
                                 intent.putExtra("gameID", gameID);
                                 mCountDownTimer.cancel();
                                 resetTimer();
+                                SharedPreferences settings = context.getSharedPreferences("prefs", Context.MODE_PRIVATE);
+                                settings.edit().clear().commit();
                                 startActivity(intent);
 
                             }

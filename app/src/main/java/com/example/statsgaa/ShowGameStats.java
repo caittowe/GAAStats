@@ -2,90 +2,34 @@ package com.example.statsgaa;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.example.statsgaa.databinding.ActivityShowGameStatsBinding;
 
 import java.util.ArrayList;
 
 public class ShowGameStats extends AppCompatActivity {
+
+    ActivityShowGameStatsBinding binding;
 
     ArrayList<String> playerNames, playerNos, statID;
 
     String clickedSquadID;
     String gameID;
 
-    TextView p1Name, p2Name, p3Name, p4Name, p5Name, p6Name, p7Name, p8Name, p9Name, p10Name,
-            p11Name, p12Name, p13Name, p14Name, p15Name;
-    TextView p1Score, p2Score, p3Score, p4Score,
-            p5Score, p6Score, p7Score, p8Score, p9Score, p10Score, p11Score, p12Score, p13Score,
-            p14Score, p15Score;
-    TextView p1Kickpass, p2Kickpass, p3Kickpass, p4Kickpass, p5Kickpass, p6Kickpass, p7Kickpass,
-            p8Kickpass, p9Kickpass, p10Kickpass, p11Kickpass, p12Kickpass, p13Kickpass, p14Kickpass,
-            p15Kickpass;
-
-    int     p1ScoreCount, p2ScoreCount, p3ScoreCount, p4ScoreCount, p5ScoreCount, p6ScoreCount, p7ScoreCount,
-            p8ScoreCount, p9ScoreCount, p10ScoreCount, p11ScoreCount, p12ScoreCount, p13ScoreCount,
-            p14ScoreCount, p15ScoreCount;
-    int     p1KickpassCount, p2KickpassCount, p3KickpassCount, p4KickpassCount,
-            p5KickpassCount, p6KickpassCount, p7KickpassCount, p8KickpassCount, p9KickpassCount, p10KickpassCount,
-            p11KickpassCount, p12KickpassCount, p13KickpassCount, p14KickpassCount, p15KickpassCount;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_game_stats);
-
-        p1Name = findViewById(R.id.p1Name);
-        p2Name = findViewById(R.id.p2Name);
-        p3Name = findViewById(R.id.p3Name);
-        p4Name = findViewById(R.id.p4Name);
-        p5Name = findViewById(R.id.p5Name);
-        p6Name = findViewById(R.id.p6Name);
-        p7Name = findViewById(R.id.p7Name);
-        p8Name = findViewById(R.id.p8Name);
-        p9Name = findViewById(R.id.p9Name);
-        p10Name = findViewById(R.id.p10Name);
-        p11Name = findViewById(R.id.p11Name);
-        p12Name = findViewById(R.id.p12Name);
-        p13Name = findViewById(R.id.p13Name);
-        p14Name = findViewById(R.id.p14Name);
-        p15Name = findViewById(R.id.p15Name);
-
-        p1Score = findViewById(R.id.p1Score);
-        p2Score = findViewById(R.id.p2Score);
-        p3Score = findViewById(R.id.p3Score);
-        p4Score = findViewById(R.id.p4Score);
-        p5Score = findViewById(R.id.p5Score);
-        p6Score = findViewById(R.id.p6Score);
-        p7Score = findViewById(R.id.p7Score);
-        p8Score = findViewById(R.id.p8Score);
-        p9Score = findViewById(R.id.p9Score);
-        p10Score = findViewById(R.id.p10Score);
-        p11Score = findViewById(R.id.p11Score);
-        p12Score = findViewById(R.id.p12Score);
-        p13Score = findViewById(R.id.p13Score);
-        p14Score = findViewById(R.id.p14Score);
-        p15Score = findViewById(R.id.p15Score);
-
-        p1Kickpass = findViewById(R.id.p1Kickpass);
-        p2Kickpass = findViewById(R.id.p2Kickpass);
-        p3Kickpass = findViewById(R.id.p3Kickpass);
-        p4Kickpass = findViewById(R.id.p4Kickpass);
-        p5Kickpass = findViewById(R.id.p5Kickpass);
-        p6Kickpass = findViewById(R.id.p6Kickpass);
-        p7Kickpass= findViewById(R.id.p7Kickpass);
-        p8Kickpass = findViewById(R.id.p8Kickpass);
-        p9Kickpass = findViewById(R.id.p9Kickpass);
-        p10Kickpass = findViewById(R.id.p10Kickpass);
-        p11Kickpass = findViewById(R.id.p11Kickpass);
-        p12Kickpass = findViewById(R.id.p12Kickpass);
-        p13Kickpass = findViewById(R.id.p13Kickpass);
-        p14Kickpass = findViewById(R.id.p14Kickpass);
-        p15Kickpass = findViewById(R.id.p15Kickpass);
+        binding = ActivityShowGameStatsBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
         getIntentData();
 
@@ -94,25 +38,31 @@ public class ShowGameStats extends AppCompatActivity {
         statID = new ArrayList<>();
 
         storeDataInArrays();
+        storeSetShotsData();
+        storeSetScoreData();
+        storeSetWideData();
+        storeSetPosTurnoverData();
+        storeSetNegTurnoverData();
+        storeSetFoulWonData();
+        storeSetFoulConcData();
+        storeSetOwnKickoutWonData();
+        storeSetOppKickoutWonData();
 
-        p1Name.setText(playerNos.get(0) + ". " + playerNames.get(0));
-        p2Name.setText(playerNos.get(1) + ". " + playerNames.get(1));
-        p3Name.setText(playerNos.get(2) + ". " + playerNames.get(2));
-        p4Name.setText(playerNos.get(3) + ". " + playerNames.get(3));
-        p5Name.setText(playerNos.get(4) + ". " + playerNames.get(4));
-        p6Name.setText(playerNos.get(5) + ". " + playerNames.get(5));
-        p7Name.setText(playerNos.get(6) + ". " + playerNames.get(6));
-        p8Name.setText(playerNos.get(7) + ". " + playerNames.get(7));
-        p9Name.setText(playerNos.get(8) + ". " + playerNames.get(8));
-        p10Name.setText(playerNos.get(9) + ". " + playerNames.get(9));
-        p11Name.setText(playerNos.get(10) + ". " + playerNames.get(10));
-        p12Name.setText(playerNos.get(11) + ". " + playerNames.get(11));
-        p13Name.setText(playerNos.get(12) + ". " + playerNames.get(12));
-        p14Name.setText(playerNos.get(13) + ". " + playerNames.get(13));
-        p15Name.setText(playerNos.get(14) + ". " + playerNames.get(14));
-
-        storeSetPlayerScoreData();
-        storeSetPlayerKickpassData();
+        binding.p1Name.setText(playerNos.get(0) + ". " + playerNames.get(0));
+        binding.p2Name.setText(playerNos.get(1) + ". " + playerNames.get(1));
+        binding.p3Name.setText(playerNos.get(2) + ". " + playerNames.get(2));
+        binding.p4Name.setText(playerNos.get(3) + ". " + playerNames.get(3));
+        binding.p5Name.setText(playerNos.get(4) + ". " + playerNames.get(4));
+        binding.p6Name.setText(playerNos.get(5) + ". " + playerNames.get(5));
+        binding.p7Name.setText(playerNos.get(6) + ". " + playerNames.get(6));
+        binding.p8Name.setText(playerNos.get(7) + ". " + playerNames.get(7));
+        binding.p9Name.setText(playerNos.get(8) + ". " + playerNames.get(8));
+        binding.p10Name.setText(playerNos.get(9) + ". " + playerNames.get(9));
+        binding.p11Name.setText(playerNos.get(10) + ". " + playerNames.get(10));
+        binding.p12Name.setText(playerNos.get(11) + ". " + playerNames.get(11));
+        binding.p13Name.setText(playerNos.get(12) + ". " + playerNames.get(12));
+        binding.p14Name.setText(playerNos.get(13) + ". " + playerNames.get(13));
+        binding.p15Name.setText(playerNos.get(14) + ". " + playerNames.get(14));
 
     }
 
@@ -151,80 +101,207 @@ public class ShowGameStats extends AppCompatActivity {
         }
     }
 
-    public void storeSetPlayerScoreData(){
+    /**
+     * fetches stores and sets textview to shot data
+     */
+    public void storeSetShotsData(){
         MyDatabaseHelper myDB = new MyDatabaseHelper(ShowGameStats.this);
-        p1ScoreCount  = myDB.showPlayerStatsCount("1" ,"1", gameID);
-        p2ScoreCount  = myDB.showPlayerStatsCount("2" ,"1", gameID);
-        p3ScoreCount  = myDB.showPlayerStatsCount("3" ,"1", gameID);
-        p4ScoreCount  = myDB.showPlayerStatsCount("4" ,"1", gameID);
-        p5ScoreCount  = myDB.showPlayerStatsCount("5" ,"1", gameID);
-        p6ScoreCount  = myDB.showPlayerStatsCount("6" ,"1", gameID);
-        p7ScoreCount  = myDB.showPlayerStatsCount("7" ,"1", gameID);
-        p8ScoreCount  = myDB.showPlayerStatsCount("8" ,"1", gameID);
-        p9ScoreCount  = myDB.showPlayerStatsCount("9" ,"1", gameID);
-        p10ScoreCount  = myDB.showPlayerStatsCount("10" ,"1", gameID);
-        p11ScoreCount  = myDB.showPlayerStatsCount("11" ,"1", gameID);
-        p12ScoreCount  = myDB.showPlayerStatsCount("12" ,"1", gameID);
-        p13ScoreCount  = myDB.showPlayerStatsCount("13" ,"1", gameID);
-        p14ScoreCount  = myDB.showPlayerStatsCount("14" ,"1", gameID);
-        p15ScoreCount  = myDB.showPlayerStatsCount("15" ,"1", gameID);
+        binding.p1Shots.setText(String.valueOf(myDB.showPlayerStatsCount("1",String.valueOf(EnterStat.SHOTID),gameID)));
+        binding.p2Shots.setText(String.valueOf(myDB.showPlayerStatsCount("2",String.valueOf(EnterStat.SHOTID),gameID)));
+        binding.p3Shots.setText(String.valueOf(myDB.showPlayerStatsCount("3",String.valueOf(EnterStat.SHOTID),gameID)));
+        binding.p4Shots.setText(String.valueOf(myDB.showPlayerStatsCount("4",String.valueOf(EnterStat.SHOTID),gameID)));
+        binding.p5Shots.setText(String.valueOf(myDB.showPlayerStatsCount("5",String.valueOf(EnterStat.SHOTID),gameID)));
+        binding.p6Shots.setText(String.valueOf(myDB.showPlayerStatsCount("6",String.valueOf(EnterStat.SHOTID),gameID)));
+        binding.p7Shots.setText(String.valueOf(myDB.showPlayerStatsCount("7",String.valueOf(EnterStat.SHOTID),gameID)));
+        binding.p8Shots.setText(String.valueOf(myDB.showPlayerStatsCount("8",String.valueOf(EnterStat.SHOTID),gameID)));
+        binding.p9Shots.setText(String.valueOf(myDB.showPlayerStatsCount("9",String.valueOf(EnterStat.SHOTID),gameID)));
+        binding.p10Shots.setText(String.valueOf(myDB.showPlayerStatsCount("10",String.valueOf(EnterStat.SHOTID),gameID)));
+        binding.p11Shots.setText(String.valueOf(myDB.showPlayerStatsCount("11",String.valueOf(EnterStat.SHOTID),gameID)));
+        binding.p12Shots.setText(String.valueOf(myDB.showPlayerStatsCount("12",String.valueOf(EnterStat.SHOTID),gameID)));
+        binding.p13Shots.setText(String.valueOf(myDB.showPlayerStatsCount("13",String.valueOf(EnterStat.SHOTID),gameID)));
+        binding.p14Shots.setText(String.valueOf(myDB.showPlayerStatsCount("14",String.valueOf(EnterStat.SHOTID),gameID)));
+        binding.p15Shots.setText(String.valueOf(myDB.showPlayerStatsCount("15",String.valueOf(EnterStat.SHOTID),gameID)));
+    }
 
-        p1Score.setText(String.valueOf(p1ScoreCount));
-        p2Score.setText(String.valueOf(p2ScoreCount));
-        p3Score.setText(String.valueOf(p3ScoreCount));
-        p4Score.setText(String.valueOf(p4ScoreCount));
-        p5Score.setText(String.valueOf(p5ScoreCount));
-        p6Score.setText(String.valueOf(p6ScoreCount));
-        p7Score.setText(String.valueOf(p7ScoreCount));
-        p8Score.setText(String.valueOf(p8ScoreCount));
-        p9Score.setText(String.valueOf(p9ScoreCount));
-        p10Score.setText(String.valueOf(p10ScoreCount));
-        p11Score.setText(String.valueOf(p11ScoreCount));
-        p12Score.setText(String.valueOf(p12ScoreCount));
-        p13Score.setText(String.valueOf(p13ScoreCount));
-        p14Score.setText(String.valueOf(p14ScoreCount));
-        p15Score.setText(String.valueOf(p15ScoreCount));
+    /**
+     * fetches stores and sets textview to score data
+     */
+    public void storeSetScoreData(){
+        MyDatabaseHelper myDB = new MyDatabaseHelper(ShowGameStats.this);
+        binding.p1Scores.setText(myDB.showPlayerStatsCount("1", String.valueOf(EnterStat.GOALID), gameID) + " - " + myDB.showPlayerStatsCount("1", String.valueOf(EnterStat.POINTID), gameID));
+        binding.p2Scores.setText(myDB.showPlayerStatsCount("2",String.valueOf(EnterStat.GOALID),gameID)+" - "+myDB.showPlayerStatsCount("2",String.valueOf(EnterStat.POINTID),gameID));
+        binding.p3Scores.setText(myDB.showPlayerStatsCount("3",String.valueOf(EnterStat.GOALID),gameID)+" - "+myDB.showPlayerStatsCount("3",String.valueOf(EnterStat.POINTID),gameID));
+        binding.p4Scores.setText(myDB.showPlayerStatsCount("4",String.valueOf(EnterStat.GOALID),gameID)+" - "+myDB.showPlayerStatsCount("4",String.valueOf(EnterStat.POINTID),gameID));
+        binding.p5Scores.setText(myDB.showPlayerStatsCount("5",String.valueOf(EnterStat.GOALID),gameID)+" - "+myDB.showPlayerStatsCount("5",String.valueOf(EnterStat.POINTID),gameID));
+        binding.p6Scores.setText(myDB.showPlayerStatsCount("6",String.valueOf(EnterStat.GOALID),gameID)+" - "+myDB.showPlayerStatsCount("6",String.valueOf(EnterStat.POINTID),gameID));
+        binding.p7Scores.setText(myDB.showPlayerStatsCount("7",String.valueOf(EnterStat.GOALID),gameID)+" - "+myDB.showPlayerStatsCount("7",String.valueOf(EnterStat.POINTID),gameID));
+        binding.p8Scores.setText(myDB.showPlayerStatsCount("8",String.valueOf(EnterStat.GOALID),gameID)+" - "+myDB.showPlayerStatsCount("8",String.valueOf(EnterStat.POINTID),gameID));
+        binding.p9Scores.setText(myDB.showPlayerStatsCount("9",String.valueOf(EnterStat.GOALID),gameID)+" - "+myDB.showPlayerStatsCount("9",String.valueOf(EnterStat.POINTID),gameID));
+        binding.p10Scores.setText(myDB.showPlayerStatsCount("10",String.valueOf(EnterStat.GOALID),gameID)+" - "+myDB.showPlayerStatsCount("10",String.valueOf(EnterStat.POINTID),gameID));
+        binding.p11Scores.setText(myDB.showPlayerStatsCount("11",String.valueOf(EnterStat.GOALID),gameID)+" - "+myDB.showPlayerStatsCount("11",String.valueOf(EnterStat.POINTID),gameID));
+        binding.p12Scores.setText(myDB.showPlayerStatsCount("12",String.valueOf(EnterStat.GOALID),gameID)+" - "+myDB.showPlayerStatsCount("12",String.valueOf(EnterStat.POINTID),gameID));
+        binding.p13Scores.setText(myDB.showPlayerStatsCount("13",String.valueOf(EnterStat.GOALID),gameID)+" - "+myDB.showPlayerStatsCount("13",String.valueOf(EnterStat.POINTID),gameID));
+        binding.p14Scores.setText(myDB.showPlayerStatsCount("14",String.valueOf(EnterStat.GOALID),gameID)+" - "+myDB.showPlayerStatsCount("14",String.valueOf(EnterStat.POINTID),gameID));
+        binding.p15Scores.setText(myDB.showPlayerStatsCount("15",String.valueOf(EnterStat.GOALID),gameID)+" - "+myDB.showPlayerStatsCount("15",String.valueOf(EnterStat.POINTID),gameID));
 
     }
 
     /**
-     * fetches, stores and sets kickpass data for each player
+     * fetches stores and sets textview to wide data
      */
-    public void storeSetPlayerKickpassData(){
+    public void storeSetWideData(){
         MyDatabaseHelper myDB = new MyDatabaseHelper(ShowGameStats.this);
-        p1KickpassCount = myDB.showPlayerStatsCount("1" ,"2", gameID);
-        p2KickpassCount  = myDB.showPlayerStatsCount("2" ,"2", gameID);
-        p3KickpassCount  = myDB.showPlayerStatsCount("3" ,"2", gameID);
-        p4KickpassCount  = myDB.showPlayerStatsCount("4" ,"2", gameID);
-        p5KickpassCount = myDB.showPlayerStatsCount("5" ,"2", gameID);
-        p6KickpassCount  = myDB.showPlayerStatsCount("6" ,"2", gameID);
-        p7KickpassCount = myDB.showPlayerStatsCount("7" ,"2", gameID);
-        p8KickpassCount  = myDB.showPlayerStatsCount("8" ,"2", gameID);
-        p9KickpassCount  = myDB.showPlayerStatsCount("9" ,"2", gameID);
-        p10KickpassCount  = myDB.showPlayerStatsCount("10" ,"2", gameID);
-        p11KickpassCount  = myDB.showPlayerStatsCount("11" ,"2", gameID);
-        p12KickpassCount  = myDB.showPlayerStatsCount("12" ,"2", gameID);
-        p13KickpassCount = myDB.showPlayerStatsCount("13" ,"2", gameID);
-        p14KickpassCount  = myDB.showPlayerStatsCount("14" ,"2", gameID);
-        p15KickpassCount  = myDB.showPlayerStatsCount("15" ,"2", gameID);
-
-        p1Kickpass.setText(String.valueOf(p1KickpassCount));
-        p2Kickpass.setText(String.valueOf(p2KickpassCount));
-        p3Kickpass.setText(String.valueOf(p3KickpassCount));
-        p4Kickpass.setText(String.valueOf(p4KickpassCount));
-        p5Kickpass.setText(String.valueOf(p5KickpassCount));
-        p6Kickpass.setText(String.valueOf(p6KickpassCount));
-        p7Kickpass.setText(String.valueOf(p7KickpassCount));
-        p8Kickpass.setText(String.valueOf(p8KickpassCount));
-        p9Kickpass.setText(String.valueOf(p9KickpassCount));
-        p10Kickpass.setText(String.valueOf(p10KickpassCount));
-        p11Kickpass.setText(String.valueOf(p11KickpassCount));
-        p12Kickpass.setText(String.valueOf(p12KickpassCount));
-        p13Kickpass.setText(String.valueOf(p13KickpassCount));
-        p14Kickpass.setText(String.valueOf(p14KickpassCount));
-        p15Kickpass.setText(String.valueOf(p15KickpassCount));
-
+        binding.p1Wide.setText(String.valueOf(myDB.showPlayerStatsCount("1",String.valueOf(EnterStat.WIDEID),gameID)));
+        binding.p2Wide.setText(String.valueOf(myDB.showPlayerStatsCount("2",String.valueOf(EnterStat.WIDEID),gameID)));
+        binding.p3Wide.setText(String.valueOf(myDB.showPlayerStatsCount("3",String.valueOf(EnterStat.WIDEID),gameID)));
+        binding.p4Wide.setText(String.valueOf(myDB.showPlayerStatsCount("4",String.valueOf(EnterStat.WIDEID),gameID)));
+        binding.p5Wide.setText(String.valueOf(myDB.showPlayerStatsCount("5",String.valueOf(EnterStat.WIDEID),gameID)));
+        binding.p6Wide.setText(String.valueOf(myDB.showPlayerStatsCount("6",String.valueOf(EnterStat.WIDEID),gameID)));
+        binding.p7Wide.setText(String.valueOf(myDB.showPlayerStatsCount("7",String.valueOf(EnterStat.WIDEID),gameID)));
+        binding.p8Wide.setText(String.valueOf(myDB.showPlayerStatsCount("8",String.valueOf(EnterStat.WIDEID),gameID)));
+        binding.p9Wide.setText(String.valueOf(myDB.showPlayerStatsCount("9",String.valueOf(EnterStat.WIDEID),gameID)));
+        binding.p10Wide.setText(String.valueOf(myDB.showPlayerStatsCount("10",String.valueOf(EnterStat.WIDEID),gameID)));
+        binding.p11Wide.setText(String.valueOf(myDB.showPlayerStatsCount("11",String.valueOf(EnterStat.WIDEID),gameID)));
+        binding.p12Wide.setText(String.valueOf(myDB.showPlayerStatsCount("12",String.valueOf(EnterStat.WIDEID),gameID)));
+        binding.p13Wide.setText(String.valueOf(myDB.showPlayerStatsCount("13",String.valueOf(EnterStat.WIDEID),gameID)));
+        binding.p14Wide.setText(String.valueOf(myDB.showPlayerStatsCount("14",String.valueOf(EnterStat.WIDEID),gameID)));
+        binding.p15Wide.setText(String.valueOf(myDB.showPlayerStatsCount("15",String.valueOf(EnterStat.WIDEID),gameID)));
     }
+
+    /**
+     * fetches, stores and sets positive turnover data
+     */
+    public void storeSetPosTurnoverData(){
+        MyDatabaseHelper myDB = new MyDatabaseHelper(ShowGameStats.this);
+        binding.p1PositiveTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("1",String.valueOf(EnterStat.POSTURNOVERID),gameID)));
+        binding.p2PositiveTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("2",String.valueOf(EnterStat.POSTURNOVERID),gameID)));
+        binding.p3PositiveTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("3",String.valueOf(EnterStat.POSTURNOVERID),gameID)));
+        binding.p4PositiveTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("4",String.valueOf(EnterStat.POSTURNOVERID),gameID)));
+        binding.p5PositiveTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("5",String.valueOf(EnterStat.POSTURNOVERID),gameID)));
+        binding.p6PositiveTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("6",String.valueOf(EnterStat.POSTURNOVERID),gameID)));
+        binding.p7PositiveTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("7",String.valueOf(EnterStat.POSTURNOVERID),gameID)));
+        binding.p8PositiveTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("8",String.valueOf(EnterStat.POSTURNOVERID),gameID)));
+        binding.p9PositiveTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("9",String.valueOf(EnterStat.POSTURNOVERID),gameID)));
+        binding.p10PositiveTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("10",String.valueOf(EnterStat.POSTURNOVERID),gameID)));
+        binding.p11PositiveTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("11",String.valueOf(EnterStat.POSTURNOVERID),gameID)));
+        binding.p12PositiveTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("12",String.valueOf(EnterStat.POSTURNOVERID),gameID)));
+        binding.p13PositiveTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("13",String.valueOf(EnterStat.POSTURNOVERID),gameID)));
+        binding.p14PositiveTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("14",String.valueOf(EnterStat.POSTURNOVERID),gameID)));
+        binding.p15PositiveTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("15",String.valueOf(EnterStat.POSTURNOVERID),gameID)));
+    }
+
+    /**
+     * fetches, stores and sets negative turnover data
+     */
+    public void storeSetNegTurnoverData(){
+        MyDatabaseHelper myDB = new MyDatabaseHelper(ShowGameStats.this);
+        binding.p1NegativeTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("1",String.valueOf(EnterStat.NEGTURNOVERID),gameID)));
+        binding.p2NegativeTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("2",String.valueOf(EnterStat.NEGTURNOVERID),gameID)));
+        binding.p3NegativeTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("3",String.valueOf(EnterStat.NEGTURNOVERID),gameID)));
+        binding.p4NegativeTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("4",String.valueOf(EnterStat.NEGTURNOVERID),gameID)));
+        binding.p5NegativeTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("5",String.valueOf(EnterStat.NEGTURNOVERID),gameID)));
+        binding.p6NegativeTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("6",String.valueOf(EnterStat.NEGTURNOVERID),gameID)));
+        binding.p7NegativeTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("7",String.valueOf(EnterStat.NEGTURNOVERID),gameID)));
+        binding.p8NegativeTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("8",String.valueOf(EnterStat.NEGTURNOVERID),gameID)));
+        binding.p9NegativeTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("9",String.valueOf(EnterStat.NEGTURNOVERID),gameID)));
+        binding.p10NegativeTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("10",String.valueOf(EnterStat.NEGTURNOVERID),gameID)));
+        binding.p11NegativeTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("11",String.valueOf(EnterStat.NEGTURNOVERID),gameID)));
+        binding.p12NegativeTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("12",String.valueOf(EnterStat.NEGTURNOVERID),gameID)));
+        binding.p13NegativeTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("13",String.valueOf(EnterStat.NEGTURNOVERID),gameID)));
+        binding.p14NegativeTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("14",String.valueOf(EnterStat.NEGTURNOVERID),gameID)));
+        binding.p15NegativeTurnover.setText(String.valueOf(myDB.showPlayerStatsCount("15",String.valueOf(EnterStat.NEGTURNOVERID),gameID)));
+    }
+
+    /**
+     * fetches, stores and sets foul won data
+     */
+    public void storeSetFoulWonData(){
+        MyDatabaseHelper myDB = new MyDatabaseHelper(ShowGameStats.this);
+        binding.p1FoulWon.setText(String.valueOf(myDB.showPlayerStatsCount("1",String.valueOf(EnterStat.FOULWONID),gameID)));
+        binding.p2FoulWon.setText(String.valueOf(myDB.showPlayerStatsCount("2",String.valueOf(EnterStat.FOULWONID),gameID)));
+        binding.p3FoulWon.setText(String.valueOf(myDB.showPlayerStatsCount("3",String.valueOf(EnterStat.FOULWONID),gameID)));
+        binding.p4FoulWon.setText(String.valueOf(myDB.showPlayerStatsCount("4",String.valueOf(EnterStat.FOULWONID),gameID)));
+        binding.p5FoulWon.setText(String.valueOf(myDB.showPlayerStatsCount("5",String.valueOf(EnterStat.FOULWONID),gameID)));
+        binding.p6FoulWon.setText(String.valueOf(myDB.showPlayerStatsCount("6",String.valueOf(EnterStat.FOULWONID),gameID)));
+        binding.p7FoulWon.setText(String.valueOf(myDB.showPlayerStatsCount("7",String.valueOf(EnterStat.FOULWONID),gameID)));
+        binding.p8FoulWon.setText(String.valueOf(myDB.showPlayerStatsCount("8",String.valueOf(EnterStat.FOULWONID),gameID)));
+        binding.p9FoulWon.setText(String.valueOf(myDB.showPlayerStatsCount("9",String.valueOf(EnterStat.FOULWONID),gameID)));
+        binding.p10FoulWon.setText(String.valueOf(myDB.showPlayerStatsCount("10",String.valueOf(EnterStat.FOULWONID),gameID)));
+        binding.p11FoulWon.setText(String.valueOf(myDB.showPlayerStatsCount("11",String.valueOf(EnterStat.FOULWONID),gameID)));
+        binding.p12FoulWon.setText(String.valueOf(myDB.showPlayerStatsCount("12",String.valueOf(EnterStat.FOULWONID),gameID)));
+        binding.p13FoulWon.setText(String.valueOf(myDB.showPlayerStatsCount("13",String.valueOf(EnterStat.FOULWONID),gameID)));
+        binding.p14FoulWon.setText(String.valueOf(myDB.showPlayerStatsCount("14",String.valueOf(EnterStat.FOULWONID),gameID)));
+        binding.p15FoulWon.setText(String.valueOf(myDB.showPlayerStatsCount("15",String.valueOf(EnterStat.FOULWONID),gameID)));
+    }
+
+    /**
+     * fetches, stores and sets foul conceded data
+     */
+    public void storeSetFoulConcData(){
+        MyDatabaseHelper myDB = new MyDatabaseHelper(ShowGameStats.this);
+        binding.p1FoulConceded.setText(String.valueOf(myDB.showPlayerStatsCount("1",String.valueOf(EnterStat.FOULCONCID),gameID)));
+        binding.p2FoulConceded.setText(String.valueOf(myDB.showPlayerStatsCount("2",String.valueOf(EnterStat.FOULCONCID),gameID)));
+        binding.p3FoulConceded.setText(String.valueOf(myDB.showPlayerStatsCount("3",String.valueOf(EnterStat.FOULCONCID),gameID)));
+        binding.p4FoulConceded.setText(String.valueOf(myDB.showPlayerStatsCount("4",String.valueOf(EnterStat.FOULCONCID),gameID)));
+        binding.p5FoulConceded.setText(String.valueOf(myDB.showPlayerStatsCount("5",String.valueOf(EnterStat.FOULCONCID),gameID)));
+        binding.p6FoulConceded.setText(String.valueOf(myDB.showPlayerStatsCount("6",String.valueOf(EnterStat.FOULCONCID),gameID)));
+        binding.p7FoulConceded.setText(String.valueOf(myDB.showPlayerStatsCount("7",String.valueOf(EnterStat.FOULCONCID),gameID)));
+        binding.p8FoulConceded.setText(String.valueOf(myDB.showPlayerStatsCount("8",String.valueOf(EnterStat.FOULCONCID),gameID)));
+        binding.p9FoulConceded.setText(String.valueOf(myDB.showPlayerStatsCount("9",String.valueOf(EnterStat.FOULCONCID),gameID)));
+        binding.p10FoulConceded.setText(String.valueOf(myDB.showPlayerStatsCount("10",String.valueOf(EnterStat.FOULCONCID),gameID)));
+        binding.p11FoulConceded.setText(String.valueOf(myDB.showPlayerStatsCount("11",String.valueOf(EnterStat.FOULCONCID),gameID)));
+        binding.p12FoulConceded.setText(String.valueOf(myDB.showPlayerStatsCount("12",String.valueOf(EnterStat.FOULCONCID),gameID)));
+        binding.p13FoulConceded.setText(String.valueOf(myDB.showPlayerStatsCount("13",String.valueOf(EnterStat.FOULCONCID),gameID)));
+        binding.p14FoulConceded.setText(String.valueOf(myDB.showPlayerStatsCount("14",String.valueOf(EnterStat.FOULCONCID),gameID)));
+        binding.p15FoulConceded.setText(String.valueOf(myDB.showPlayerStatsCount("15",String.valueOf(EnterStat.FOULCONCID),gameID)));
+    }
+
+
+    /**
+     * fetches, stores and sets own kickout won data
+     */
+    public void storeSetOwnKickoutWonData(){
+        MyDatabaseHelper myDB = new MyDatabaseHelper(ShowGameStats.this);
+        binding.p1OwnKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("1",String.valueOf(EnterStat.OWNKICKOUTWONID),gameID)));
+        binding.p2OwnKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("2",String.valueOf(EnterStat.OWNKICKOUTWONID),gameID)));
+        binding.p3OwnKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("3",String.valueOf(EnterStat.OWNKICKOUTWONID),gameID)));
+        binding.p4OwnKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("4",String.valueOf(EnterStat.OWNKICKOUTWONID),gameID)));
+        binding.p5OwnKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("5",String.valueOf(EnterStat.OWNKICKOUTWONID),gameID)));
+        binding.p6OwnKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("6",String.valueOf(EnterStat.OWNKICKOUTWONID),gameID)));
+        binding.p7OwnKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("7",String.valueOf(EnterStat.OWNKICKOUTWONID),gameID)));
+        binding.p8OwnKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("8",String.valueOf(EnterStat.OWNKICKOUTWONID),gameID)));
+        binding.p9OwnKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("9",String.valueOf(EnterStat.OWNKICKOUTWONID),gameID)));
+        binding.p10OwnKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("10",String.valueOf(EnterStat.OWNKICKOUTWONID),gameID)));
+        binding.p11OwnKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("11",String.valueOf(EnterStat.OWNKICKOUTWONID),gameID)));
+        binding.p12OwnKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("12",String.valueOf(EnterStat.OWNKICKOUTWONID),gameID)));
+        binding.p13OwnKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("13",String.valueOf(EnterStat.OWNKICKOUTWONID),gameID)));
+        binding.p14OwnKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("14",String.valueOf(EnterStat.OWNKICKOUTWONID),gameID)));
+        binding.p15OwnKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("15",String.valueOf(EnterStat.OWNKICKOUTWONID),gameID)));
+    }
+
+    /**
+     * fetches, stores and sets foul won data
+     */
+    public void storeSetOppKickoutWonData(){
+        MyDatabaseHelper myDB = new MyDatabaseHelper(ShowGameStats.this);
+        binding.p1OppKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("1",String.valueOf(EnterStat.OPPKICKOUTWONID),gameID)));
+        binding.p2OppKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("2",String.valueOf(EnterStat.OPPKICKOUTWONID),gameID)));
+        binding.p3OppKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("3",String.valueOf(EnterStat.OPPKICKOUTWONID),gameID)));
+        binding.p4OppKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("4",String.valueOf(EnterStat.OPPKICKOUTWONID),gameID)));
+        binding.p5OppKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("5",String.valueOf(EnterStat.OPPKICKOUTWONID),gameID)));
+        binding.p6OppKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("6",String.valueOf(EnterStat.OPPKICKOUTWONID),gameID)));
+        binding.p7OppKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("7",String.valueOf(EnterStat.OPPKICKOUTWONID),gameID)));
+        binding.p8OppKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("8",String.valueOf(EnterStat.OPPKICKOUTWONID),gameID)));
+        binding.p9OppKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("9",String.valueOf(EnterStat.OPPKICKOUTWONID),gameID)));
+        binding.p10OppKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("10",String.valueOf(EnterStat.OPPKICKOUTWONID),gameID)));
+        binding.p11OppKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("11",String.valueOf(EnterStat.OPPKICKOUTWONID),gameID)));
+        binding.p12OppKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("12",String.valueOf(EnterStat.OPPKICKOUTWONID),gameID)));
+        binding.p13OppKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("13",String.valueOf(EnterStat.OPPKICKOUTWONID),gameID)));
+        binding.p14OppKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("14",String.valueOf(EnterStat.OPPKICKOUTWONID),gameID)));
+        binding.p15OppKickoutWon.setText(String.valueOf(myDB.showPlayerStatsCount("15",String.valueOf(EnterStat.OPPKICKOUTWONID),gameID)));
+    }
+
+
 
 
 }
