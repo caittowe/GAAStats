@@ -1711,6 +1711,14 @@
 
             </TableLayout>
 
+            <Button
+                android:id="@+id/topScorers"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:text="Top Scorers" />
+
         </LinearLayout>
     </ScrollView>
 

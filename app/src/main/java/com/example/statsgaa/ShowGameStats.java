@@ -3,11 +3,13 @@ package com.example.statsgaa;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.statsgaa.databinding.ActivityShowGameStatsBinding;
@@ -24,6 +26,7 @@ public class ShowGameStats extends AppCompatActivity {
     String gameID;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +39,16 @@ public class ShowGameStats extends AppCompatActivity {
         playerNames = new ArrayList<>();
         playerNos = new ArrayList<>();
         statID = new ArrayList<>();
+
+        binding.topScorers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ShowGameStats.this, ShowScoresDesc.class);
+                intent.putExtra("gameID", gameID);
+                intent.putExtra("squadID", clickedSquadID);
+                startActivity(intent);
+            }
+        });
 
         storeDataInArrays();
         storeSetShotsData();

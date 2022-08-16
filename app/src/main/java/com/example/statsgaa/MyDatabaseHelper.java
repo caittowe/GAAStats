@@ -44,6 +44,15 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String TIME = "time";
     private static final String LOCATION = "location";
 
+    private static final String TABLE_TOP_SCORERS = "top_scorers";
+    private static final String TOP_SCORERS_ID = "top_scorers_id";
+//    private static final String MATCH_ID = "game_id";
+//    private static final String PLAYER_NO = "player_no";
+//    private static final String PLAYER_NAME = "player_name";
+    private static final String GOALS = "goals";
+    private static final String POINTS = "points";
+    private static final String SCORE_COUNT = "score_count";
+
 
     /**
      * constructor
@@ -85,9 +94,18 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 + PLAYER_NAME + " TEXT, "
                 + PLAYER_NO + " INTEGER);";
 
+        String createTopScorers = "CREATE TABLE IF NOT EXISTS " + TABLE_TOP_SCORERS + " (" + TOP_SCORERS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + MATCH_ID + " INTEGER, "
+                + PLAYER_NO + " TEXT, "
+                + PLAYER_NAME + " TEXT, "
+                + GOALS + " INTEGER, "
+                + POINTS + " INTEGER, "
+                + SCORE_COUNT + " INTEGER);";
+
         db.execSQL(createSquad);
         db.execSQL(createPlayerGameStat);
         db.execSQL(createMatch);
+        db.execSQL(createTopScorers);
     }
 
     /**
@@ -102,6 +120,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLAYER_GAME_STAT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SQUAD);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MATCH);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TOP_SCORERS);
 
         onCreate(db);
     }
@@ -333,22 +352,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + TABLE_SQUAD);
     }
 
-    /**
-     * displays the player with the most scores
-     *
-     * @return
-     */
-    public Cursor showPlayerScoresOrderDesc(int game_id, int stat_id, int player_no) {
-        String query = "SELECT COUNT(stat_id) FROM player_game_stat WHERE game_id =" + game_id + "" +
-                "AND stat_id =" + stat_id + " AND player_no = " + player_no + ";";
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        if (db != null) {
-            cursor = db.rawQuery(query, null);
-        }
-        return cursor;
-    }
-
 
     /**
      * returns players with a certain squad id
@@ -384,4 +387,41 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
         return count;
     }
+
+    /**
+     * adds a new stat to the player_match_stat
+     */
+    public void addTopScorers(String matchID, String playerNo, String playerName, String goals, String points, String scoreCount) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(MATCH_ID, matchID);
+        cv.put(PLAYER_NO, playerNo);
+        cv.put(PLAYER_NAME, playerName);
+        cv.put(GOALS, goals);
+        cv.put(POINTS, points);
+        cv.put(SCORE_COUNT, scoreCount);
+
+        long result = db.insert(TABLE_TOP_SCORERS, null, cv);
+        if (result == -1) {
+            Toast.makeText(context, "Failed to add match", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Match Added", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    /**
+     * @param gameID
+     */
+    public Cursor returnScorersDesc(String gameID) {
+        String query = "SELECT player_name, player_no, goals, points, score_count  FROM top_scorers WHERE game_id =" + gameID + " ORDER BY score_count DESC;";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
 }
