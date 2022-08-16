@@ -20,8 +20,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 
 public class DisplaySquad extends AppCompatActivity {
@@ -116,7 +114,7 @@ public class DisplaySquad extends AppCompatActivity {
      * Stores data entered into array lists
      */
     public void storeDataInArrays() {
-        Cursor cursor = myDB.readPlayerNamePlayerID(clickedSquadID);
+        Cursor cursor = myDB.readPlayerNamePlayerNo(clickedSquadID);
         if (cursor.getCount() == 0) {
 //           empty_imageview.setVisibility(View.VISIBLE);
 //           no_data.setVisibility(View.VISIBLE);
@@ -183,4 +181,5 @@ public class DisplaySquad extends AppCompatActivity {
         });
         builder.create().show();
     }
+
 }

@@ -29,9 +29,12 @@ public class GameStart extends AppCompatActivity {
     ArrayList<String> player_name;
     ArrayList<String> player_no;
 
+    String pointsScored, goalsScored;
+
     private static final long START_TIME_IN_MILLIS = 1800000;
 
     private TextView mTextViewCountDown;
+    public TextView showScore;
     private Button mButtonStartPause;
     private Button mButtonReset;
 
@@ -59,7 +62,7 @@ public class GameStart extends AppCompatActivity {
 
         context = this;
 
-
+        showScore = findViewById(R.id.showScore);
 
         mTextViewCountDown = findViewById(R.id.text_view_countdown);
 
@@ -114,7 +117,6 @@ public class GameStart extends AppCompatActivity {
         player_no = new ArrayList<>();
 
         getIntentData();
-
         storeDataInArrays();
 
         btnPlayer1 = findViewById(R.id.btnPlayer1);
@@ -123,12 +125,13 @@ public class GameStart extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
                 intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
-                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(0)));
                 intent.putExtra("squad_id", toString().valueOf(squad_id.get(0)));
                 intent.putExtra("squad_name", toString().valueOf(squad_name.get(0)));
                 intent.putExtra("player_name", toString().valueOf(player_name.get(0)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(0)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
+                intent.putExtra("points", pointsScored);
+                intent.putExtra("goals", goalsScored);
                 startActivity(intent);
             }
         });
@@ -145,6 +148,8 @@ public class GameStart extends AppCompatActivity {
                 intent.putExtra("player_name", toString().valueOf(player_name.get(1)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(1)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
+                intent.putExtra("points", pointsScored);
+                intent.putExtra("goals", goalsScored);
                 startActivity(intent);
 
             }
@@ -162,6 +167,8 @@ public class GameStart extends AppCompatActivity {
                 intent.putExtra("player_name", toString().valueOf(player_name.get(2)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(2)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
+                intent.putExtra("points", pointsScored);
+                intent.putExtra("goals", goalsScored);
                 startActivity(intent);
 
             }
@@ -179,6 +186,8 @@ public class GameStart extends AppCompatActivity {
                 intent.putExtra("player_name", toString().valueOf(player_name.get(3)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(3)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
+                intent.putExtra("points", pointsScored);
+                intent.putExtra("goals", goalsScored);
                 startActivity(intent);
 
             }
@@ -196,6 +205,8 @@ public class GameStart extends AppCompatActivity {
                 intent.putExtra("player_name", toString().valueOf(player_name.get(4)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(4)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
+                intent.putExtra("points", pointsScored);
+                intent.putExtra("goals", goalsScored);
                 startActivity(intent);
 
             }
@@ -213,6 +224,8 @@ public class GameStart extends AppCompatActivity {
                 intent.putExtra("player_name", toString().valueOf(player_name.get(5)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(5)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
+                intent.putExtra("points", pointsScored);
+                intent.putExtra("goals", goalsScored);
                 startActivity(intent);
 
             }
@@ -230,6 +243,8 @@ public class GameStart extends AppCompatActivity {
                 intent.putExtra("player_name", toString().valueOf(player_name.get(6)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(6)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
+                intent.putExtra("points", pointsScored);
+                intent.putExtra("goals", goalsScored);
                 startActivity(intent);
 
             }
@@ -247,6 +262,8 @@ public class GameStart extends AppCompatActivity {
                 intent.putExtra("player_name", toString().valueOf(player_name.get(7)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(7)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
+                intent.putExtra("points", pointsScored);
+                intent.putExtra("goals", goalsScored);
                 startActivity(intent);
 
             }
@@ -264,6 +281,8 @@ public class GameStart extends AppCompatActivity {
                 intent.putExtra("player_name", toString().valueOf(player_name.get(8)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(8)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
+                intent.putExtra("points", pointsScored);
+                intent.putExtra("goals", goalsScored);
                 startActivity(intent);
 
             }
@@ -281,6 +300,8 @@ public class GameStart extends AppCompatActivity {
                 intent.putExtra("player_name", toString().valueOf(player_name.get(9)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(9)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
+                intent.putExtra("points", pointsScored);
+                intent.putExtra("goals", goalsScored);
                 startActivity(intent);
 
             }
@@ -298,6 +319,8 @@ public class GameStart extends AppCompatActivity {
                 intent.putExtra("player_name", toString().valueOf(player_name.get(10)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(10)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
+                intent.putExtra("points", pointsScored);
+                intent.putExtra("goals", goalsScored);
                 startActivity(intent);
 
             }
@@ -315,6 +338,8 @@ public class GameStart extends AppCompatActivity {
                 intent.putExtra("player_name", toString().valueOf(player_name.get(11)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(11)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
+                intent.putExtra("points", pointsScored);
+                intent.putExtra("goals", goalsScored);
                 startActivity(intent);
 
             }
@@ -332,6 +357,8 @@ public class GameStart extends AppCompatActivity {
                 intent.putExtra("player_name", toString().valueOf(player_name.get(12)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(12)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
+                intent.putExtra("points", pointsScored);
+                intent.putExtra("goals", goalsScored);
                 startActivity(intent);
 
             }
@@ -349,6 +376,8 @@ public class GameStart extends AppCompatActivity {
                 intent.putExtra("player_name", toString().valueOf(player_name.get(13)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(13)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
+                intent.putExtra("points", pointsScored);
+                intent.putExtra("goals", goalsScored);
                 startActivity(intent);
 
             }
@@ -366,11 +395,17 @@ public class GameStart extends AppCompatActivity {
                 intent.putExtra("player_name", toString().valueOf(player_name.get(14)));
                 intent.putExtra("player_no", toString().valueOf(player_no.get(14)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
+                intent.putExtra("points", pointsScored);
+                intent.putExtra("goals", goalsScored);
                 startActivity(intent);
 
             }
         });
 
+    }
+
+    public void updateScore(){
+        showScore.setText("Score: "+goalsScored+" - "+pointsScored);
     }
 
 
@@ -487,13 +522,19 @@ public class GameStart extends AppCompatActivity {
      * gets squad id of the squad that was clicked ont
      */
     public void getIntentData() {
-        if (getIntent().hasExtra("clicked_squad_id")) {
+        clickedSquadID = getIntent().getStringExtra("clicked_squad_id");
+        gameID = getIntent().getStringExtra("gameID");
+        storeDataInArrays();
+        if (getIntent().hasExtra("points") && getIntent().hasExtra("goals") ) {
             // getting data from intent
-            clickedSquadID = getIntent().getStringExtra("clicked_squad_id");
-            gameID = getIntent().getStringExtra("gameID");
-            storeDataInArrays();
+            pointsScored = getIntent().getStringExtra("points");
+            goalsScored = getIntent().getStringExtra("goals");
+            showScore.setText("Score: "+goalsScored+" - "+pointsScored);
             Log.i("GOTSQUAD", "getIntentData: squad id =  " + clickedSquadID);
         } else {
+            pointsScored = String.valueOf(0);
+            goalsScored = String.valueOf(0);
+            showScore.setText("Score: "+goalsScored+" - "+pointsScored);
             Toast.makeText(this, "Hi", Toast.LENGTH_SHORT).show();
         }
     }

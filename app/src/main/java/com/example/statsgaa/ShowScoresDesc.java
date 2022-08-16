@@ -82,6 +82,7 @@ public class ShowScoresDesc extends AppCompatActivity {
             }
         }
     }
+
     public void addSetScores(){
         p1Points = String.valueOf(myDB.showPlayerStatsCount("1", pointID, gameID));
         p1Goals = String.valueOf(myDB.showPlayerStatsCount("1", goalID, gameID));

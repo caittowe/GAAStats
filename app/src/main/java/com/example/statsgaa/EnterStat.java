@@ -30,7 +30,10 @@ public class EnterStat extends AppCompatActivity {
     public static int NEGTURNOVERID = 9;
     public static int FOULWONID = 10;
     public static int FOULCONCID = 11;
+    public static int POSSESSIONID = 12;
     String timestamp;
+    int scorePoints;
+    int scoreGoals;
     int gameID;
 
 
@@ -55,12 +58,16 @@ public class EnterStat extends AppCompatActivity {
             public void onClick(View view) {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(EnterStat.this);
                 Intent intent = new Intent(EnterStat.this, GameStart.class);
+                // add score
+                scorePoints++;
                 // add shot
                 myDB.addMatchEvent(SHOTID, gameID, Integer.parseInt(clickedSquadID), Integer.parseInt(playerNo), timestamp);
                 // add point
                 myDB.addMatchEvent(POINTID, gameID, Integer.parseInt(clickedSquadID), Integer.parseInt(playerNo), timestamp);
                 intent.putExtra("clicked_squad_id", toString().valueOf(clickedSquadID));
                 intent.putExtra("gameID", String.valueOf(gameID));
+                intent.putExtra("points", String.valueOf(scorePoints));
+                intent.putExtra("goals", String.valueOf(scoreGoals));
                 startActivity(intent);
                 Log.i("POINTADDED", "Point player " + playerNo);
             }
@@ -72,12 +79,16 @@ public class EnterStat extends AppCompatActivity {
             public void onClick(View view) {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(EnterStat.this);
                 Intent intent = new Intent(EnterStat.this, GameStart.class);
+                // add goal
+                scoreGoals++;
                 // add shot
                 myDB.addMatchEvent(SHOTID, gameID, Integer.parseInt(clickedSquadID), Integer.parseInt(playerNo), timestamp);
                 // add goal
                 myDB.addMatchEvent(GOALID, gameID, Integer.parseInt(clickedSquadID), Integer.parseInt(playerNo), timestamp);
                 intent.putExtra("clicked_squad_id", toString().valueOf(clickedSquadID));
                 intent.putExtra("gameID", toString().valueOf(gameID));
+                intent.putExtra("points", String.valueOf(scorePoints));
+                intent.putExtra("goals", String.valueOf(scoreGoals));
                 startActivity(intent);
                 Log.i("GOALADDED", "Goal player " + playerNo);
             }
@@ -94,6 +105,8 @@ public class EnterStat extends AppCompatActivity {
                 myDB.addMatchEvent(WIDEID, gameID, Integer.parseInt(clickedSquadID), Integer.parseInt(playerNo), timestamp);
                 intent.putExtra("clicked_squad_id", toString().valueOf(clickedSquadID));
                 intent.putExtra("gameID", toString().valueOf(gameID));
+                intent.putExtra("points", String.valueOf(scorePoints));
+                intent.putExtra("goals", String.valueOf(scoreGoals));
                 startActivity(intent);
                 Log.i("WIDEADDED", "Wide player " + playerNo);
             }
@@ -108,6 +121,8 @@ public class EnterStat extends AppCompatActivity {
                 myDB.addMatchEvent(FOULWONID, gameID, Integer.parseInt(clickedSquadID), Integer.parseInt(playerNo), timestamp);
                 intent.putExtra("clicked_squad_id", toString().valueOf(clickedSquadID));
                 intent.putExtra("gameID", toString().valueOf(gameID));
+                intent.putExtra("points", String.valueOf(scorePoints));
+                intent.putExtra("goals", String.valueOf(scoreGoals));
                 startActivity(intent);
                 Log.i("FOULWONADDED", "Foul won player " + playerNo);
             }
@@ -122,6 +137,8 @@ public class EnterStat extends AppCompatActivity {
                 myDB.addMatchEvent(FOULCONCID, gameID, Integer.parseInt(clickedSquadID), Integer.parseInt(playerNo), timestamp);
                 intent.putExtra("clicked_squad_id", toString().valueOf(clickedSquadID));
                 intent.putExtra("gameID", toString().valueOf(gameID));
+                intent.putExtra("points", String.valueOf(scorePoints));
+                intent.putExtra("goals", String.valueOf(scoreGoals));
                 startActivity(intent);
                 Log.i("FOULCONADDED", "Foul conceded player " + playerNo);
             }
@@ -138,6 +155,8 @@ public class EnterStat extends AppCompatActivity {
                 myDB.addMatchEvent(OWNKICKOUTWONID, gameID, Integer.parseInt(clickedSquadID), Integer.parseInt(playerNo), timestamp);
                 intent.putExtra("clicked_squad_id", toString().valueOf(clickedSquadID));
                 intent.putExtra("gameID", toString().valueOf(gameID));
+                intent.putExtra("points", String.valueOf(scorePoints));
+                intent.putExtra("goals", String.valueOf(scoreGoals));
                 startActivity(intent);
                 Log.i("OWNKICKWONADDED", "Kickout won player " + playerNo);
             }
@@ -152,6 +171,8 @@ public class EnterStat extends AppCompatActivity {
                 myDB.addMatchEvent(OPPKICKOUTWONID, gameID, Integer.parseInt(clickedSquadID), Integer.parseInt(playerNo), timestamp);
                 intent.putExtra("clicked_squad_id", toString().valueOf(clickedSquadID));
                 intent.putExtra("gameID", toString().valueOf(gameID));
+                intent.putExtra("points", String.valueOf(scorePoints));
+                intent.putExtra("goals", String.valueOf(scoreGoals));
                 startActivity(intent);
                 Log.i("OPPKICKWONADDED", "Kickout lost player " + playerNo);
             }
@@ -166,6 +187,8 @@ public class EnterStat extends AppCompatActivity {
                 myDB.addMatchEvent(POSTURNOVERID, gameID, Integer.parseInt(clickedSquadID), Integer.parseInt(playerNo), timestamp);
                 intent.putExtra("clicked_squad_id", toString().valueOf(clickedSquadID));
                 intent.putExtra("gameID", toString().valueOf(gameID));
+                intent.putExtra("points", String.valueOf(scorePoints));
+                intent.putExtra("goals", String.valueOf(scoreGoals));
                 startActivity(intent);
                 Log.i("POSTURNADDED", "Positive turnover player " + playerNo);
             }
@@ -180,6 +203,8 @@ public class EnterStat extends AppCompatActivity {
                 myDB.addMatchEvent(NEGTURNOVERID, gameID, Integer.parseInt(clickedSquadID), Integer.parseInt(playerNo), timestamp);
                 intent.putExtra("clicked_squad_id", toString().valueOf(clickedSquadID));
                 intent.putExtra("gameID", toString().valueOf(gameID));
+                intent.putExtra("points", String.valueOf(scorePoints));
+                intent.putExtra("goals", String.valueOf(scoreGoals));
                 startActivity(intent);
                 Log.i("NEGTURNADDED", "Negative turnover player " + playerNo);
             }
@@ -191,17 +216,17 @@ public class EnterStat extends AppCompatActivity {
      *
      */
     public void getAndSetIntentData() {
-        if (getIntent().hasExtra("squad_table_id") && getIntent().hasExtra("squad_id") && getIntent().hasExtra("squad_name") && getIntent().hasExtra("player_name")
-                && getIntent().hasExtra("player_no")) {
+        if ( getIntent().hasExtra("squad_id") && getIntent().hasExtra("squad_name") && getIntent().hasExtra("player_name")
+                && getIntent().hasExtra("player_no") && getIntent().hasExtra("points") && getIntent().hasExtra("goals")) {
             // getting data from intent
             timestamp = getIntent().getStringExtra("timestamp");
-            squadTableID = getIntent().getStringExtra("squad_table_id");
             squadID = getIntent().getStringExtra("squad_id");
             squadName = getIntent().getStringExtra("squad_name");
             playerName = getIntent().getStringExtra("player_name");
             playerNo = getIntent().getStringExtra("player_no");
             clickedSquadID = getIntent().getStringExtra("clickedSquadID");
-
+            scorePoints = Integer.parseInt(getIntent().getStringExtra("points"));
+            scoreGoals = Integer.parseInt(getIntent().getStringExtra("goals"));
         } else {
             Toast.makeText(this, "No Data here boss", Toast.LENGTH_SHORT).show();
         }

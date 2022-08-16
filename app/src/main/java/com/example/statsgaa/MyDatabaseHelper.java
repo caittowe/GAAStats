@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -44,14 +43,22 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String TIME = "time";
     private static final String LOCATION = "location";
 
-    private static final String TABLE_TOP_SCORERS = "top_scorers";
-    private static final String TOP_SCORERS_ID = "top_scorers_id";
+    private static final String TABLE_SCORES = "scores";
+    private static final String TOP_SCORERS_ID = "scorers_id";
 //    private static final String MATCH_ID = "game_id";
 //    private static final String PLAYER_NO = "player_no";
 //    private static final String PLAYER_NAME = "player_name";
     private static final String GOALS = "goals";
     private static final String POINTS = "points";
     private static final String SCORE_COUNT = "score_count";
+
+    private static final String TABLE_POSSESSION = "possession";
+    private static final String POSSESSION_ID = "possession_id";
+    //    private static final String MATCH_ID = "game_id";
+//    private static final String PLAYER_NO = "player_no";
+//    private static final String PLAYER_NAME = "player_name";
+    private static final String POSSESSION_COUNT = "possession_count";
+
 
 
     /**
@@ -80,7 +87,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 + TIME + " TEXT, "
                 + LOCATION + " TEXT);";
 
-
         String createPlayerGameStat = "CREATE TABLE IF NOT EXISTS " + TABLE_PLAYER_GAME_STAT + " (" + PLAYER_GAME_STAT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + STAT_ID + " INTEGER, "
                 + MATCH_ID + " INTEGER, "
@@ -94,7 +100,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 + PLAYER_NAME + " TEXT, "
                 + PLAYER_NO + " INTEGER);";
 
-        String createTopScorers = "CREATE TABLE IF NOT EXISTS " + TABLE_TOP_SCORERS + " (" + TOP_SCORERS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+        String createTopScorers = "CREATE TABLE IF NOT EXISTS " + TABLE_SCORES + " (" + TOP_SCORERS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + MATCH_ID + " INTEGER, "
                 + PLAYER_NO + " TEXT, "
                 + PLAYER_NAME + " TEXT, "
@@ -102,10 +108,19 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 + POINTS + " INTEGER, "
                 + SCORE_COUNT + " INTEGER);";
 
+        String createPossession = "CREATE TABLE IF NOT EXISTS " + TABLE_POSSESSION + " (" + POSSESSION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + MATCH_ID + " INTEGER, "
+                + PLAYER_NO + " TEXT, "
+                + PLAYER_NAME + " TEXT, "
+                + POSSESSION_COUNT + " INTEGER);";
+
+
         db.execSQL(createSquad);
         db.execSQL(createPlayerGameStat);
         db.execSQL(createMatch);
         db.execSQL(createTopScorers);
+        db.execSQL(createPossession);
+
     }
 
     /**
@@ -120,7 +135,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLAYER_GAME_STAT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SQUAD);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MATCH);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_TOP_SCORERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SCORES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_POSSESSION);
 
         onCreate(db);
     }
@@ -297,7 +313,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
      *
      * @return
      */
-    public Cursor readPlayerNamePlayerID(String squad_id) {
+    public Cursor readPlayerNamePlayerNo(String squad_id) {
         String query = "SELECT player_no, player_name  FROM squad WHERE squad_id =" + squad_id + ";";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
@@ -402,7 +418,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(POINTS, points);
         cv.put(SCORE_COUNT, scoreCount);
 
-        long result = db.insert(TABLE_TOP_SCORERS, null, cv);
+        long result = db.insert(TABLE_SCORES, null, cv);
         if (result == -1) {
             Toast.makeText(context, "Failed to add match", Toast.LENGTH_SHORT).show();
         } else {
@@ -412,10 +428,44 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * adds a new stat to the player_match_stat
+     */
+    public void addTopPossessions(String matchID, String playerNo, String playerName, String possessionCount) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(MATCH_ID, matchID);
+        cv.put(PLAYER_NO, playerNo);
+        cv.put(PLAYER_NAME, playerNo);
+        cv.put(POSSESSION_COUNT, possessionCount);
+
+        long result = db.insert(TABLE_SCORES, null, cv);
+        if (result == -1) {
+            Toast.makeText(context, "Failed to add possession", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Possession Added", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    /**
      * @param gameID
      */
     public Cursor returnScorersDesc(String gameID) {
-        String query = "SELECT player_name, player_no, goals, points, score_count  FROM top_scorers WHERE game_id =" + gameID + " ORDER BY score_count DESC;";
+        String query = "SELECT player_name, player_no, goals, points, score_count  FROM "+ TABLE_SCORES +" WHERE game_id =" + gameID + " ORDER BY score_count DESC;";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
+    }
+
+    /**
+     * @param gameID
+     */
+    public Cursor returnPossessionsDesc(String gameID) {
+        String query = "SELECT player_name, player_no, possession_count  FROM "+ TABLE_POSSESSION +" WHERE game_id =" + gameID + " ORDER BY possession_count DESC;";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         if (db != null) {
