@@ -114,7 +114,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 + PLAYER_NAME + " TEXT, "
                 + POSSESSION_COUNT + " INTEGER);";
 
-
         db.execSQL(createSquad);
         db.execSQL(createPlayerGameStat);
         db.execSQL(createMatch);
@@ -436,10 +435,10 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         cv.put(MATCH_ID, matchID);
         cv.put(PLAYER_NO, playerNo);
-        cv.put(PLAYER_NAME, playerNo);
+        cv.put(PLAYER_NAME, playerName);
         cv.put(POSSESSION_COUNT, possessionCount);
 
-        long result = db.insert(TABLE_SCORES, null, cv);
+        long result = db.insert(TABLE_POSSESSION, null, cv);
         if (result == -1) {
             Toast.makeText(context, "Failed to add possession", Toast.LENGTH_SHORT).show();
         } else {

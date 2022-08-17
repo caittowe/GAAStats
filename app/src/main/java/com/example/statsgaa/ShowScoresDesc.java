@@ -50,8 +50,6 @@ public class ShowScoresDesc extends AppCompatActivity {
         addSetScores();
         returnScorersDesc();
 
-
-
         customAdapter = new CustomAdapterScoresList(ShowScoresDesc.this, this, playerNamesOrder, playerNosOrder, playerGoals, playerPoints, playerScoresOrder);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(ShowScoresDesc.this));

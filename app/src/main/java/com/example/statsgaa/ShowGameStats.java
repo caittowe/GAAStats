@@ -50,6 +50,16 @@ public class ShowGameStats extends AppCompatActivity {
             }
         });
 
+        binding.topPossessions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ShowGameStats.this, ShowPossessions.class);
+                intent.putExtra("gameID", gameID);
+                intent.putExtra("squadID", clickedSquadID);
+                startActivity(intent);
+            }
+        });
+
         storeDataInArrays();
         storeSetShotsData();
         storeSetScoreData();

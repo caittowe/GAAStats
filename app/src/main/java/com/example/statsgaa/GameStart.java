@@ -21,32 +21,24 @@ import java.util.Locale;
 
 public class GameStart extends AppCompatActivity {
 
+    private static final long START_TIME_MILLISECONDS = 3600000;
+
     MyDatabaseHelper myDB;
-    String gameID, clickedSquadID;
-    ArrayList<String> squad_table_id;
-    ArrayList<String> squad_id;
-    ArrayList<String> squad_name;
-    ArrayList<String> player_name;
-    ArrayList<String> player_no;
-
-    String pointsScored, goalsScored;
-
-    private static final long START_TIME_IN_MILLIS = 1800000;
-
-    private TextView mTextViewCountDown;
+    String gameID, clickedSquadID, pointsScored, goalsScored;
+    ArrayList<String> squadTableIDs;
+    ArrayList<String> squadIDs;
+    ArrayList<String> squadNames;
+    ArrayList<String> playerNames;
+    ArrayList<String> playerNos;
+    private TextView tvCountdownTimer;
     public TextView showScore;
-    private Button mButtonStartPause;
-    private Button mButtonReset;
-
-    private CountDownTimer mCountDownTimer;
-
-    private boolean mTimerRunning;
-
-    private long mTimeLeftInMillis;
-    private long mEndTime;
-
+    private Button btnStartPause;
+    private Button btnEndGame;
+    private CountDownTimer countdownTimer;
+    private boolean timerRunning;
+    private long timeLeftMillis;
+    private long endTime;
     Context context;
-
     Button btnPlayer1, btnPlayer2, btnPlayer3, btnPlayer4, btnPlayer5, btnPlayer6, btnPlayer7, btnPlayer8, btnPlayer9, btnPlayer10, btnPlayer11, btnPlayer12, btnPlayer13, btnPlayer14, btnPlayer15;
 
     /**
@@ -60,19 +52,17 @@ public class GameStart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_start);
 
+
         context = this;
-
         showScore = findViewById(R.id.showScore);
+        tvCountdownTimer = findViewById(R.id.text_view_countdown);
+        btnStartPause = findViewById(R.id.button_start_pause);
+        btnEndGame = findViewById(R.id.button_reset);
 
-        mTextViewCountDown = findViewById(R.id.text_view_countdown);
-
-        mButtonStartPause = findViewById(R.id.button_start_pause);
-        mButtonReset = findViewById(R.id.button_reset);
-
-        mButtonStartPause.setOnClickListener(new View.OnClickListener() {
+        btnStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mTimerRunning) {
+                if (timerRunning) {
                     pauseTimer();
                 } else {
                     startTimer();
@@ -80,7 +70,7 @@ public class GameStart extends AppCompatActivity {
             }
         });
 
-        mButtonReset.setOnClickListener(new View.OnClickListener() {
+        btnEndGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -94,7 +84,7 @@ public class GameStart extends AppCompatActivity {
                                 Intent intent = new Intent(GameStart.this, ShowGameStats.class);
                                 intent.putExtra("squadID", clickedSquadID);
                                 intent.putExtra("gameID", gameID);
-                                mCountDownTimer.cancel();
+                                countdownTimer.cancel();
                                 resetTimer();
                                 SharedPreferences settings = context.getSharedPreferences("prefs", Context.MODE_PRIVATE);
                                 settings.edit().clear().commit();
@@ -110,11 +100,11 @@ public class GameStart extends AppCompatActivity {
 
 
         myDB = new MyDatabaseHelper(GameStart.this);
-        squad_table_id = new ArrayList<>();
-        squad_id = new ArrayList<>();
-        squad_name = new ArrayList<>();
-        player_name = new ArrayList<>();
-        player_no = new ArrayList<>();
+        squadTableIDs = new ArrayList<>();
+        squadIDs = new ArrayList<>();
+        squadNames = new ArrayList<>();
+        playerNames = new ArrayList<>();
+        playerNos = new ArrayList<>();
 
         getIntentData();
         storeDataInArrays();
@@ -123,12 +113,13 @@ public class GameStart extends AppCompatActivity {
         btnPlayer1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myDB.addMatchEvent(EnterStat.POSSESSIONID, Integer.valueOf(gameID), Integer.valueOf(clickedSquadID), 1, tvCountdownTimer.getText().toString());
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
-                intent.putExtra("squad_id", toString().valueOf(squad_id.get(0)));
-                intent.putExtra("squad_name", toString().valueOf(squad_name.get(0)));
-                intent.putExtra("player_name", toString().valueOf(player_name.get(0)));
-                intent.putExtra("player_no", toString().valueOf(player_no.get(0)));
+                intent.putExtra("timestamp", tvCountdownTimer.getText().toString());
+                intent.putExtra("squad_id", toString().valueOf(squadIDs.get(0)));
+                intent.putExtra("squad_name", toString().valueOf(squadNames.get(0)));
+                intent.putExtra("player_name", toString().valueOf(playerNames.get(0)));
+                intent.putExtra("player_no", toString().valueOf(playerNos.get(0)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 intent.putExtra("points", pointsScored);
                 intent.putExtra("goals", goalsScored);
@@ -140,13 +131,14 @@ public class GameStart extends AppCompatActivity {
         btnPlayer2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myDB.addMatchEvent(EnterStat.POSSESSIONID, Integer.valueOf(gameID), Integer.valueOf(clickedSquadID), 2, tvCountdownTimer.getText().toString());
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
-                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(1)));
-                intent.putExtra("squad_id", toString().valueOf(squad_id.get(1)));
-                intent.putExtra("squad_name", toString().valueOf(squad_name.get(1)));
-                intent.putExtra("player_name", toString().valueOf(player_name.get(1)));
-                intent.putExtra("player_no", toString().valueOf(player_no.get(1)));
+                intent.putExtra("timestamp", tvCountdownTimer.getText().toString());
+                intent.putExtra("squad_table_id", toString().valueOf(squadTableIDs.get(1)));
+                intent.putExtra("squad_id", toString().valueOf(squadIDs.get(1)));
+                intent.putExtra("squad_name", toString().valueOf(squadNames.get(1)));
+                intent.putExtra("player_name", toString().valueOf(playerNames.get(1)));
+                intent.putExtra("player_no", toString().valueOf(playerNos.get(1)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 intent.putExtra("points", pointsScored);
                 intent.putExtra("goals", goalsScored);
@@ -159,13 +151,14 @@ public class GameStart extends AppCompatActivity {
         btnPlayer3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myDB.addMatchEvent(EnterStat.POSSESSIONID, Integer.valueOf(gameID), Integer.valueOf(clickedSquadID), 3, tvCountdownTimer.getText().toString());
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
-                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(2)));
-                intent.putExtra("squad_id", toString().valueOf(squad_id.get(2)));
-                intent.putExtra("squad_name", toString().valueOf(squad_name.get(2)));
-                intent.putExtra("player_name", toString().valueOf(player_name.get(2)));
-                intent.putExtra("player_no", toString().valueOf(player_no.get(2)));
+                intent.putExtra("timestamp", tvCountdownTimer.getText().toString());
+                intent.putExtra("squad_table_id", toString().valueOf(squadTableIDs.get(2)));
+                intent.putExtra("squad_id", toString().valueOf(squadIDs.get(2)));
+                intent.putExtra("squad_name", toString().valueOf(squadNames.get(2)));
+                intent.putExtra("player_name", toString().valueOf(playerNames.get(2)));
+                intent.putExtra("player_no", toString().valueOf(playerNos.get(2)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 intent.putExtra("points", pointsScored);
                 intent.putExtra("goals", goalsScored);
@@ -178,13 +171,14 @@ public class GameStart extends AppCompatActivity {
         btnPlayer4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myDB.addMatchEvent(EnterStat.POSSESSIONID, Integer.valueOf(gameID), Integer.valueOf(clickedSquadID), 4, tvCountdownTimer.getText().toString());
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
-                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(3)));
-                intent.putExtra("squad_id", toString().valueOf(squad_id.get(3)));
-                intent.putExtra("squad_name", toString().valueOf(squad_name.get(3)));
-                intent.putExtra("player_name", toString().valueOf(player_name.get(3)));
-                intent.putExtra("player_no", toString().valueOf(player_no.get(3)));
+                intent.putExtra("timestamp", tvCountdownTimer.getText().toString());
+                intent.putExtra("squad_table_id", toString().valueOf(squadTableIDs.get(3)));
+                intent.putExtra("squad_id", toString().valueOf(squadIDs.get(3)));
+                intent.putExtra("squad_name", toString().valueOf(squadNames.get(3)));
+                intent.putExtra("player_name", toString().valueOf(playerNames.get(3)));
+                intent.putExtra("player_no", toString().valueOf(playerNos.get(3)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 intent.putExtra("points", pointsScored);
                 intent.putExtra("goals", goalsScored);
@@ -197,13 +191,14 @@ public class GameStart extends AppCompatActivity {
         btnPlayer5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myDB.addMatchEvent(EnterStat.POSSESSIONID, Integer.valueOf(gameID), Integer.valueOf(clickedSquadID), 5, tvCountdownTimer.getText().toString());
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
-                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(4)));
-                intent.putExtra("squad_id", toString().valueOf(squad_id.get(4)));
-                intent.putExtra("squad_name", toString().valueOf(squad_name.get(4)));
-                intent.putExtra("player_name", toString().valueOf(player_name.get(4)));
-                intent.putExtra("player_no", toString().valueOf(player_no.get(4)));
+                intent.putExtra("timestamp", tvCountdownTimer.getText().toString());
+                intent.putExtra("squad_table_id", toString().valueOf(squadTableIDs.get(4)));
+                intent.putExtra("squad_id", toString().valueOf(squadIDs.get(4)));
+                intent.putExtra("squad_name", toString().valueOf(squadNames.get(4)));
+                intent.putExtra("player_name", toString().valueOf(playerNames.get(4)));
+                intent.putExtra("player_no", toString().valueOf(playerNos.get(4)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 intent.putExtra("points", pointsScored);
                 intent.putExtra("goals", goalsScored);
@@ -216,13 +211,14 @@ public class GameStart extends AppCompatActivity {
         btnPlayer6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myDB.addMatchEvent(EnterStat.POSSESSIONID, Integer.valueOf(gameID), Integer.valueOf(clickedSquadID), 6, tvCountdownTimer.getText().toString());
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
-                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(5)));
-                intent.putExtra("squad_id", toString().valueOf(squad_id.get(5)));
-                intent.putExtra("squad_name", toString().valueOf(squad_name.get(5)));
-                intent.putExtra("player_name", toString().valueOf(player_name.get(5)));
-                intent.putExtra("player_no", toString().valueOf(player_no.get(5)));
+                intent.putExtra("timestamp", tvCountdownTimer.getText().toString());
+                intent.putExtra("squad_table_id", toString().valueOf(squadTableIDs.get(5)));
+                intent.putExtra("squad_id", toString().valueOf(squadIDs.get(5)));
+                intent.putExtra("squad_name", toString().valueOf(squadNames.get(5)));
+                intent.putExtra("player_name", toString().valueOf(playerNames.get(5)));
+                intent.putExtra("player_no", toString().valueOf(playerNos.get(5)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 intent.putExtra("points", pointsScored);
                 intent.putExtra("goals", goalsScored);
@@ -235,13 +231,14 @@ public class GameStart extends AppCompatActivity {
         btnPlayer7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myDB.addMatchEvent(EnterStat.POSSESSIONID, Integer.valueOf(gameID), Integer.valueOf(clickedSquadID), 7, tvCountdownTimer.getText().toString());
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
-                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(6)));
-                intent.putExtra("squad_id", toString().valueOf(squad_id.get(6)));
-                intent.putExtra("squad_name", toString().valueOf(squad_name.get(6)));
-                intent.putExtra("player_name", toString().valueOf(player_name.get(6)));
-                intent.putExtra("player_no", toString().valueOf(player_no.get(6)));
+                intent.putExtra("timestamp", tvCountdownTimer.getText().toString());
+                intent.putExtra("squad_table_id", toString().valueOf(squadTableIDs.get(6)));
+                intent.putExtra("squad_id", toString().valueOf(squadIDs.get(6)));
+                intent.putExtra("squad_name", toString().valueOf(squadNames.get(6)));
+                intent.putExtra("player_name", toString().valueOf(playerNames.get(6)));
+                intent.putExtra("player_no", toString().valueOf(playerNos.get(6)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 intent.putExtra("points", pointsScored);
                 intent.putExtra("goals", goalsScored);
@@ -254,13 +251,14 @@ public class GameStart extends AppCompatActivity {
         btnPlayer8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myDB.addMatchEvent(EnterStat.POSSESSIONID, Integer.valueOf(gameID), Integer.valueOf(clickedSquadID), 8, tvCountdownTimer.getText().toString());
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
-                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(7)));
-                intent.putExtra("squad_id", toString().valueOf(squad_id.get(7)));
-                intent.putExtra("squad_name", toString().valueOf(squad_name.get(7)));
-                intent.putExtra("player_name", toString().valueOf(player_name.get(7)));
-                intent.putExtra("player_no", toString().valueOf(player_no.get(7)));
+                intent.putExtra("timestamp", tvCountdownTimer.getText().toString());
+                intent.putExtra("squad_table_id", toString().valueOf(squadTableIDs.get(7)));
+                intent.putExtra("squad_id", toString().valueOf(squadIDs.get(7)));
+                intent.putExtra("squad_name", toString().valueOf(squadNames.get(7)));
+                intent.putExtra("player_name", toString().valueOf(playerNames.get(7)));
+                intent.putExtra("player_no", toString().valueOf(playerNos.get(7)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 intent.putExtra("points", pointsScored);
                 intent.putExtra("goals", goalsScored);
@@ -273,13 +271,14 @@ public class GameStart extends AppCompatActivity {
         btnPlayer9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myDB.addMatchEvent(EnterStat.POSSESSIONID, Integer.valueOf(gameID), Integer.valueOf(clickedSquadID), 9, tvCountdownTimer.getText().toString());
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
-                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(8)));
-                intent.putExtra("squad_id", toString().valueOf(squad_id.get(8)));
-                intent.putExtra("squad_name", toString().valueOf(squad_name.get(8)));
-                intent.putExtra("player_name", toString().valueOf(player_name.get(8)));
-                intent.putExtra("player_no", toString().valueOf(player_no.get(8)));
+                intent.putExtra("timestamp", tvCountdownTimer.getText().toString());
+                intent.putExtra("squad_table_id", toString().valueOf(squadTableIDs.get(8)));
+                intent.putExtra("squad_id", toString().valueOf(squadIDs.get(8)));
+                intent.putExtra("squad_name", toString().valueOf(squadNames.get(8)));
+                intent.putExtra("player_name", toString().valueOf(playerNames.get(8)));
+                intent.putExtra("player_no", toString().valueOf(playerNos.get(8)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 intent.putExtra("points", pointsScored);
                 intent.putExtra("goals", goalsScored);
@@ -292,13 +291,14 @@ public class GameStart extends AppCompatActivity {
         btnPlayer10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myDB.addMatchEvent(EnterStat.POSSESSIONID, Integer.valueOf(gameID), Integer.valueOf(clickedSquadID), 10, tvCountdownTimer.getText().toString());
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
-                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(9)));
-                intent.putExtra("squad_id", toString().valueOf(squad_id.get(9)));
-                intent.putExtra("squad_name", toString().valueOf(squad_name.get(9)));
-                intent.putExtra("player_name", toString().valueOf(player_name.get(9)));
-                intent.putExtra("player_no", toString().valueOf(player_no.get(9)));
+                intent.putExtra("timestamp", tvCountdownTimer.getText().toString());
+                intent.putExtra("squad_table_id", toString().valueOf(squadTableIDs.get(9)));
+                intent.putExtra("squad_id", toString().valueOf(squadIDs.get(9)));
+                intent.putExtra("squad_name", toString().valueOf(squadNames.get(9)));
+                intent.putExtra("player_name", toString().valueOf(playerNames.get(9)));
+                intent.putExtra("player_no", toString().valueOf(playerNos.get(9)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 intent.putExtra("points", pointsScored);
                 intent.putExtra("goals", goalsScored);
@@ -311,13 +311,14 @@ public class GameStart extends AppCompatActivity {
         btnPlayer11.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myDB.addMatchEvent(EnterStat.POSSESSIONID, Integer.valueOf(gameID), Integer.valueOf(clickedSquadID), 11, tvCountdownTimer.getText().toString());
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
-                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(10)));
-                intent.putExtra("squad_id", toString().valueOf(squad_id.get(10)));
-                intent.putExtra("squad_name", toString().valueOf(squad_name.get(10)));
-                intent.putExtra("player_name", toString().valueOf(player_name.get(10)));
-                intent.putExtra("player_no", toString().valueOf(player_no.get(10)));
+                intent.putExtra("timestamp", tvCountdownTimer.getText().toString());
+                intent.putExtra("squad_table_id", toString().valueOf(squadTableIDs.get(10)));
+                intent.putExtra("squad_id", toString().valueOf(squadIDs.get(10)));
+                intent.putExtra("squad_name", toString().valueOf(squadNames.get(10)));
+                intent.putExtra("player_name", toString().valueOf(playerNames.get(10)));
+                intent.putExtra("player_no", toString().valueOf(playerNos.get(10)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 intent.putExtra("points", pointsScored);
                 intent.putExtra("goals", goalsScored);
@@ -330,13 +331,14 @@ public class GameStart extends AppCompatActivity {
         btnPlayer12.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myDB.addMatchEvent(EnterStat.POSSESSIONID, Integer.valueOf(gameID), Integer.valueOf(clickedSquadID), 12, tvCountdownTimer.getText().toString());
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
-                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(11)));
-                intent.putExtra("squad_id", toString().valueOf(squad_id.get(11)));
-                intent.putExtra("squad_name", toString().valueOf(squad_name.get(11)));
-                intent.putExtra("player_name", toString().valueOf(player_name.get(11)));
-                intent.putExtra("player_no", toString().valueOf(player_no.get(11)));
+                intent.putExtra("timestamp", tvCountdownTimer.getText().toString());
+                intent.putExtra("squad_table_id", toString().valueOf(squadTableIDs.get(11)));
+                intent.putExtra("squad_id", toString().valueOf(squadIDs.get(11)));
+                intent.putExtra("squad_name", toString().valueOf(squadNames.get(11)));
+                intent.putExtra("player_name", toString().valueOf(playerNames.get(11)));
+                intent.putExtra("player_no", toString().valueOf(playerNos.get(11)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 intent.putExtra("points", pointsScored);
                 intent.putExtra("goals", goalsScored);
@@ -349,13 +351,14 @@ public class GameStart extends AppCompatActivity {
         btnPlayer13.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myDB.addMatchEvent(EnterStat.POSSESSIONID, Integer.valueOf(gameID), Integer.valueOf(clickedSquadID), 13, tvCountdownTimer.getText().toString());
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
-                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(12)));
-                intent.putExtra("squad_id", toString().valueOf(squad_id.get(12)));
-                intent.putExtra("squad_name", toString().valueOf(squad_name.get(12)));
-                intent.putExtra("player_name", toString().valueOf(player_name.get(12)));
-                intent.putExtra("player_no", toString().valueOf(player_no.get(12)));
+                intent.putExtra("timestamp", tvCountdownTimer.getText().toString());
+                intent.putExtra("squad_table_id", toString().valueOf(squadTableIDs.get(12)));
+                intent.putExtra("squad_id", toString().valueOf(squadIDs.get(12)));
+                intent.putExtra("squad_name", toString().valueOf(squadNames.get(12)));
+                intent.putExtra("player_name", toString().valueOf(playerNames.get(12)));
+                intent.putExtra("player_no", toString().valueOf(playerNos.get(12)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 intent.putExtra("points", pointsScored);
                 intent.putExtra("goals", goalsScored);
@@ -368,13 +371,14 @@ public class GameStart extends AppCompatActivity {
         btnPlayer14.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myDB.addMatchEvent(EnterStat.POSSESSIONID, Integer.valueOf(gameID), Integer.valueOf(clickedSquadID), 14, tvCountdownTimer.getText().toString());
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
-                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(13)));
-                intent.putExtra("squad_id", toString().valueOf(squad_id.get(13)));
-                intent.putExtra("squad_name", toString().valueOf(squad_name.get(13)));
-                intent.putExtra("player_name", toString().valueOf(player_name.get(13)));
-                intent.putExtra("player_no", toString().valueOf(player_no.get(13)));
+                intent.putExtra("timestamp", tvCountdownTimer.getText().toString());
+                intent.putExtra("squad_table_id", toString().valueOf(squadTableIDs.get(13)));
+                intent.putExtra("squad_id", toString().valueOf(squadIDs.get(13)));
+                intent.putExtra("squad_name", toString().valueOf(squadNames.get(13)));
+                intent.putExtra("player_name", toString().valueOf(playerNames.get(13)));
+                intent.putExtra("player_no", toString().valueOf(playerNos.get(13)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 intent.putExtra("points", pointsScored);
                 intent.putExtra("goals", goalsScored);
@@ -387,13 +391,14 @@ public class GameStart extends AppCompatActivity {
         btnPlayer15.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                myDB.addMatchEvent(EnterStat.POSSESSIONID, Integer.valueOf(gameID), Integer.valueOf(clickedSquadID), 15, tvCountdownTimer.getText().toString());
                 Intent intent = new Intent(GameStart.this, EnterStat.class);
-                intent.putExtra("timestamp", mTextViewCountDown.getText().toString());
-                intent.putExtra("squad_table_id", toString().valueOf(squad_table_id.get(14)));
-                intent.putExtra("squad_id", toString().valueOf(squad_id.get(14)));
-                intent.putExtra("squad_name", toString().valueOf(squad_name.get(14)));
-                intent.putExtra("player_name", toString().valueOf(player_name.get(14)));
-                intent.putExtra("player_no", toString().valueOf(player_no.get(14)));
+                intent.putExtra("timestamp", tvCountdownTimer.getText().toString());
+                intent.putExtra("squad_table_id", toString().valueOf(squadTableIDs.get(14)));
+                intent.putExtra("squad_id", toString().valueOf(squadIDs.get(14)));
+                intent.putExtra("squad_name", toString().valueOf(squadNames.get(14)));
+                intent.putExtra("player_name", toString().valueOf(playerNames.get(14)));
+                intent.putExtra("player_no", toString().valueOf(playerNos.get(14)));
                 intent.putExtra("clickedSquadID", toString().valueOf(clickedSquadID));
                 intent.putExtra("points", pointsScored);
                 intent.putExtra("goals", goalsScored);
@@ -410,64 +415,64 @@ public class GameStart extends AppCompatActivity {
 
 
     private void startTimer() {
-        mEndTime = System.currentTimeMillis() + mTimeLeftInMillis;
+        endTime = System.currentTimeMillis() + timeLeftMillis;
 
-        mCountDownTimer = new CountDownTimer(mTimeLeftInMillis, 1000) {
+        countdownTimer = new CountDownTimer(timeLeftMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                mTimeLeftInMillis = millisUntilFinished;
+                timeLeftMillis = millisUntilFinished;
                 updateCountDownText();
             }
 
             @Override
             public void onFinish() {
-                mTimerRunning = false;
+                timerRunning = false;
                 updateButtons();
             }
         }.start();
 
-        mTimerRunning = true;
+        timerRunning = true;
         updateButtons();
     }
 
     private void pauseTimer() {
-        mCountDownTimer.cancel();
-        mTimerRunning = false;
+        countdownTimer.cancel();
+        timerRunning = false;
         updateButtons();
     }
 
     private void resetTimer() {
-        mTimeLeftInMillis = START_TIME_IN_MILLIS;
+        timeLeftMillis = START_TIME_MILLISECONDS;
         updateCountDownText();
         updateButtons();
     }
 
     private void updateCountDownText() {
-        int minutes = (int) (mTimeLeftInMillis / 1000) / 60;
-        int seconds = (int) (mTimeLeftInMillis / 1000) % 60;
+        int minutes = (int) (timeLeftMillis / 1000) / 60;
+        int seconds = (int) (timeLeftMillis / 1000) % 60;
 
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
 
-        mTextViewCountDown.setText(timeLeftFormatted);
+        tvCountdownTimer.setText(timeLeftFormatted);
     }
 
     private void updateButtons() {
-        if (mTimerRunning) {
-            mButtonReset.setVisibility(View.INVISIBLE);
-            mButtonStartPause.setText("Pause");
+        if (timerRunning) {
+            btnEndGame.setVisibility(View.INVISIBLE);
+            btnStartPause.setText("Pause");
         } else {
-            mButtonStartPause.setText("Start");
+            btnStartPause.setText("Start");
 
-            if (mTimeLeftInMillis < 1000) {
-                mButtonStartPause.setVisibility(View.INVISIBLE);
+            if (timeLeftMillis < 1000) {
+                btnStartPause.setVisibility(View.INVISIBLE);
             } else {
-                mButtonStartPause.setVisibility(View.VISIBLE);
+                btnStartPause.setVisibility(View.VISIBLE);
             }
 
-            if (mTimeLeftInMillis < START_TIME_IN_MILLIS) {
-                mButtonReset.setVisibility(View.VISIBLE);
+            if (timeLeftMillis < START_TIME_MILLISECONDS) {
+                btnEndGame.setVisibility(View.VISIBLE);
             } else {
-                mButtonReset.setVisibility(View.INVISIBLE);
+                btnEndGame.setVisibility(View.INVISIBLE);
             }
         }
     }
@@ -479,14 +484,14 @@ public class GameStart extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
-        editor.putLong("millisLeft", mTimeLeftInMillis);
-        editor.putBoolean("timerRunning", mTimerRunning);
-        editor.putLong("endTime", mEndTime);
+        editor.putLong("millisLeft", timeLeftMillis);
+        editor.putBoolean("timerRunning", timerRunning);
+        editor.putLong("endTime", endTime);
 
         editor.apply();
 
-        if (mCountDownTimer != null) {
-            mCountDownTimer.cancel();
+        if (countdownTimer != null) {
+            countdownTimer.cancel();
         }
     }
 
@@ -496,19 +501,19 @@ public class GameStart extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
 
-        mTimeLeftInMillis = prefs.getLong("millisLeft", START_TIME_IN_MILLIS);
-        mTimerRunning = prefs.getBoolean("timerRunning", false);
+        timeLeftMillis = prefs.getLong("millisLeft", START_TIME_MILLISECONDS);
+        timerRunning = prefs.getBoolean("timerRunning", false);
 
         updateCountDownText();
         updateButtons();
 
-        if (mTimerRunning) {
-            mEndTime = prefs.getLong("endTime", 0);
-            mTimeLeftInMillis = mEndTime - System.currentTimeMillis();
+        if (timerRunning) {
+            endTime = prefs.getLong("endTime", 0);
+            timeLeftMillis = endTime - System.currentTimeMillis();
 
-            if (mTimeLeftInMillis < 0) {
-                mTimeLeftInMillis = 0;
-                mTimerRunning = false;
+            if (timeLeftMillis < 0) {
+                timeLeftMillis = 0;
+                timerRunning = false;
                 updateCountDownText();
                 updateButtons();
             } else {
@@ -551,11 +556,11 @@ public class GameStart extends AppCompatActivity {
 //           no_data.setVisibility(View.VISIBLE);
         } else {
             while (cursor.moveToNext()) {
-                squad_table_id.add(cursor.getString(0));
-                squad_id.add(cursor.getString(1));
-                squad_name.add(cursor.getString(2));
-                player_name.add(cursor.getString(3));
-                player_no.add(cursor.getString(4));
+                squadTableIDs.add(cursor.getString(0));
+                squadIDs.add(cursor.getString(1));
+                squadNames.add(cursor.getString(2));
+                playerNames.add(cursor.getString(3));
+                playerNos.add(cursor.getString(4));
             }
         }
 

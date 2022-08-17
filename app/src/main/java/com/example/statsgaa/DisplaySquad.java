@@ -31,6 +31,7 @@ public class DisplaySquad extends AppCompatActivity {
     TextView team1, team2, time, date, location;
     Button startGame;
     String clickedSquadID;
+    int gameID;
 
     /**
      * displays the details entered from the dialog
@@ -44,6 +45,8 @@ public class DisplaySquad extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_squad);
 
+        gameID = getGameID();
+
         recyclerView = findViewById(R.id.recyclerView);
         team1 = findViewById(R.id.tvTeam1);
         team2 = findViewById(R.id.tvTeam2);
@@ -56,6 +59,7 @@ public class DisplaySquad extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(DisplaySquad.this, GameStart.class);
                 intent.putExtra("clicked_squad_id",String.valueOf(clickedSquadID));
+                intent.putExtra("gameID",String.valueOf(gameID));
                 startActivity(intent);
             }
         });
@@ -72,7 +76,6 @@ public class DisplaySquad extends AppCompatActivity {
         player_no = new ArrayList<>();
 
         getIntentData();
-
         storeDataInArrays();
 
         customAdapter = new CustomAdapterPlayerList(DisplaySquad.this, this, player_no, player_name);
@@ -180,6 +183,17 @@ public class DisplaySquad extends AppCompatActivity {
             }
         });
         builder.create().show();
+    }
+
+    /**
+     * returns ID of game
+     * @return
+     */
+    public int getGameID() {
+        MyDatabaseHelper myDB = new MyDatabaseHelper(DisplaySquad.this);
+        gameID = myDB.getMaxGameID();
+        Toast.makeText(this, "gameID = " + gameID, Toast.LENGTH_SHORT).show();
+        return gameID;
     }
 
 }
