@@ -89,7 +89,6 @@ public class GameStart extends AppCompatActivity {
                                 SharedPreferences settings = context.getSharedPreferences("prefs", Context.MODE_PRIVATE);
                                 settings.edit().clear().commit();
                                 startActivity(intent);
-
                             }
                         })
                         .setNegativeButton("Cancel", null);
@@ -409,21 +408,15 @@ public class GameStart extends AppCompatActivity {
 
     }
 
-    public void updateScore(){
-        showScore.setText("Score: "+goalsScored+" - "+pointsScored);
-    }
-
 
     private void startTimer() {
         endTime = System.currentTimeMillis() + timeLeftMillis;
-
         countdownTimer = new CountDownTimer(timeLeftMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeLeftMillis = millisUntilFinished;
                 updateCountDownText();
             }
-
             @Override
             public void onFinish() {
                 timerRunning = false;
@@ -540,7 +533,7 @@ public class GameStart extends AppCompatActivity {
             pointsScored = String.valueOf(0);
             goalsScored = String.valueOf(0);
             showScore.setText("Score: "+goalsScored+" - "+pointsScored);
-            Toast.makeText(this, "Hi", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "No Score Data", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -12,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.CollationElementIterator;
 import java.util.ArrayList;
 
 /**
@@ -25,7 +24,8 @@ public class CustomAdapterPlayerList extends RecyclerView.Adapter<CustomAdapterP
 
     private Context context;
     Activity activity;
-    private ArrayList player_no, player_name;
+    private ArrayList playerNo, playerName;
+    String squadID;
 
     int position;
 
@@ -34,11 +34,12 @@ public class CustomAdapterPlayerList extends RecyclerView.Adapter<CustomAdapterP
      * constructor with args
      * @param context
      */
-    CustomAdapterPlayerList(Activity activity, Context context, ArrayList player_no, ArrayList player_name) {
+    CustomAdapterPlayerList(Activity activity, Context context, String squadID, ArrayList playerNo, ArrayList playerName) {
         this.activity = activity;
         this.context = context;
-        this.player_no = player_no;
-        this.player_name = player_name;
+        this.squadID = squadID;
+        this.playerNo = playerNo;
+        this.playerName = playerName;
     }
 
 
@@ -54,24 +55,23 @@ public class CustomAdapterPlayerList extends RecyclerView.Adapter<CustomAdapterP
     public void onBindViewHolder(@NonNull CustomAdapterPlayerList.MyViewHolder holder, final int position) {
         this.position = position;
 
+        holder.player_no_txt.setText(String.valueOf(playerNo.get(position)));
+        holder.player_name_txt.setText(String.valueOf(playerName.get(position)));
 
-
-        holder.player_no_txt.setText(String.valueOf(player_no.get(position)));
-        holder.player_name_txt.setText(String.valueOf(player_name.get(position)));
-
-//
-//        holder.mainLayout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(context, EditPlayer.class);
-//                // allows changes to be seen
-//                activity.startActivityForResult(intent,1);
-//            }
-//        });
+        holder.mainLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, EditPlayer.class);
+                intent.putExtra("squadID", squadID);
+                intent.putExtra("playerName", String.valueOf(playerName.get(position)));
+                intent.putExtra("playerNo", String.valueOf(playerNo.get(position)));
+                activity.startActivityForResult(intent,1);
+            }
+        });
     }
     @Override
     public int getItemCount() {
-        return player_no.size();
+        return playerNo.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -87,4 +87,6 @@ public class CustomAdapterPlayerList extends RecyclerView.Adapter<CustomAdapterP
 
         }
     }
+
+
 }

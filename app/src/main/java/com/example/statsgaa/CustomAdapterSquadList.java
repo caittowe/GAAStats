@@ -24,24 +24,22 @@ public class CustomAdapterSquadList extends RecyclerView.Adapter<CustomAdapterSq
 
     private Context context;
     Activity activity;
-    private ArrayList squad_id, squad_name;
-    String squadID;
-
+    private ArrayList squadID, squadName;
     int position;
 
 
     /**
      * constructor with args
      * @param context
-     * @param squad_id
-     * @param squad_name
+     * @param squadID
+     * @param squadName
 
      */
-    CustomAdapterSquadList(Activity activity, Context context, ArrayList squad_id, ArrayList squad_name) {
+    CustomAdapterSquadList(Activity activity, Context context, ArrayList squadID, ArrayList squadName) {
         this.activity = activity;
         this.context = context;
-        this.squad_id = squad_id;
-        this.squad_name = squad_name;
+        this.squadID = squadID;
+        this.squadName = squadName;
     }
 
 
@@ -57,24 +55,22 @@ public class CustomAdapterSquadList extends RecyclerView.Adapter<CustomAdapterSq
     public void onBindViewHolder(@NonNull CustomAdapterSquadList.MyViewHolder holder, final int position) {
         this.position = position;
 
-        holder.squad_id_txt.setText(String.valueOf(squad_id.get(position)));
-        holder.squad_name_txt.setText(String.valueOf(squad_name.get(position)));
+        holder.squad_id_txt.setText(String.valueOf(squadID.get(position)));
+        holder.squad_name_txt.setText(String.valueOf(squadName.get(position)));
 
 
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, DisplaySquad.class);
-                intent.putExtra("squad_id", toString().valueOf(squad_id.get(position)));
-                // allows changes to be seen
+                intent.putExtra("squad_id", toString().valueOf(squadID.get(position)));
                 activity.startActivity(intent);
-//                activity.startActivityForResult(intent,2);
             }
         });
     }
     @Override
     public int getItemCount() {
-        return squad_id.size();
+        return squadID.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{

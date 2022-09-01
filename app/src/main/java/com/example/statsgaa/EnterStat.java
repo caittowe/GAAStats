@@ -17,7 +17,7 @@ public class EnterStat extends AppCompatActivity {
 
     ActivityEnterStatBinding binding;
 
-    String squadTableID, squadID, squadName, playerName, playerNo, clickedSquadID;
+    String  squadID, squadName, playerName, playerNo, clickedSquadID;
 
     public static int SHOTID = 1;
     public static int POINTID = 2;
@@ -52,7 +52,6 @@ public class EnterStat extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
         ab.setTitle(playerNo + ". " + playerName);
 
-        // increments number of pages by 1
         binding.addPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -228,14 +227,14 @@ public class EnterStat extends AppCompatActivity {
             scorePoints = Integer.parseInt(getIntent().getStringExtra("points"));
             scoreGoals = Integer.parseInt(getIntent().getStringExtra("goals"));
         } else {
-            Toast.makeText(this, "No Data here boss", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "No Data ", Toast.LENGTH_SHORT).show();
         }
     }
 
     public int getGameID() {
         MyDatabaseHelper myDB = new MyDatabaseHelper(EnterStat.this);
         gameID = myDB.getMaxGameID();
-        Toast.makeText(this, "gameID = " + gameID, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "gameID = " + gameID, Toast.LENGTH_SHORT).show();
         return gameID;
     }
 

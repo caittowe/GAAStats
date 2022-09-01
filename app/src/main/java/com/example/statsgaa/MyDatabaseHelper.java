@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     // sets values for tables, db and columns
-    private Context context;
+    public Context context;
     private static final String DATABASE_NAME = "Stats.db";
     private static final int DATABASE_VERSION = 2;
 
@@ -43,7 +43,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String TIME = "time";
     private static final String LOCATION = "location";
 
-    private static final String TABLE_SCORES = "scores";
+    private static final String TABLE_SCORERS = "scorers";
     private static final String TOP_SCORERS_ID = "scorers_id";
 //    private static final String MATCH_ID = "game_id";
 //    private static final String PLAYER_NO = "player_no";
@@ -100,7 +100,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 + PLAYER_NAME + " TEXT, "
                 + PLAYER_NO + " INTEGER);";
 
-        String createTopScorers = "CREATE TABLE IF NOT EXISTS " + TABLE_SCORES + " (" + TOP_SCORERS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+        String createTopScorers = "CREATE TABLE IF NOT EXISTS " + TABLE_SCORERS + " (" + TOP_SCORERS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + MATCH_ID + " INTEGER, "
                 + PLAYER_NO + " TEXT, "
                 + PLAYER_NAME + " TEXT, "
@@ -134,7 +134,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLAYER_GAME_STAT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SQUAD);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MATCH);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SCORES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SCORERS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_POSSESSION);
 
         onCreate(db);
@@ -143,11 +143,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     /**
      * adds a new stat to the player_match_stat
      */
-    public void createNewMatch(String match_name, String team1, String team2, String date, String time, String location) {
+    public void createNewMatch(String matchName, String team1, String team2, String date, String time, String location) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put(MATCH_NAME, match_name);
+        cv.put(MATCH_NAME, matchName);
         cv.put(TEAM1, team1);
         cv.put(TEAM2, team2);
         cv.put(DATE, date);
@@ -164,31 +164,16 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * returns all data in database
-     *
-     * @return
-     */
-    public Cursor readAllStatData(String gameID) {
-        String query = "SELECT * FROM " + TABLE_PLAYER_GAME_STAT + " WHERE game_id = " + gameID + ";";
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        if (db != null) {
-            cursor = db.rawQuery(query, null);
-        }
-        return cursor;
-    }
-
-    /**
      * adds a new player to the player table
      */
-    public void addPlayersToSquad(String squad_id, String squad_name, String player_name, String player_no) {
+    public void addPlayersToSquad(String squadID, String squadName, String playerName, String playerNo) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put(SQUAD_ID, squad_id);
-        cv.put(SQUAD_NAME, squad_name);
-        cv.put(PLAYER_NAME, player_name);
-        cv.put(PLAYER_NO, player_no);
+        cv.put(SQUAD_ID, squadID);
+        cv.put(SQUAD_NAME, squadName);
+        cv.put(PLAYER_NAME, playerName);
+        cv.put(PLAYER_NO, playerNo);
 
 
         long result = db.insert(TABLE_SQUAD, null, cv);
@@ -203,14 +188,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     /**
      * adds a new stat to the player_match_stat
      */
-    public void addMatchEvent(int stat_id, int match_id, int squad_id, int player_no, String timestamp) {
+    public void addMatchEvent(int statID, int matchID, int squadID, int playerNo, String timestamp) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
-        cv.put(STAT_ID, stat_id);
-        cv.put(MATCH_ID, match_id);
-        cv.put(SQUAD_ID, squad_id);
-        cv.put(PLAYER_NO, player_no);
+        cv.put(STAT_ID, statID);
+        cv.put(MATCH_ID, matchID);
+        cv.put(SQUAD_ID, squadID);
+        cv.put(PLAYER_NO, playerNo);
         cv.put(TIMESTAMP, timestamp);
 
         long result = db.insert(TABLE_PLAYER_GAME_STAT, null, cv);
@@ -262,28 +247,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return maxID;
     }
 
-    /**
-     * returns all data in database
-     *
-     * @return
-     */
-    public Cursor readAllSquadData() {
-        String query = "SELECT * FROM " + TABLE_SQUAD;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        if (db != null) {
-            cursor = db.rawQuery(query, null);
-        }
-        return cursor;
-    }
 
     /**
      * returns all data in database
      *
      * @return
      */
-    public Cursor readAllClickedSquadData(String squad_id) {
-        String query = "SELECT * FROM " + TABLE_SQUAD + " WHERE squad_id = " + squad_id + ";";
+    public Cursor readAllClickedSquadData(String squadID) {
+        String query = "SELECT * FROM " + TABLE_SQUAD + " WHERE squad_id = " + squadID + ";";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         if (db != null) {
@@ -312,8 +283,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
      *
      * @return
      */
-    public Cursor readPlayerNamePlayerNo(String squad_id) {
-        String query = "SELECT player_no, player_name  FROM squad WHERE squad_id =" + squad_id + ";";
+    public Cursor readPlayerNamePlayerNo(String squadID) {
+        String query = "SELECT player_no, player_name  FROM squad WHERE squad_id =" + squadID + ";";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         if (db != null) {
@@ -326,14 +297,15 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     /**
      * makes updates in the database accordign to user input
      *
-     * @param player_name
+     * @param playerName
      */
-    public void updatePlayerName(String player_name, String player_no) {
+    public void updatePlayerName(String playerName, String playerNo, String squadID) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(PLAYER_NAME, player_name);
-
-        long result = db.update(TABLE_SQUAD, cv, "player_no=?", new String[]{player_no});
+//        cv.put(SQUAD_ID, squadID);
+        cv.put(PLAYER_NAME, playerName);
+//        cv.put(PLAYER_NO, playerNo);
+        long result = db.update(TABLE_SQUAD, cv, SQUAD_ID +" = ? AND "+PLAYER_NO +" = ?", new String[]{squadID, playerNo});
         if (result == -1) {
             Toast.makeText(context, "Update Failed", Toast.LENGTH_SHORT).show();
         } else {
@@ -344,11 +316,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     /**
      * deletes one record in the database (a player)
      *
-     * @param player_no
+     * @param playerNo
      */
-    public void deleteOnePlayer(String player_no) {
+    public void deleteOnePlayer(String playerNo) {
         SQLiteDatabase db = this.getWritableDatabase();
-        long result = db.delete(TABLE_SQUAD, "player_no=?", new String[]{player_no});
+        long result = db.delete(TABLE_SQUAD, "player_no=?", new String[]{playerNo});
 
         if (result == -1) {
             Toast.makeText(context, "Deleted Failed", Toast.LENGTH_SHORT).show();
@@ -367,21 +339,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + TABLE_SQUAD);
     }
 
-
-    /**
-     * returns players with a certain squad id
-     *
-     * @return
-     */
-    public Cursor showPlayerNameByGameID(String squad_id) {
-        String query = "SELECT player_name  FROM squad WHERE squad_id =" + squad_id + ";";
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        if (db != null) {
-            cursor = db.rawQuery(query, null);
-        }
-        return cursor;
-    }
 
     /**
      * returns stats for a specific player
@@ -417,7 +374,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(POINTS, points);
         cv.put(SCORE_COUNT, scoreCount);
 
-        long result = db.insert(TABLE_SCORES, null, cv);
+        long result = db.insert(TABLE_SCORERS, null, cv);
         if (result == -1) {
             Toast.makeText(context, "Failed to add match", Toast.LENGTH_SHORT).show();
         } else {
@@ -440,9 +397,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         long result = db.insert(TABLE_POSSESSION, null, cv);
         if (result == -1) {
-            Toast.makeText(context, "Failed to add possession", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Failed to add possession", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, "Possession Added", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Possession Added", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -451,7 +408,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
      * @param gameID
      */
     public Cursor returnScorersDesc(String gameID) {
-        String query = "SELECT player_name, player_no, goals, points, score_count  FROM "+ TABLE_SCORES +" WHERE game_id =" + gameID + " ORDER BY score_count DESC;";
+        String query = "SELECT DISTINCT player_name, player_no, goals, points, score_count  FROM "+ TABLE_SCORERS +" WHERE game_id =" + gameID + " ORDER BY score_count DESC;";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         if (db != null) {
@@ -464,7 +421,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
      * @param gameID
      */
     public Cursor returnPossessionsDesc(String gameID) {
-        String query = "SELECT player_name, player_no, possession_count  FROM "+ TABLE_POSSESSION +" WHERE game_id =" + gameID + " ORDER BY possession_count DESC;";
+        String query = "SELECT DISTINCT player_name, player_no, possession_count  FROM "+ TABLE_POSSESSION +" WHERE game_id =" + gameID + " ORDER BY possession_count DESC;";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         if (db != null) {

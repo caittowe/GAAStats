@@ -8,23 +8,36 @@
 
     <Button
         android:id="@+id/topPossessions"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="60dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="10dp"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/topScorers"
-        android:text="Possession Data" />
+        android:text="Possession" />
 
     <Button
         android:id="@+id/topScorers"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_height="60dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="10dp"
         android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:text="Scores Data" />
+        android:text="Scores" />
+
+    <Button
+        android:id="@+id/exitGame"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_toRightOf="@+id/topPossessions"
+        android:gravity="center"
+        android:backgroundTint="@color/red"
+        android:textColor="@color/black"
+        android:text="Exit" />
 
     <ScrollView
         android:layout_width="match_parent"

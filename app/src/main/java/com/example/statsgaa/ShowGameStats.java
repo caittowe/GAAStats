@@ -19,13 +19,9 @@ import java.util.ArrayList;
 public class ShowGameStats extends AppCompatActivity {
 
     ActivityShowGameStatsBinding binding;
-
     ArrayList<String> playerNames, playerNos, statID;
-
     String clickedSquadID;
     String gameID;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +52,14 @@ public class ShowGameStats extends AppCompatActivity {
                 Intent intent = new Intent(ShowGameStats.this, ShowPossessions.class);
                 intent.putExtra("gameID", gameID);
                 intent.putExtra("squadID", clickedSquadID);
+                startActivity(intent);
+            }
+        });
+
+        binding.exitGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ShowGameStats.this, MainActivity.class);
                 startActivity(intent);
             }
         });

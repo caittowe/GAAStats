@@ -17,7 +17,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -26,9 +25,8 @@ public class DisplaySquad extends AppCompatActivity {
 
     RecyclerView recyclerView;
     MyDatabaseHelper myDB;
-    ArrayList<String> squad_id, player_no, player_name;
+    ArrayList<String> squadID, playerNo, playerName;
     CustomAdapterPlayerList customAdapter;
-    TextView team1, team2, time, date, location;
     Button startGame;
     String clickedSquadID;
     int gameID;
@@ -48,11 +46,6 @@ public class DisplaySquad extends AppCompatActivity {
         gameID = getGameID();
 
         recyclerView = findViewById(R.id.recyclerView);
-        team1 = findViewById(R.id.tvTeam1);
-        team2 = findViewById(R.id.tvTeam2);
-        time = findViewById(R.id.tvTime);
-        date = findViewById(R.id.tvDate);
-        location = findViewById(R.id.tvLocation);
         startGame = findViewById(R.id.startGame);
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,21 +57,16 @@ public class DisplaySquad extends AppCompatActivity {
             }
         });
 
-        team1.setText(getIntent().getStringExtra("TEAM1"));
-        team2.setText(getIntent().getStringExtra("TEAM2"));
-        date.setText(getIntent().getStringExtra("DATE"));
-        time.setText(getIntent().getStringExtra("TIME"));
-        location.setText(getIntent().getStringExtra("LOCATION"));
 
         myDB = new MyDatabaseHelper(DisplaySquad.this);
-        squad_id = new ArrayList<>();
-        player_name = new ArrayList<>();
-        player_no = new ArrayList<>();
+        squadID = new ArrayList<>();
+        playerName = new ArrayList<>();
+        playerNo = new ArrayList<>();
 
         getIntentData();
         storeDataInArrays();
 
-        customAdapter = new CustomAdapterPlayerList(DisplaySquad.this, this, player_no, player_name);
+        customAdapter = new CustomAdapterPlayerList(DisplaySquad.this, this, clickedSquadID, playerNo, playerName);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(DisplaySquad.this));
     }
@@ -108,7 +96,6 @@ public class DisplaySquad extends AppCompatActivity {
                 clickedSquadID = getIntent().getStringExtra("squad_id");
                 Log.i("GOTSQUAD", "getIntentData: squad id =  "+clickedSquadID);
             } else {
-                Toast.makeText(this, "No Data DisplaySquadCLASS", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -123,8 +110,8 @@ public class DisplaySquad extends AppCompatActivity {
 //           no_data.setVisibility(View.VISIBLE);
         } else {
             while (cursor.moveToNext()) {
-                player_no.add(cursor.getString(0));
-                player_name.add(cursor.getString(1));
+                playerNo.add(cursor.getString(0));
+                playerName.add(cursor.getString(1));
             }
         }
 
@@ -192,7 +179,7 @@ public class DisplaySquad extends AppCompatActivity {
     public int getGameID() {
         MyDatabaseHelper myDB = new MyDatabaseHelper(DisplaySquad.this);
         gameID = myDB.getMaxGameID();
-        Toast.makeText(this, "gameID = " + gameID, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "gameID = " + gameID, Toast.LENGTH_SHORT).show();
         return gameID;
     }
 

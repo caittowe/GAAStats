@@ -8,18 +8,6 @@
     android:id="@+id/editLayout">
 
 
-    <Button
-        android:id="@+id/deletePlayerButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#EF1212"
-        android:text="Delete"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.797" />
-
     <EditText
         android:id="@+id/nameInput"
         android:layout_width="wrap_content"

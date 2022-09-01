@@ -59,7 +59,7 @@ public class ShowPossessions extends AppCompatActivity {
             squadID = getIntent().getStringExtra("squadID");
             Log.i("SQUADID", "squad id =  " + squadID);
         } else {
-            Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();
         }
     }
 

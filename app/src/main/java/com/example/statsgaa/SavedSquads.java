@@ -30,10 +30,8 @@ public class SavedSquads extends AppCompatActivity {
     RecyclerView recyclerView;
     FloatingActionButton addButton;
     MyDatabaseHelper myDB;
-    ArrayList<String> squad_table_id, squad_id, squad_name, player_name, player_no;
+    ArrayList<String> squad_id, squad_name;
     CustomAdapterSquadList customAdapter;
-    TextView team1, team2, time, date, location;
-
 
     /**
      * displays the details entered from the dialog
@@ -48,17 +46,6 @@ public class SavedSquads extends AppCompatActivity {
         setContentView(R.layout.activity_saved_squads);
 
         recyclerView = findViewById(R.id.recyclerView);
-        team1 = findViewById(R.id.tvTeam1);
-        team2 = findViewById(R.id.tvTeam2);
-        time = findViewById(R.id.tvTime);
-        date = findViewById(R.id.tvDate);
-        location = findViewById(R.id.tvLocation);
-
-        team1.setText(getIntent().getStringExtra("TEAM1"));
-        team2.setText(getIntent().getStringExtra("TEAM2"));
-        date.setText(getIntent().getStringExtra("DATE"));
-        time.setText(getIntent().getStringExtra("TIME"));
-        location.setText(getIntent().getStringExtra("LOCATION"));
 
         addButton = findViewById(R.id.fab);
         addButton.setOnClickListener(new View.OnClickListener() {

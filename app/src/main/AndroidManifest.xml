@@ -24,7 +24,7 @@
             android:exported="false" />
         <activity
             android:name=".GameStart"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".EnterStat"
             android:exported="false" />
@@ -33,21 +33,15 @@
             android:exported="false" />
         <activity
             android:name=".EditPlayer"
-            android:exported="false"
-            android:parentActivityName=".SavedSquads" />
+            android:exported="false" />
         <activity
             android:name=".SavedSquads"
             android:exported="false"
             android:label="Saved Squads" />
         <activity
-            android:name=".PreviousGames"
-            android:exported="false"
-            android:label="Previous Games" />
-        <activity
             android:name=".AddNewSquad"
             android:exported="false"
-            android:label="Squad Setup"
-            android:parentActivityName=".SavedSquads" />
+            android:label="Squad Setup" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

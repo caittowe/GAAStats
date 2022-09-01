@@ -63,7 +63,7 @@ public class ShowScoresDesc extends AppCompatActivity {
             squadID = getIntent().getStringExtra("squadID");
             Log.i("SQUADID", "squad id =  " + squadID);
         } else {
-            Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();
         }
     }
     /**
@@ -94,7 +94,7 @@ public class ShowScoresDesc extends AppCompatActivity {
 
         p3Points = String.valueOf(myDB.showPlayerStatsCount("3", pointID, gameID));
         p3Goals = String.valueOf(myDB.showPlayerStatsCount("3", goalID, gameID));
-        p2Total = String.valueOf((Integer.parseInt(p2Points)+(3*(Integer.parseInt(p3Goals)))));
+        p3Total = String.valueOf((Integer.parseInt(p3Points)+(3*(Integer.parseInt(p3Goals)))));
         myDB.addTopScorers(gameID, "3",playerNames.get(2),p3Goals, p3Points, p3Total);
 
         p4Points = String.valueOf(myDB.showPlayerStatsCount("4", pointID, gameID));

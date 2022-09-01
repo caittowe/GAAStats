@@ -13,7 +13,7 @@ import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button newGame, prevGames, newSquad, savedSquads;
+    Button newGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                LayoutInflater inflater= getLayoutInflater();
-                final View myView= inflater.inflate(R.layout.new_game_dialog, null);
+                LayoutInflater inflater = getLayoutInflater();
+                final View myView = inflater.inflate(R.layout.new_game_dialog, null);
                 builder.setView(myView);
 
                 EditText enterMatchName, enterTeam1, enterTeam2, enterDate, enterTime, enterLocation;
@@ -46,11 +46,6 @@ public class MainActivity extends AppCompatActivity {
                                 db.createNewMatch(enterMatchName.getText().toString(), enterTeam1.getText().toString(), enterTeam2.getText().toString(),
                                         enterDate.getText().toString(), enterTime.getText().toString(), enterLocation.getText().toString());
                                 Intent intent = new Intent(MainActivity.this, SavedSquads.class);
-                                intent.putExtra("TEAM1", enterTeam1.getText().toString());
-                                intent.putExtra("TEAM2", enterTeam2.getText().toString());
-                                intent.putExtra("DATE", toString().valueOf(enterDate.getText()));
-                                intent.putExtra("TIME", toString().valueOf(enterTime.getText()));
-                                intent.putExtra("LOCATION", enterLocation.getText().toString());
                                 startActivity(intent);
                             }
                         })
@@ -61,13 +56,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        prevGames = findViewById(R.id.buttonPrevGames);
-        prevGames.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, PreviousGames.class);
-                startActivity(intent);
-            }
-        });
     }
 }

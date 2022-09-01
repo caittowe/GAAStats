@@ -10,20 +10,21 @@ import android.widget.EditText;
 
 /**
  * adds each player to the database and sets their default values
- * should be up to 30 players when fully developed
+ *
  */
 public class AddNewSquad extends AppCompatActivity {
 
+    // views
     private EditText squadName, player1, player2, player3, player4, player5, player6, player7, player8, player9,
     player10, player11, player12,player13, player14, player15;
-    private Button addPlayerButton;
+    private Button goButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_squad_setup);
 
-        squadName = findViewById(R.id.enterSquadName);
+        squadName = findViewById(R.id.squadName);
         player1 = findViewById(R.id.player1input);
         player2 = findViewById(R.id.player2input);
         player3 = findViewById(R.id.player3input);
@@ -41,19 +42,18 @@ public class AddNewSquad extends AppCompatActivity {
         player15 = findViewById(R.id.player15input);
 
 
-        addPlayers();
+        addSquad();
     }
 
-    public void addPlayers(){
-        addPlayerButton = findViewById(R.id.addPlayersButton);
-        addPlayerButton.setOnClickListener(new View.OnClickListener() {
+    public void addSquad(){
+        goButton = findViewById(R.id.goButton);
+        goButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 MyDatabaseHelper myDB = new MyDatabaseHelper(AddNewSquad.this);
                 int maxID = myDB.getMaxSquadID();
                 maxID = maxID+1;
-                // needs to be chnaged to either add a player or a squad
                 myDB.addPlayersToSquad(String.valueOf(maxID), squadName.getText().toString(), player1.getText().toString().trim(), String.valueOf(1));
                 myDB.addPlayersToSquad(String.valueOf(maxID), squadName.getText().toString(), player2.getText().toString().trim(), String.valueOf(2));
                 myDB.addPlayersToSquad(String.valueOf(maxID), squadName.getText().toString(), player3.getText().toString().trim(), String.valueOf(3));

@@ -22,25 +22,30 @@ import java.util.ArrayList;
 public class CustomAdapterScoresList extends RecyclerView.Adapter<CustomAdapterScoresList.MyViewHolder> {
 
 
-    private Context context;
+    public Context context;
     Activity activity;
-    private ArrayList playerNamesOrder, playerNosOrder, playerScoresOrder, playerPoints, playerGoals;
+    public ArrayList playerNamesOrder, playerNosOrder, playerPoints, playerGoals;
 
     int position;
 
 
     /**
+     * default
+     */
+   public CustomAdapterScoresList(){
+
+    }
+    /**
      * constructor with args
      * @param context
      */
-    CustomAdapterScoresList(Activity activity, Context context, ArrayList playerNamesOrder, ArrayList playerNosOrder,ArrayList playerGoals, ArrayList playerPoints, ArrayList playerScoresOrder){
+    public CustomAdapterScoresList(Activity activity, Context context, ArrayList playerNamesOrder, ArrayList playerNosOrder,ArrayList playerGoals, ArrayList playerPoints, ArrayList playerScoresOrder){
         this.activity = activity;
         this.context = context;
         this.playerNamesOrder = playerNamesOrder;
         this.playerNosOrder = playerNosOrder;
         this.playerGoals = playerGoals;
         this.playerPoints = playerPoints;
-        this.playerScoresOrder = playerScoresOrder;
 
     }
 
