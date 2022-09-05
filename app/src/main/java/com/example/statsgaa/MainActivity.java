@@ -11,9 +11,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+/**
+ * Launch activity
+ */
 public class MainActivity extends AppCompatActivity {
 
-    Button newGame;
+    // views
+    private Button newGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
                 final View myView = inflater.inflate(R.layout.new_game_dialog, null);
                 builder.setView(myView);
 
+                // views for the dialog
                 EditText enterMatchName, enterTeam1, enterTeam2, enterDate, enterTime, enterLocation;
                 enterMatchName = myView.findViewById(R.id.etMatchName);
                 enterTeam1 = myView.findViewById(R.id.etTeam1);

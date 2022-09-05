@@ -27,11 +27,12 @@ import java.util.ArrayList;
  */
 public class SavedSquads extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    FloatingActionButton addButton;
-    MyDatabaseHelper myDB;
-    ArrayList<String> squad_id, squad_name;
-    CustomAdapterSquadList customAdapter;
+    // views and vars
+    private RecyclerView recyclerView;
+    private FloatingActionButton addButton;
+    private MyDatabaseHelper myDB;
+    private ArrayList<String> squad_id, squad_name;
+    private CustomAdapterSquadList customAdapter;
 
     /**
      * displays the details entered from the dialog

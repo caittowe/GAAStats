@@ -12,19 +12,23 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ * shows player score count in order desc
+ */
 public class ShowScoresDesc extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    MyDatabaseHelper myDB;
-    ArrayList<String> playerNames, scorersDesc, playerNamesOrder, playerNosOrder, playerScoresOrder, playerPoints, playerGoals;
-    CustomAdapterScoresList customAdapter;
-    String gameID, squadID;
-    String pointID = String.valueOf(EnterStat.POINTID);
-    String goalID = String.valueOf(EnterStat.GOALID);
-    String p1Points, p1Goals, p1Total, p2Points, p2Goals, p2Total, p3Points, p3Goals, p3Total, p4Points, p4Goals, p4Total;
-    String p5Points, p5Goals, p5Total, p6Points, p6Goals, p6Total, p7Points, p7Goals, p7Total, p8Points, p8Goals, p8Total;
-    String p9Points, p9Goals, p9Total, p10Points, p10Goals,p10Total, p11Points, p11Goals, p11Total, p12Points, p12Goals, p12Total;
-    String p13Points, p13Goals, p13Total, p14Points, p14Goals, p14Total, p15Points, p15Goals, p15Total;
+    // views and vars
+    private RecyclerView recyclerView;
+    private MyDatabaseHelper myDB;
+    private ArrayList<String> playerNames, scorersDesc, playerNamesOrder, playerNosOrder, playerScoresOrder, playerPoints, playerGoals;
+    private CustomAdapterScoresList customAdapter;
+    private String gameID, squadID;
+    private String pointID = String.valueOf(EnterStat.POINTID);
+    private String goalID = String.valueOf(EnterStat.GOALID);
+    private String p1Points, p1Goals, p1Total, p2Points, p2Goals, p2Total, p3Points, p3Goals, p3Total, p4Points, p4Goals, p4Total;
+    private String p5Points, p5Goals, p5Total, p6Points, p6Goals, p6Total, p7Points, p7Goals, p7Total, p8Points, p8Goals, p8Total;
+    private String p9Points, p9Goals, p9Total, p10Points, p10Goals,p10Total, p11Points, p11Goals, p11Total, p12Points, p12Goals, p12Total;
+    private String p13Points, p13Goals, p13Total, p14Points, p14Goals, p14Total, p15Points, p15Goals, p15Total;
 
 
     @Override
@@ -56,6 +60,9 @@ public class ShowScoresDesc extends AppCompatActivity {
 
     }
 
+    /**
+     * gets and sets intent data
+     */
     public void getIntentData() {
         if (getIntent().hasExtra("gameID")) {
             gameID = getIntent().getStringExtra("gameID");
@@ -81,6 +88,9 @@ public class ShowScoresDesc extends AppCompatActivity {
         }
     }
 
+    /**
+     * sets player scores and adds them to the top scorers table
+     */
     public void addSetScores(){
         p1Points = String.valueOf(myDB.showPlayerStatsCount("1", pointID, gameID));
         p1Goals = String.valueOf(myDB.showPlayerStatsCount("1", goalID, gameID));
@@ -159,13 +169,12 @@ public class ShowScoresDesc extends AppCompatActivity {
     }
 
     /**
-     * adds top scorers to an array list in order
+     * returns top scorers and adds to an array list in order
      */
     public void returnScorersDesc(){
         Cursor cursorPlayer = myDB.returnScorersDesc(gameID);
         if (cursorPlayer.getCount() == 0) {
-//           empty_imageview.setVisibility(View.VISIBLE);
-//           no_data.setVisibility(View.VISIBLE);
+
         } else {
             while (cursorPlayer.moveToNext()) {
                 playerNamesOrder.add(cursorPlayer.getString(0));

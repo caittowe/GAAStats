@@ -23,13 +23,21 @@ import java.util.ArrayList;
 
 public class DisplaySquad extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    MyDatabaseHelper myDB;
-    ArrayList<String> squadID, playerNo, playerName;
-    CustomAdapterPlayerList customAdapter;
-    Button startGame;
-    String clickedSquadID;
-    int gameID;
+    // vars and views
+    public RecyclerView recyclerView;
+    public MyDatabaseHelper myDB;
+    public ArrayList<String> squadID, playerNo, playerName;
+    public CustomAdapterPlayerList customAdapter;
+    private Button startGame;
+    private String clickedSquadID;
+    private int gameID;
+
+    /**
+     * default constructor
+     */
+    public DisplaySquad(){
+
+    }
 
     /**
      * displays the details entered from the dialog
@@ -56,7 +64,6 @@ public class DisplaySquad extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 
         myDB = new MyDatabaseHelper(DisplaySquad.this);
         squadID = new ArrayList<>();
@@ -87,7 +94,6 @@ public class DisplaySquad extends AppCompatActivity {
     }
 
     /**
-     * WORKING
      *  gets squad id of the squad that was clicked
      */
     public void getIntentData(){
@@ -179,7 +185,6 @@ public class DisplaySquad extends AppCompatActivity {
     public int getGameID() {
         MyDatabaseHelper myDB = new MyDatabaseHelper(DisplaySquad.this);
         gameID = myDB.getMaxGameID();
-//        Toast.makeText(this, "gameID = " + gameID, Toast.LENGTH_SHORT).show();
         return gameID;
     }
 

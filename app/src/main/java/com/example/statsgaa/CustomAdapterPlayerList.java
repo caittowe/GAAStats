@@ -15,20 +15,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 /**
- *
+ * Receives array lists of player numbers and player names
+ * Creates a view for each item in arraylists
+ * Sends data to be displayed in DisplaySquad class.
  */
-
-
 public class CustomAdapterPlayerList extends RecyclerView.Adapter<CustomAdapterPlayerList.MyViewHolder> {
 
+    // vars
+    public Context context;
+    public Activity activity;
+    public ArrayList playerNo, playerName;
+    public String squadID;
+    private int position;
 
-    private Context context;
-    Activity activity;
-    private ArrayList playerNo, playerName;
-    String squadID;
+    /**
+     * default constructor
+     */
+    public CustomAdapterPlayerList(){
 
-    int position;
-
+    }
 
     /**
      * constructor with args
@@ -45,6 +50,9 @@ public class CustomAdapterPlayerList extends RecyclerView.Adapter<CustomAdapterP
 
     @NonNull
     @Override
+    /**
+     * inflates the view holder
+     */
     public CustomAdapterPlayerList.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.my_player_row, parent,false);
@@ -52,6 +60,9 @@ public class CustomAdapterPlayerList extends RecyclerView.Adapter<CustomAdapterP
     }
 
     @Override
+    /**
+     * sets textviews of player names and player numbers in list
+     */
     public void onBindViewHolder(@NonNull CustomAdapterPlayerList.MyViewHolder holder, final int position) {
         this.position = position;
 
@@ -69,13 +80,22 @@ public class CustomAdapterPlayerList extends RecyclerView.Adapter<CustomAdapterP
             }
         });
     }
+
+
     @Override
+    /**
+     * returns item count
+     */
     public int getItemCount() {
         return playerNo.size();
     }
 
+    /**
+     *  view holder
+     */
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
+        // views
         TextView player_no_txt, player_name_txt;
         LinearLayout mainLayout;
 

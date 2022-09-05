@@ -11,10 +11,12 @@ import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 
+/**
+ * UNIT TESTS
+ */
 public class CustomAdapterScoresListTest extends TestCase {
 
     // test data
-    int expectedCount;
     CustomAdapterScoresList cA;
     Activity activityValid;
     Context contextValid;
@@ -25,13 +27,10 @@ public class CustomAdapterScoresListTest extends TestCase {
     public void testDefaultConstructor() {
         cA = new CustomAdapterScoresList();
         assertNotNull(cA);
-
     }
 
     @Test
     public void testConstructorWithArgsValid() {
-
-
     playerNamesOrderValid = new ArrayList();
     playerNamesOrderValid.add("a");
     playerNamesOrderValid.add("b");

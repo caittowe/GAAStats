@@ -13,12 +13,16 @@ import android.widget.Toast;
 import com.example.statsgaa.databinding.ActivityEnterStatBinding;
 import com.example.statsgaa.databinding.ActivityShowGameStatsBinding;
 
+/**
+ * displays buttons of match events and adds events to the database
+ */
 public class EnterStat extends AppCompatActivity {
 
-    ActivityEnterStatBinding binding;
-
-    String  squadID, squadName, playerName, playerNo, clickedSquadID;
-
+    // vars and views
+    private ActivityEnterStatBinding binding;
+    public String  squadID, squadName, playerName, playerNo, clickedSquadID, timestamp;
+    public int scorePoints, scoreGoals, gameID;
+    // event ids
     public static int SHOTID = 1;
     public static int POINTID = 2;
     public static int GOALID = 3;
@@ -31,11 +35,6 @@ public class EnterStat extends AppCompatActivity {
     public static int FOULWONID = 10;
     public static int FOULCONCID = 11;
     public static int POSSESSIONID = 12;
-    String timestamp;
-    int scorePoints;
-    int scoreGoals;
-    int gameID;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +43,15 @@ public class EnterStat extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        // first we call this
+        // get and set data
         getAndSetIntentData();
         gameID = getGameID();
 
-        // set actionbar after get and set method
+        // set actionbar
         ActionBar ab = getSupportActionBar();
         ab.setTitle(playerNo + ". " + playerName);
 
+        // adds point to the database
         binding.addPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,7 +72,7 @@ public class EnterStat extends AppCompatActivity {
             }
         });
 
-
+        // adds goal to the database
         binding.addGoal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,6 +93,7 @@ public class EnterStat extends AppCompatActivity {
             }
         });
 
+        // adds wide to the database
         binding.addWide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,6 +112,7 @@ public class EnterStat extends AppCompatActivity {
             }
         });
 
+        // adds foul won to the database
         binding.addFoulWon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,6 +129,7 @@ public class EnterStat extends AppCompatActivity {
             }
         });
 
+        // adds foul conceded to the database
         binding.addFoulConceded.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -143,6 +146,7 @@ public class EnterStat extends AppCompatActivity {
             }
         });
 
+        // adds own kickout won to the database
         binding.addOwnKickoutWon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -161,6 +165,7 @@ public class EnterStat extends AppCompatActivity {
             }
         });
 
+        // adds ooposition kickout won
         binding.addOppKickoutWon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -177,6 +182,7 @@ public class EnterStat extends AppCompatActivity {
             }
         });
 
+        // adds positive turnover to the database
         binding.addPostitiveTurnover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -193,6 +199,7 @@ public class EnterStat extends AppCompatActivity {
             }
         });
 
+        // adds negative turnover to the database
         binding.addNegTurnover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -212,7 +219,7 @@ public class EnterStat extends AppCompatActivity {
     }
 
     /**
-     *
+     * gets and sets data
      */
     public void getAndSetIntentData() {
         if ( getIntent().hasExtra("squad_id") && getIntent().hasExtra("squad_name") && getIntent().hasExtra("player_name")
@@ -227,14 +234,17 @@ public class EnterStat extends AppCompatActivity {
             scorePoints = Integer.parseInt(getIntent().getStringExtra("points"));
             scoreGoals = Integer.parseInt(getIntent().getStringExtra("goals"));
         } else {
-//            Toast.makeText(this, "No Data ", Toast.LENGTH_SHORT).show();
+
         }
     }
 
+    /**
+     * returns game ID
+     * @return
+     */
     public int getGameID() {
         MyDatabaseHelper myDB = new MyDatabaseHelper(EnterStat.this);
         gameID = myDB.getMaxGameID();
-//        Toast.makeText(this, "gameID = " + gameID, Toast.LENGTH_SHORT).show();
         return gameID;
     }
 

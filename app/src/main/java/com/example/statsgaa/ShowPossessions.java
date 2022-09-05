@@ -11,14 +11,18 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ * displays possession count in order desc
+ */
 public class ShowPossessions extends AppCompatActivity {
 
-    RecyclerView recyclerView;
-    MyDatabaseHelper myDB;
-    ArrayList<String> playerNames, playerNamesOrder, playerNosOrder, playerPossessionsOrder;
-    CustomAdapterPossessionList customAdapter;
-    String gameID, squadID, possessionID;
-    String p1Possessions, p2Possessions,p3Possessions,p4Possessions,p5Possessions,p6Possessions,p7Possessions,
+    // views and vars
+    private RecyclerView recyclerView;
+    private MyDatabaseHelper myDB;
+    private ArrayList<String> playerNames, playerNamesOrder, playerNosOrder, playerPossessionsOrder;
+    private CustomAdapterPossessionList customAdapter;
+    private String gameID, squadID, possessionID;
+    private String p1Possessions, p2Possessions,p3Possessions,p4Possessions,p5Possessions,p6Possessions,p7Possessions,
     p8Possessions,p9Possessions,p10Possessions,p11Possessions,p12Possessions,p13Possessions,p14Possessions,p15Possessions;
 
     @Override
@@ -121,8 +125,7 @@ public class ShowPossessions extends AppCompatActivity {
     public void returnPossessionsDesc(){
         Cursor cursorPlayer = myDB.returnPossessionsDesc(gameID);
         if (cursorPlayer.getCount() == 0) {
-//           empty_imageview.setVisibility(View.VISIBLE);
-//           no_data.setVisibility(View.VISIBLE);
+
         } else {
             while (cursorPlayer.moveToNext()) {
                 playerNamesOrder.add(cursorPlayer.getString(0));

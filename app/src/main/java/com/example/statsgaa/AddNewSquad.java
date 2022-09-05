@@ -9,12 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 /**
- * adds each player to the database and sets their default values
+ * adds a new squad of 15 players to the database
  *
  */
 public class AddNewSquad extends AppCompatActivity {
 
-    // views
+    // activity views
     private EditText squadName, player1, player2, player3, player4, player5, player6, player7, player8, player9,
     player10, player11, player12,player13, player14, player15;
     private Button goButton;
@@ -41,19 +41,26 @@ public class AddNewSquad extends AppCompatActivity {
         player14 = findViewById(R.id.player14input);
         player15 = findViewById(R.id.player15input);
 
-
         addSquad();
     }
 
+    /**
+     * calls the database method to add each player
+     */
     public void addSquad(){
+
         goButton = findViewById(R.id.goButton);
         goButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
+
                 MyDatabaseHelper myDB = new MyDatabaseHelper(AddNewSquad.this);
+
+                // gets match id by fetching max id and incrementing by 1
                 int maxID = myDB.getMaxSquadID();
                 maxID = maxID+1;
+
+                // database methods called to add each player
                 myDB.addPlayersToSquad(String.valueOf(maxID), squadName.getText().toString(), player1.getText().toString().trim(), String.valueOf(1));
                 myDB.addPlayersToSquad(String.valueOf(maxID), squadName.getText().toString(), player2.getText().toString().trim(), String.valueOf(2));
                 myDB.addPlayersToSquad(String.valueOf(maxID), squadName.getText().toString(), player3.getText().toString().trim(), String.valueOf(3));

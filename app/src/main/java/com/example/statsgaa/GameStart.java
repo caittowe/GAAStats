@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,27 +18,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 import java.util.Locale;
 
+/**
+ * displays and implements player jerseys, match timer, game start and stop buttons
+ */
 public class GameStart extends AppCompatActivity {
 
+    // 60 minutes in milliseconds
     private static final long START_TIME_MILLISECONDS = 3600000;
 
-    MyDatabaseHelper myDB;
-    String gameID, clickedSquadID, pointsScored, goalsScored;
-    ArrayList<String> squadTableIDs;
-    ArrayList<String> squadIDs;
-    ArrayList<String> squadNames;
-    ArrayList<String> playerNames;
-    ArrayList<String> playerNos;
-    private TextView tvCountdownTimer;
-    public TextView showScore;
-    private Button btnStartPause;
-    private Button btnEndGame;
+    // vars and views
+    private MyDatabaseHelper myDB;
+    private String gameID, clickedSquadID, pointsScored, goalsScored;
+    private ArrayList<String> squadTableIDs, squadIDs, squadNames, playerNames, playerNos;
+    private TextView tvCountdownTimer, showScore;
+    private Button btnStartPause, btnEndGame;
     private CountDownTimer countdownTimer;
     private boolean timerRunning;
-    private long timeLeftMillis;
-    private long endTime;
-    Context context;
-    Button btnPlayer1, btnPlayer2, btnPlayer3, btnPlayer4, btnPlayer5, btnPlayer6, btnPlayer7, btnPlayer8, btnPlayer9, btnPlayer10, btnPlayer11, btnPlayer12, btnPlayer13, btnPlayer14, btnPlayer15;
+    private long timeLeft, endTime;
+    public Context context;
+    public Button btnPlayer1, btnPlayer2, btnPlayer3, btnPlayer4, btnPlayer5, btnPlayer6, btnPlayer7, btnPlayer8, btnPlayer9, btnPlayer10, btnPlayer11, btnPlayer12, btnPlayer13, btnPlayer14, btnPlayer15;
 
     /**
      * displays the details entered from the dialog
@@ -52,24 +49,27 @@ public class GameStart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_start);
 
-
         context = this;
         showScore = findViewById(R.id.showScore);
         tvCountdownTimer = findViewById(R.id.text_view_countdown);
         btnStartPause = findViewById(R.id.button_start_pause);
         btnEndGame = findViewById(R.id.button_reset);
 
+        // timer start button
         btnStartPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // if pressed and timer is running, call pause method
                 if (timerRunning) {
                     pauseTimer();
                 } else {
+                    // start timer if not started
                     startTimer();
                 }
             }
         });
 
+        // end game button - appears when timer button is paused
         btnEndGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,14 +97,16 @@ public class GameStart extends AppCompatActivity {
             }
         });
 
-
+        // creates database class object
         myDB = new MyDatabaseHelper(GameStart.this);
+        // arrays for storing data
         squadTableIDs = new ArrayList<>();
         squadIDs = new ArrayList<>();
         squadNames = new ArrayList<>();
         playerNames = new ArrayList<>();
         playerNos = new ArrayList<>();
 
+        // get data and store them in arrays
         getIntentData();
         storeDataInArrays();
 
@@ -409,12 +411,13 @@ public class GameStart extends AppCompatActivity {
     }
 
 
+    // method called to start timer - countdown starts
     private void startTimer() {
-        endTime = System.currentTimeMillis() + timeLeftMillis;
-        countdownTimer = new CountDownTimer(timeLeftMillis, 1000) {
+        endTime = System.currentTimeMillis() + timeLeft;
+        countdownTimer = new CountDownTimer(timeLeft, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                timeLeftMillis = millisUntilFinished;
+                timeLeft = millisUntilFinished;
                 updateCountDownText();
             }
             @Override
@@ -428,27 +431,37 @@ public class GameStart extends AppCompatActivity {
         updateButtons();
     }
 
+    /**
+     * method called when timer paused - countdown stops
+     */
     private void pauseTimer() {
         countdownTimer.cancel();
         timerRunning = false;
         updateButtons();
     }
 
+    /**
+     * called when game ends - reset timer to 60 minutes
+     */
     private void resetTimer() {
-        timeLeftMillis = START_TIME_MILLISECONDS;
+        timeLeft = START_TIME_MILLISECONDS;
         updateCountDownText();
         updateButtons();
     }
 
+    /**
+     * sets timer textview in format of minutes and seconds
+     */
     private void updateCountDownText() {
-        int minutes = (int) (timeLeftMillis / 1000) / 60;
-        int seconds = (int) (timeLeftMillis / 1000) % 60;
-
+        int minutes = (int) (timeLeft / 1000) / 60;
+        int seconds = (int) (timeLeft / 1000) % 60;
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
-
         tvCountdownTimer.setText(timeLeftFormatted);
     }
 
+    /**
+     * sets button visibility of buttons when timer started, paused and game ended
+     */
     private void updateButtons() {
         if (timerRunning) {
             btnEndGame.setVisibility(View.INVISIBLE);
@@ -456,13 +469,13 @@ public class GameStart extends AppCompatActivity {
         } else {
             btnStartPause.setText("Start");
 
-            if (timeLeftMillis < 1000) {
+            if (timeLeft < 1000) {
                 btnStartPause.setVisibility(View.INVISIBLE);
             } else {
                 btnStartPause.setVisibility(View.VISIBLE);
             }
 
-            if (timeLeftMillis < START_TIME_MILLISECONDS) {
+            if (timeLeft < START_TIME_MILLISECONDS) {
                 btnEndGame.setVisibility(View.VISIBLE);
             } else {
                 btnEndGame.setVisibility(View.INVISIBLE);
@@ -471,13 +484,17 @@ public class GameStart extends AppCompatActivity {
     }
 
     @Override
+    /**
+     * method called when timer is stopped
+     */
     protected void onStop() {
         super.onStop();
 
+        // gets the time stored in saved preferences
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
 
-        editor.putLong("millisLeft", timeLeftMillis);
+        editor.putLong("millisLeft", timeLeft);
         editor.putBoolean("timerRunning", timerRunning);
         editor.putLong("endTime", endTime);
 
@@ -489,23 +506,28 @@ public class GameStart extends AppCompatActivity {
     }
 
     @Override
+    /**
+     * called when timer is started
+     */
     protected void onStart() {
         super.onStart();
 
+        // creates new shared preferences
         SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-
-        timeLeftMillis = prefs.getLong("millisLeft", START_TIME_MILLISECONDS);
+        // gets the time left in milliseconds
+        timeLeft = prefs.getLong("millisLeft", START_TIME_MILLISECONDS);
         timerRunning = prefs.getBoolean("timerRunning", false);
-
+        // calls method to update timer and buttons
         updateCountDownText();
         updateButtons();
 
         if (timerRunning) {
             endTime = prefs.getLong("endTime", 0);
-            timeLeftMillis = endTime - System.currentTimeMillis();
-
-            if (timeLeftMillis < 0) {
-                timeLeftMillis = 0;
+            // set the time left to endTime in stored preferences minus the device time
+            timeLeft = endTime - System.currentTimeMillis();
+            // if timer runs out - set timerRunning to false
+            if (timeLeft < 0) {
+                timeLeft = 0;
                 timerRunning = false;
                 updateCountDownText();
                 updateButtons();
@@ -533,7 +555,6 @@ public class GameStart extends AppCompatActivity {
             pointsScored = String.valueOf(0);
             goalsScored = String.valueOf(0);
             showScore.setText("Score: "+goalsScored+" - "+pointsScored);
-//            Toast.makeText(this, "No Score Data", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -544,9 +565,6 @@ public class GameStart extends AppCompatActivity {
     public void storeDataInArrays() {
         Cursor cursor = myDB.readAllClickedSquadData(clickedSquadID);
         if (cursor.getCount() == 0) {
-//            Toast.makeText(context, "No results", Toast.LENGTH_SHORT).show();
-//           empty_imageview.setVisibility(View.VISIBLE);
-//           no_data.setVisibility(View.VISIBLE);
         } else {
             while (cursor.moveToNext()) {
                 squadTableIDs.add(cursor.getString(0));

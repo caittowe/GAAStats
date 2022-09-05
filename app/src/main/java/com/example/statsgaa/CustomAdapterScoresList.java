@@ -15,26 +15,26 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
- *
+ * Receives array lists of player numbers, player names and player scores
+ * Creates a view for each item in arraylists
+ * Sends data to be displayed in ShowScoresDesc class.
  */
-
-
 public class CustomAdapterScoresList extends RecyclerView.Adapter<CustomAdapterScoresList.MyViewHolder> {
 
-
+    // vars
     public Context context;
-    Activity activity;
+    public Activity activity;
     public ArrayList playerNamesOrder, playerNosOrder, playerPoints, playerGoals;
-
-    int position;
+    private int position;
 
 
     /**
-     * default
+     * default constructor
      */
    public CustomAdapterScoresList(){
 
     }
+
     /**
      * constructor with args
      * @param context
@@ -46,12 +46,14 @@ public class CustomAdapterScoresList extends RecyclerView.Adapter<CustomAdapterS
         this.playerNosOrder = playerNosOrder;
         this.playerGoals = playerGoals;
         this.playerPoints = playerPoints;
-
     }
 
 
     @NonNull
     @Override
+    /**
+     * inflates the view holder
+     */
     public CustomAdapterScoresList.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.my_scores_row, parent,false);
@@ -59,22 +61,29 @@ public class CustomAdapterScoresList extends RecyclerView.Adapter<CustomAdapterS
     }
 
     @Override
+    /**
+     *  sets text views of player names, number, goals and points in list
+     */
     public void onBindViewHolder(@NonNull CustomAdapterScoresList.MyViewHolder holder, final int position) {
         this.position = position;
-
 
         holder.player_no_txt.setText(String.valueOf(playerNosOrder.get(position)));
         holder.player_name_txt.setText(String.valueOf(playerNamesOrder.get(position)));
         holder.player_goal_txt.setText(String.valueOf(playerGoals.get(position)));
         holder.player_point_txt.setText(String.valueOf(playerPoints.get(position)));
-
-
     }
+
     @Override
+    /**
+     * returns item count
+     */
     public int getItemCount() {
         return playerNamesOrder.size();
     }
 
+    /**
+     * view holder
+     */
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         TextView player_no_txt, player_name_txt, player_goal_txt, player_point_txt;

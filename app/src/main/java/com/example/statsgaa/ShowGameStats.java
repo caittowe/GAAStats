@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 public class ShowGameStats extends AppCompatActivity {
 
+    // views and vars
     ActivityShowGameStatsBinding binding;
     ArrayList<String> playerNames, playerNos, statID;
     String clickedSquadID;

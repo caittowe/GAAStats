@@ -13,10 +13,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ *  class allows the editing of player names
+ */
 public class EditPlayer extends AppCompatActivity {
 
+    // vars and views
     private EditText nameInput;
-    String squadID, playerName, playerNo;
+    public String squadID, playerName, playerNo;
     private Button updateButton;
 
 
@@ -28,10 +32,10 @@ public class EditPlayer extends AppCompatActivity {
         nameInput = findViewById(R.id.nameInput);
         updateButton = findViewById(R.id.updatePlayerNameButton);
 
-        // first we call this
+        // get the data
         getAndSetIntentData();
 
-        // set actionbar after get and set method
+        // set actionbar
         ActionBar ab = getSupportActionBar();
         ab.setTitle(playerNo +". "+ playerName);
 
@@ -48,7 +52,7 @@ public class EditPlayer extends AppCompatActivity {
     }
 
     /**
-     *
+     * gets and sets squad id, player name, player number
      */
     public void getAndSetIntentData() {
         if (getIntent().hasExtra("squadID") && getIntent().hasExtra("playerName") && getIntent().hasExtra("playerNo")){
@@ -59,7 +63,7 @@ public class EditPlayer extends AppCompatActivity {
             // setting intent data
             nameInput.setText(playerName);
         } else {
-//            Toast.makeText(this, "No Data", Toast.LENGTH_SHORT).show();
+
         }
     }
 }

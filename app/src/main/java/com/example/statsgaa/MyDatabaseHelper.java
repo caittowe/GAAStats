@@ -18,22 +18,15 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public Context context;
     private static final String DATABASE_NAME = "Stats.db";
     private static final int DATABASE_VERSION = 2;
-
-    private static final String TABLE_PLAYER_GAME_STAT = "player_game_stat";
-    private static final String PLAYER_GAME_STAT_ID = "player_game_stat_id";
+    private static final String TABLE_RECORD_STAT = "record_stat";
+    private static final String RECORD_STAT_ID = "record_stat_id";
     private static final String STAT_ID = "stat_id";
-    //    private static final String MATCH_ID = "match_id";
-    //    private static final String PLAYER_NO = "player_no";
     private static final String TIMESTAMP = "timestamp";
-
-    private static final String TABLE_SQUAD = "squad";
     private static final String SQUAD_TABLE_ID = "squad_table_id";
     private static final String SQUAD_ID = "squad_id";
     private static final String SQUAD_NAME = "squad_name";
     private static final String PLAYER_NAME = "player_name";
     private static final String PLAYER_NO = "player_no";
-
-
     private static final String TABLE_MATCH = "game";
     private static final String MATCH_ID = "game_id";
     private static final String MATCH_NAME = "game_name";
@@ -42,24 +35,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String DATE = "date";
     private static final String TIME = "time";
     private static final String LOCATION = "location";
-
     private static final String TABLE_SCORERS = "scorers";
     private static final String TOP_SCORERS_ID = "scorers_id";
-//    private static final String MATCH_ID = "game_id";
-//    private static final String PLAYER_NO = "player_no";
-//    private static final String PLAYER_NAME = "player_name";
     private static final String GOALS = "goals";
     private static final String POINTS = "points";
     private static final String SCORE_COUNT = "score_count";
-
     private static final String TABLE_POSSESSION = "possession";
     private static final String POSSESSION_ID = "possession_id";
-    //    private static final String MATCH_ID = "game_id";
-//    private static final String PLAYER_NO = "player_no";
-//    private static final String PLAYER_NAME = "player_name";
     private static final String POSSESSION_COUNT = "possession_count";
-
-
 
     /**
      * constructor
@@ -87,7 +70,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 + TIME + " TEXT, "
                 + LOCATION + " TEXT);";
 
-        String createPlayerGameStat = "CREATE TABLE IF NOT EXISTS " + TABLE_PLAYER_GAME_STAT + " (" + PLAYER_GAME_STAT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+        String createPlayerGameStat = "CREATE TABLE IF NOT EXISTS " + TABLE_RECORD_STAT + " (" + RECORD_STAT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + STAT_ID + " INTEGER, "
                 + MATCH_ID + " INTEGER, "
                 + SQUAD_ID + " INTEGER, "
@@ -102,7 +85,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         String createTopScorers = "CREATE TABLE IF NOT EXISTS " + TABLE_SCORERS + " (" + TOP_SCORERS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + MATCH_ID + " INTEGER, "
-                + PLAYER_NO + " TEXT, "
+                + PLAYER_NO + " INTEGER, "
                 + PLAYER_NAME + " TEXT, "
                 + GOALS + " INTEGER, "
                 + POINTS + " INTEGER, "
@@ -110,7 +93,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         String createPossession = "CREATE TABLE IF NOT EXISTS " + TABLE_POSSESSION + " (" + POSSESSION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + MATCH_ID + " INTEGER, "
-                + PLAYER_NO + " TEXT, "
+                + PLAYER_NO + " INTEGER, "
                 + PLAYER_NAME + " TEXT, "
                 + POSSESSION_COUNT + " INTEGER);";
 
@@ -131,7 +114,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PLAYER_GAME_STAT);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECORD_STAT);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SQUAD);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_MATCH);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_SCORERS);
@@ -156,9 +139,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         long result = db.insert(TABLE_MATCH, null, cv);
         if (result == -1) {
-            Toast.makeText(context, "Failed to add match", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Failed to add match", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, "Match Added", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Match Added", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -178,9 +161,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         long result = db.insert(TABLE_SQUAD, null, cv);
         if (result == -1) {
-            Toast.makeText(context, "Failed to add player", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Failed to add player", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, "Player Added", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Player Added", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -198,11 +181,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(PLAYER_NO, playerNo);
         cv.put(TIMESTAMP, timestamp);
 
-        long result = db.insert(TABLE_PLAYER_GAME_STAT, null, cv);
+        long result = db.insert(TABLE_RECORD_STAT, null, cv);
         if (result == -1) {
-            Toast.makeText(context, "Failed to add event", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Failed to add event", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, "Event Added", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Event Added", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -269,7 +252,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
      * @return
      */
     public Cursor readSquadIDSquadName() {
-        String query = "SELECT DISTINCT squad_id, squad_name  FROM " + TABLE_SQUAD;
+        String query = "SELECT DISTINCT "+ SQUAD_ID +" , "+ SQUAD_NAME +" FROM " + TABLE_SQUAD;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         if (db != null) {
@@ -284,7 +267,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
      * @return
      */
     public Cursor readPlayerNamePlayerNo(String squadID) {
-        String query = "SELECT player_no, player_name  FROM squad WHERE squad_id =" + squadID + ";";
+        String query = "SELECT "+PLAYER_NO+" , "+PLAYER_NAME +" FROM "+ TABLE_SQUAD +" WHERE "+SQUAD_ID+" = "+squadID + ";";
+
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         if (db != null) {
@@ -307,9 +291,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 //        cv.put(PLAYER_NO, playerNo);
         long result = db.update(TABLE_SQUAD, cv, SQUAD_ID +" = ? AND "+PLAYER_NO +" = ?", new String[]{squadID, playerNo});
         if (result == -1) {
-            Toast.makeText(context, "Update Failed", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Update Failed", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, "Successfully Updated", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Successfully Updated", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -323,9 +307,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         long result = db.delete(TABLE_SQUAD, "player_no=?", new String[]{playerNo});
 
         if (result == -1) {
-            Toast.makeText(context, "Deleted Failed", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Deleted Failed", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, "Successfully Deleted", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Successfully Deleted", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -347,8 +331,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
      */
     public int showPlayerStatsCount(String playerNo, String statID, String gameID) {
         int count = 0;
-        String query = "SELECT COUNT(stat_id)  FROM player_game_stat WHERE player_no =" + playerNo + " "
-                + "AND stat_id = " + statID + " AND game_id = " + gameID + ";";
+        String query = "SELECT COUNT(squad_id)  FROM "+ TABLE_RECORD_STAT +" WHERE "+ PLAYER_NO + " = " + playerNo + " AND "+ STAT_ID + " = " + statID + " AND "+ MATCH_ID +" = " + gameID + ";";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
@@ -376,9 +359,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
         long result = db.insert(TABLE_SCORERS, null, cv);
         if (result == -1) {
-            Toast.makeText(context, "Failed to add match", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Failed to add match", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, "Match Added", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "Match Added", Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -408,7 +391,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
      * @param gameID
      */
     public Cursor returnScorersDesc(String gameID) {
-        String query = "SELECT DISTINCT player_name, player_no, goals, points, score_count  FROM "+ TABLE_SCORERS +" WHERE game_id =" + gameID + " ORDER BY score_count DESC;";
+        String query = "SELECT DISTINCT "+ PLAYER_NAME + " , "+ PLAYER_NO +" , "+ GOALS +" , "+ POINTS+","+SCORE_COUNT+" FROM "+ TABLE_SCORERS +" WHERE "+ MATCH_ID +" = " + gameID + " ORDER BY "+SCORE_COUNT+" DESC;";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         if (db != null) {
@@ -421,7 +404,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
      * @param gameID
      */
     public Cursor returnPossessionsDesc(String gameID) {
-        String query = "SELECT DISTINCT player_name, player_no, possession_count  FROM "+ TABLE_POSSESSION +" WHERE game_id =" + gameID + " ORDER BY possession_count DESC;";
+        String query = "SELECT DISTINCT "+PLAYER_NAME+","+PLAYER_NO+","+POSSESSION_COUNT+" FROM "+ TABLE_POSSESSION +" WHERE "+MATCH_ID+" = " + gameID + " ORDER BY "+POSSESSION_COUNT+" DESC;";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         if (db != null) {
