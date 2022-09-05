@@ -22,6 +22,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String RECORD_STAT_ID = "record_stat_id";
     private static final String STAT_ID = "stat_id";
     private static final String TIMESTAMP = "timestamp";
+    private static final String TABLE_SQUAD = "squad";
     private static final String SQUAD_TABLE_ID = "squad_table_id";
     private static final String SQUAD_ID = "squad_id";
     private static final String SQUAD_NAME = "squad_name";
