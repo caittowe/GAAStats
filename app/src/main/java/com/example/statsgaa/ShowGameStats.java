@@ -16,6 +16,9 @@ import com.example.statsgaa.databinding.ActivityShowGameStatsBinding;
 
 import java.util.ArrayList;
 
+/**
+ * Shows final game stats in table form
+ */
 public class ShowGameStats extends AppCompatActivity {
 
     // views and vars

@@ -2,6 +2,7 @@ package com.example.statsgaa;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -64,6 +65,7 @@ public class SavedSquads extends AppCompatActivity {
         squad_name = new ArrayList<>();
 
         storeDataInArrays();
+
 
         customAdapter = new CustomAdapterSquadList(SavedSquads.this, this, squad_id, squad_name);
         recyclerView.setAdapter(customAdapter);
@@ -132,7 +134,7 @@ public class SavedSquads extends AppCompatActivity {
     /**
      * dialog that appears
      */
-    void confirmDialog() {
+    public void confirmDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Delete all?");
         builder.setMessage("Are you sure you want to delete all data?");

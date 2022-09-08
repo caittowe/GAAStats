@@ -74,6 +74,7 @@ public class CustomAdapterSquadList extends RecyclerView.Adapter<CustomAdapterSq
             public void onClick(View view) {
                 Intent intent = new Intent(context, DisplaySquad.class);
                 intent.putExtra("squad_id", toString().valueOf(squadID.get(position)));
+                intent.putExtra("squadName", toString().valueOf(squadName.get(position)));
                 activity.startActivity(intent);
             }
         });

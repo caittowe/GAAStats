@@ -2,6 +2,7 @@ package com.example.statsgaa;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +22,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ * class enables display of details of squads previously saved
+ */
 public class DisplaySquad extends AppCompatActivity {
 
     // vars and views
@@ -29,7 +33,7 @@ public class DisplaySquad extends AppCompatActivity {
     public ArrayList<String> squadID, playerNo, playerName;
     public CustomAdapterPlayerList customAdapter;
     private Button startGame;
-    private String clickedSquadID;
+    private String clickedSquadID, squadName;
     private int gameID;
 
     /**
@@ -73,6 +77,10 @@ public class DisplaySquad extends AppCompatActivity {
         getIntentData();
         storeDataInArrays();
 
+        // set actionbar
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle(squadName);
+
         customAdapter = new CustomAdapterPlayerList(DisplaySquad.this, this, clickedSquadID, playerNo, playerName);
         recyclerView.setAdapter(customAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(DisplaySquad.this));
@@ -100,6 +108,7 @@ public class DisplaySquad extends AppCompatActivity {
             if (getIntent().hasExtra("squad_id")){
                 // getting data from intent
                 clickedSquadID = getIntent().getStringExtra("squad_id");
+                squadName = getIntent().getStringExtra("squadName");
                 Log.i("GOTSQUAD", "getIntentData: squad id =  "+clickedSquadID);
             } else {
             }

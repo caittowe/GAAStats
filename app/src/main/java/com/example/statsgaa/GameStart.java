@@ -434,7 +434,7 @@ public class GameStart extends AppCompatActivity {
     /**
      * method called when timer paused - countdown stops
      */
-    private void pauseTimer() {
+    public void pauseTimer() {
         countdownTimer.cancel();
         timerRunning = false;
         updateButtons();
@@ -443,7 +443,7 @@ public class GameStart extends AppCompatActivity {
     /**
      * called when game ends - reset timer to 60 minutes
      */
-    private void resetTimer() {
+    public void resetTimer() {
         timeLeft = START_TIME_MILLISECONDS;
         updateCountDownText();
         updateButtons();
@@ -452,7 +452,7 @@ public class GameStart extends AppCompatActivity {
     /**
      * sets timer textview in format of minutes and seconds
      */
-    private void updateCountDownText() {
+    public void updateCountDownText() {
         int minutes = (int) (timeLeft / 1000) / 60;
         int seconds = (int) (timeLeft / 1000) % 60;
         String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
@@ -462,7 +462,7 @@ public class GameStart extends AppCompatActivity {
     /**
      * sets button visibility of buttons when timer started, paused and game ended
      */
-    private void updateButtons() {
+    public void updateButtons() {
         if (timerRunning) {
             btnEndGame.setVisibility(View.INVISIBLE);
             btnStartPause.setText("Pause");
